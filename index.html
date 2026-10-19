@@ -338,7 +338,8 @@
       <button class="nav-btn" onclick="switchTab('planning', this)" style="color: #38bdf8;">🧠 রিসার্চ ও প্ল্যানিং</button>
       
       <div style="flex: 1;"></div>
-      <button class="nav-btn" onclick="window.logout()" style="color: var(--danger); margin-top: 20px; border: 1px solid rgba(239,68,68,0.3);">🚪 লগআউট</button>
+      <!-- ডাইনামিক লগইন/লগআউট বাটন -->
+      <button id="sidebar-auth-btn" class="nav-btn" onclick="handleAuthAction()" style="color: var(--danger); margin-top: 20px; border: 1px solid rgba(239,68,68,0.3);">🚪 লগআউট</button>
     </nav>
   </aside>
 
@@ -716,14 +717,19 @@
     </div>
   </div>
 
-  <!-- Auth/Login Overlay -->
+  <!-- Auth/Login Overlay with Offline Bypass -->
   <div id="auth-overlay" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg); z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-    <div style="background: var(--card-bg); padding: 3rem; border-radius: 15px; border: 1px solid var(--border); text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.5); max-width: 90%;">
+    <div style="background: var(--card-bg); padding: 3rem; border-radius: 15px; border: 1px solid var(--border); text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.5); max-width: 90%; width: 420px;">
       <h2 style="font-size: 2.2rem; margin-bottom: 10px; color: var(--accent); font-weight: 700;">Naim's OS</h2>
-      <p style="color: var(--text-muted); margin-bottom: 30px;">যেকোনো ডিভাইস থেকে ড্যাশবোর্ড এক্সেস করতে লগ-ইন করুন</p>
+      <p style="color: var(--text-muted); margin-bottom: 30px;">আপনার ক্লাউড ড্যাশবোর্ডে স্বাগতম</p>
       
-      <button class="btn" style="background: #ea4335; font-size: 1.1rem; padding: 12px 25px; box-shadow: 0 5px 15px rgba(234, 67, 53, 0.3); border-radius: 30px; width: 100%;" onclick="window.loginWithGoogle()">
+      <button class="btn" style="background: #ea4335; font-size: 1.1rem; padding: 12px 25px; box-shadow: 0 5px 15px rgba(234, 67, 53, 0.3); border-radius: 30px; width: 100%; margin-bottom: 15px;" onclick="window.loginWithGoogle()">
         🌐 Google দিয়ে Login করুন
+      </button>
+
+      <!-- নতুন অফলাইন/স্কিপ বাটন -->
+      <button class="btn" style="background: transparent; color: var(--text-muted); border: 1px solid var(--border); font-size: 1rem; padding: 10px 25px; border-radius: 30px; width: 100%; transition: 0.3s;" onmouseover="this.style.background='var(--border)';" onmouseout="this.style.background='transparent';" onclick="window.continueAsGuest()">
+        লগ-ইন ছাড়া প্রবেশ করুন (Local Mode)
       </button>
     </div>
   </div>
@@ -734,8 +740,6 @@
     import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    const envConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
-    
     // Naim's Firebase Config
     const userConfig = {
       apiKey: "AIzaSyAh-w6kxP6h6i3K35yACd5Z-01W7u_MtAI",
@@ -747,8 +751,8 @@
       measurementId: "G-PXQJXZP1WP"
     };
 
-    const firebaseConfig = envConfig || userConfig;
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'naims-os-v1';
+    const firebaseConfig = userConfig;
+    const appId = 'naims-os-v1';
 
     let app, auth, db, provider;
     try {
@@ -758,20 +762,44 @@
       provider = new GoogleAuthProvider();
     } catch(e) { console.error("Firebase Initialization Error:", e); }
 
+    // লগ-ইন সিস্টেম
     window.loginWithGoogle = async () => {
       try { 
         document.querySelector('#auth-overlay button').innerHTML = 'অপেক্ষা করুন...';
         await signInWithPopup(auth, provider); 
       } catch (e) { 
-        alert("লগ-ইন ফেইল হয়েছে। দয়া করে আপনার ফায়ারবেস কনফিগ চেক করুন।"); 
+        alert("লগ-ইন ফেইল হয়েছে। দয়া করে ফায়ারবেস সেটিংসে গিয়ে লিংকটি যুক্ত করে দিন (বা অফলাইন মোডে প্রবেশ করুন)।"); 
         document.querySelector('#auth-overlay button').innerHTML = '🌐 Google দিয়ে Login করুন';
       }
     };
 
     window.logout = async () => {
       await signOut(auth);
-      localStorage.removeItem('naims_os_data_v3'); // Clear local data on logout
+      sessionStorage.removeItem('naims_guest_mode');
       location.reload();
+    };
+
+    // ডাইনামিক বাটন অ্যাকশন (লগ-ইন না থাকলে লগ-ইন পপআপ দেখাবে)
+    window.handleAuthAction = () => {
+      if(auth && auth.currentUser) {
+        window.logout();
+      } else {
+        document.getElementById('auth-overlay').style.display = 'flex';
+      }
+    };
+
+    // অফলাইন/গেস্ট মোড সিস্টেম
+    window.continueAsGuest = () => {
+      sessionStorage.setItem('naims_guest_mode', 'true');
+      document.getElementById('auth-overlay').style.display = 'none';
+      
+      const authBtn = document.getElementById('sidebar-auth-btn');
+      if(authBtn) {
+        authBtn.innerHTML = '🌐 গুগল লগ-ইন';
+        authBtn.style.color = 'var(--accent)';
+        authBtn.style.borderColor = 'var(--accent)';
+      }
+      showToast('লোকাল মোডে প্রবেশ করেছেন। ডাটা শুধু এই ব্রাউজারেই সেভ হবে।', 'success');
     };
 
     window.cloudSaveData = async (stateObj) => {
@@ -792,19 +820,29 @@
       } catch(e) { console.error("Cloud Load Error:", e); callback(null); }
     };
 
+    // Auth State Check
     onAuthStateChanged(auth, async (user) => {
       const overlay = document.getElementById('auth-overlay');
+      const authBtn = document.getElementById('sidebar-auth-btn');
+
       if (user) {
         overlay.style.display = 'none'; // Hide login screen
-        // Fetch cloud data on login
+        if(authBtn) {
+          authBtn.innerHTML = '🚪 লগআউট';
+          authBtn.style.color = 'var(--danger)';
+          authBtn.style.borderColor = 'rgba(239,68,68,0.3)';
+        }
         window.cloudLoadData((cloudState) => {
            if(cloudState) window.handleCloudData(cloudState);
         });
       } else {
-        // Show login screen
-        if (typeof __initial_auth_token !== 'undefined') {
-          await signInWithCustomToken(auth, __initial_auth_token);
-        } else {
+        if(authBtn) {
+          authBtn.innerHTML = '🌐 গুগল লগ-ইন';
+          authBtn.style.color = 'var(--accent)';
+          authBtn.style.borderColor = 'var(--accent)';
+        }
+        // যদি গেস্ট মোড অন না থাকে, তবেই লগ-ইন পপআপ দেখাবে
+        if (!sessionStorage.getItem('naims_guest_mode')) {
            overlay.style.display = 'flex';
         }
       }
@@ -829,7 +867,6 @@
       theme: 'dark'
     };
 
-    // New function to handle data from cloud
     window.handleCloudData = (cloudState) => {
       state = { ...state, ...cloudState };
       
@@ -853,7 +890,7 @@
       loadData();
       updateClock();
       setInterval(updateClock, 1000);
-      setInterval(check4HourTimer, 60000); // Check every minute
+      setInterval(check4HourTimer, 60000); 
       setupDraggableTimer();
       
       document.getElementById('todo-date').valueAsDate = new Date();
@@ -902,13 +939,11 @@
       document.getElementById('planning-notes').value = state.planningNotes || '';
       
       applyTheme(state.theme || 'dark');
-      
       renderAll();
     }
     
     function saveData() {
       localStorage.setItem('naims_os_data_v3', JSON.stringify(state));
-      // Sync to cloud automatically
       if (window.cloudSaveData) window.cloudSaveData(state);
       renderAll();
     }
