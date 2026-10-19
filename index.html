@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naims OS - Dashboard</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #f3f4f6;
+            --text-color: #1f2937;
+            --card-bg: #ffffff;
+            --border-color: #e5e7eb;
+        }
+        [data-theme="dark"] {
+            --bg-color: #111827;
+            --text-color: #f9fafb;
+            --card-bg: #1f2937;
+            --border-color: #374151;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border-color: var(--border-color);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 font-sans transition-colors duration-300">
+
+    <!-- Header Section -->
+    <header class="flex justify-between items-center mb-8 card p-4 rounded-lg shadow border transition-colors duration-300">
+        <h1 class="text-2xl font-bold"><i class="fa-solid fa-bolt text-yellow-500"></i> Naims OS</h1>
+        <div class="flex gap-4 items-center">
+            <button id="themeToggle" class="text-2xl p-2 rounded hover:opacity-70 transition">☀️</button>
+            <button id="loginBtn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 font-semibold"><i class="fa-brands fa-google"></i> Google Login</button>
+        </div>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        
+        <!-- Left Sidebar (To-Do & Calculator) -->
+        <div class="space-y-6 md:col-span-1">
+            <!-- To-Do List -->
+            <div class="card p-4 rounded-lg shadow border transition-colors duration-300">
+                <h2 class="text-lg font-bold mb-4 border-b pb-2"><i class="fa-solid fa-list-check text-blue-500"></i> To-Do List</h2>
+                <div class="flex gap-2 mb-4">
+                    <input type="text" id="todoInput" class="w-full p-2 border rounded text-black outline-none" placeholder="Add task...">
+                    <button onclick="addTodo()" class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-600"><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <ul id="todoList" class="space-y-2 text-sm max-h-60 overflow-y-auto"></ul>
+            </div>
+
+            <!-- Quick Calculator -->
+            <div class="card p-4 rounded-lg shadow border transition-colors duration-300">
+                <h2 class="text-lg font-bold mb-4 border-b pb-2"><i class="fa-solid fa-calculator text-purple-500"></i> Calculator</h2>
+                <input type="text" id="calcDisplay" class="w-full p-2 border rounded mb-2 text-right text-lg font-semibold text-black bg-gray-100 outline-none" disabled placeholder="0">
+                <div class="grid grid-cols-4 gap-2">
+                    <button class="bg-gray-200 text-black p-2 rounded font-bold" onclick="calcInput('7')">7</button>
+                    <button class="bg-gray-200 text-black p-2 rounded font-bold" onclick="calcInput('8')">8</button>
+                    <button class="bg-gray-200 text-black p-2 rounded font-bold" onclick="calcInput('9')">9</button>
+                    <button class="bg-purple-500 text-white p-2 rounded font-bold" onclick="calcInput('/')">÷</button>
+                    <button class="bg-gray-200 text-black p-2 rounded font-bold" onclick="calcInput('4')">4</button>
+                    <button class="bg-gray-200 text-black p-2 rounded font-bold" onclick="calcInput('5')">5</button>
+                    <button class="bg-gray-200 text-black p-2 rounded font-bold" onclick="calcInput('6')">6</button>
+                    <button class="bg-purple-500 text-white p-2 rounded font-bold" onclick="calcInput('*')">×</button>
+                    <button class="bg-gray-200 text-black p-2 rounded font-bold" onclick="calcInput('1')">1</button>
+                    <button class="bg-gray-200 text-black p-2 rounded font-bold" onclick="calcInput('2')">2</button>
+                    <button class="bg-gray-200 text-black p-2 rounded font-bold" onclick="calcInput('3')">3</button>
+                    <button class="bg-purple-500 text-white p-2 rounded font-bold" onclick="calcInput('-')">-</button>
+                    <button class="bg-red-500 text-white p-2 rounded font-bold" onclick="calcClear()">C</button>
+                    <button class="bg-gray-200 text-black p-2 rounded font-bold" onclick="calcInput('0')">0</button>
+                    <button class="bg-green-500 text-white p-2 rounded font-bold" onclick="calcResult()">=</button>
+                    <button class="bg-purple-500 text-white p-2 rounded font-bold" onclick="calcInput('+')">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="md:col-span-3 space-y-6">
+            <div class="card p-6 rounded-lg shadow border transition-colors duration-300">
+                <h2 class="text-xl font-bold mb-4"><i class="fa-solid fa-folder-open text-green-500"></i> Welcome to Naims OS</h2>
+                <p class="text-gray-500 dark:text-gray-400">Your custom cloud dashboard is successfully integrated with Firebase and ready for deployment.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase & Custom Script Integration -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-analytics.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
+
+        // Your Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAh-w6kxP6h6i3K35yACd5Z-01W7u_MtAI",
+            authDomain: "naims-os.firebaseapp.com",
+            projectId: "naims-os",
+            storageBucket: "naims-os.firebasestorage.app",
+            messagingSenderId: "327101185480",
+            appId: "1:327101185480:web:3b2bee72ffb0cda4d094fd",
+            measurementId: "G-PXQJXZP1WP"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // Google Login / Logout Logic
+        const loginBtn = document.getElementById('loginBtn');
+        loginBtn.addEventListener('click', () => {
+            if(auth.currentUser) {
+                signOut(auth).then(() => alert("Logged out successfully!"));
+            } else {
+                signInWithPopup(auth, provider)
+                    .then((result) => alert("স্বাগতম, " + result.user.displayName + "!"))
+                    .catch((error) => alert("Login Error: " + error.message));
+            }
+        });
+
+        onAuthStateChanged(auth, (user) => {
+            if(user) {
+                loginBtn.innerHTML = `<i class="fa-solid fa-right-from-bracket"></i> Logout`;
+                loginBtn.classList.replace('bg-blue-600', 'bg-red-500');
+            } else {
+                loginBtn.innerHTML = `<i class="fa-brands fa-google"></i> Google Login`;
+                loginBtn.classList.replace('bg-red-500', 'bg-blue-600');
+            }
+        });
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            if(document.body.getAttribute('data-theme') === 'dark') {
+                document.body.removeAttribute('data-theme');
+                themeToggle.textContent = '🌙';
+            } else {
+                document.body.setAttribute('data-theme', 'dark');
+                themeToggle.textContent = '☀️';
+            }
+        });
+        document.body.setAttribute('data-theme', 'dark');
+
+        // Calculator Logic
+        window.calcInput = (val) => document.getElementById('calcDisplay').value += val;
+        window.calcClear = () => document.getElementById('calcDisplay').value = '';
+        window.calcResult = () => {
+            try {
+                document.getElementById('calcDisplay').value = eval(document.getElementById('calcDisplay').value);
+            } catch(e) {
+                document.getElementById('calcDisplay').value = 'Error';
+            }
+        };
+
+        // To-Do List Logic
+        window.addTodo = () => {
+            const val = document.getElementById('todoInput').value;
+            if(!val) return;
+            const li = document.createElement('li');
+            li.className = "flex justify-between items-center p-2 bg-gray-100 dark:bg-gray-700 rounded text-black dark:text-white";
+            li.innerHTML = `<span>${val}</span> <button onclick="this.parentElement.remove()" class="text-red-500"><i class="fa-solid fa-trash"></i></button>`;
+            document.getElementById('todoList').prepend(li);
+            document.getElementById('todoInput').value = '';
+        };
+    </script>
+</body>
+</html>
