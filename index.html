@@ -696,7 +696,7 @@
   <div class="modal-overlay" id="checkin-modal">
     <div class="modal-content" style="text-align:center;">
       <h2 style="font-size:1.4rem; color:var(--warning); margin-bottom:10px;">⏱️ ৪ ঘণ্টা পার হয়ে গেছে!</h2>
-      <p style="color:var(--text-muted); margin-bottom:20px;">গত ৪ ঘণ্টায় আপনি কী কী কাজ করেছেন? আপডেট দিন。</p>
+      <p style="color:var(--text-muted); margin-bottom:20px;">গত ৪ ঘণ্টায় আপনি কী কী কাজ করেছেন? আপডেট দিন!</p>
       <textarea id="checkin-text" rows="3" placeholder="যেমন: ক্লায়েন্টের ভিডিও এডিট করলাম..." style="width:100%; background:var(--bg); color:var(--text); padding:10px; border:1px solid var(--border); border-radius:6px;"></textarea>
       <div style="display:flex; gap:10px; margin-top:15px;">
         <button class="btn" style="flex:1;" onclick="saveCheckin(document.getElementById('checkin-text').value)">লগ সেভ করুন</button>
@@ -725,7 +725,6 @@
       <button class="btn" style="background: #ea4335; font-size: 1.1rem; padding: 12px 25px; box-shadow: 0 5px 15px rgba(234, 67, 53, 0.3); border-radius: 30px; width: 100%;" onclick="window.loginWithGoogle()">
         🌐 Google দিয়ে Login করুন
       </button>
-      <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 25px;">(Vercel-এ হোস্ট করার আগে ফাইলে আপনার Firebase Config বসিয়ে নিন)</p>
     </div>
   </div>
 
@@ -737,14 +736,15 @@
 
     const envConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
     
-    // ⚠️ Vercel-এ লাইভ করার জন্য এই কনফিগটি আপনার নিজস্ব Firebase প্রজেক্টের তথ্য দিয়ে রিপ্লেস করুন:
+    // Naim's Firebase Config
     const userConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_AUTH_DOMAIN",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_STORAGE_BUCKET",
-      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-      appId: "YOUR_APP_ID"
+      apiKey: "AIzaSyAh-w6kxP6h6i3K35yACd5Z-01W7u_MtAI",
+      authDomain: "naims-os.firebaseapp.com",
+      projectId: "naims-os",
+      storageBucket: "naims-os.firebasestorage.app",
+      messagingSenderId: "327101185480",
+      appId: "1:327101185480:web:3b2bee72ffb0cda4d094fd",
+      measurementId: "G-PXQJXZP1WP"
     };
 
     const firebaseConfig = envConfig || userConfig;
@@ -1603,7 +1603,7 @@
               <span class="chip ${p.checklist.footage ? 'active':''}" onclick="toggleCheck(${p.id}, 'footage')">✓ Footage</span>
             </div>
             <div style="display:flex; gap:10px;">
-              <button class="btn btn-small" onclick="openProjectTimer(${p.id}, '${p.title}', ${p.price}, ${p.timeSpent})" style="flex:1;">⏱ টাইমার শুরু</button>
+              <button class="btn btn-small" onclick="openProjectTimer(${p.id}, '${p.title}', ${p.price},${p.timeSpent})" style="flex:1;">⏱ টাইমার শুরু</button>
               <button class="btn btn-small" style="background:var(--success); flex:1;" onclick="completeProject(${p.id})">✅ কমপ্লিট</button>
             </div>
             ` : `<div style="font-size:0.8rem; color:var(--success);">শেষ হয়েছে: ${p.completedAt}</div>`}
