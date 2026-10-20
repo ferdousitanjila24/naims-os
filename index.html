@@ -311,16 +311,26 @@ input::placeholder,textarea::placeholder{color:var(--dim)}
 .dash-live .dl-sub{font-size:.74rem;color:var(--muted);margin-top:3px}
 .dash-live .dl-sub b{color:var(--text)}
 .dash-live .dl-prog{flex:0 0 220px;max-width:100%}
+.dash-live .dl-actions{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .dash-live .dl-bar{height:8px;border-radius:8px;background:rgba(120,140,255,.16);overflow:hidden}
 .dash-live .dl-bar i{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg,#6366f1,#22d3ee,#34d399);box-shadow:0 0 12px rgba(34,211,238,.5);transition:width .4s linear}
 .dash-live .dl-bar.over i{background:linear-gradient(90deg,#b91c1c,#ef4444);box-shadow:0 0 14px rgba(239,68,68,.8);animation:redpulse 1.4s infinite}
 .dash-live .dl-pct{font-size:.72rem;color:var(--muted);margin-top:6px}
 .dash-live.over .dl-time{color:#f87171;text-shadow:0 0 22px rgba(239,68,68,.55)}
 .dash-live .over-txt{color:var(--bad);font-weight:700}
-@media(max-width:700px){.dash-live .dl-time{font-size:1.6rem}.dash-live .dl-prog{flex:1 1 100%}}
+@media(max-width:700px){.dash-live .dl-time{font-size:1.6rem}.dash-live .dl-prog{flex:1 1 100%}.dash-live .dl-actions{flex:1 1 100%}}
 
 .proj .meta{display:flex;gap:12px;flex-wrap:wrap;font-size:.78rem;color:var(--muted)}
 .proj .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+/* ডেলিভারি চেকলিস্ট — ভিডিও এডিটরদের জন্য */
+.deliv{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.deliv button{font-size:.7rem;font-weight:600;padding:4px 9px;border-radius:20px;border:1px solid var(--border);background:rgba(120,140,255,.06);color:var(--muted);cursor:pointer;transition:.18s;font-family:inherit}
+.deliv button:hover{border-color:var(--border2);color:var(--text)}
+.deliv button.on{border-color:rgba(16,185,129,.5);background:rgba(16,185,129,.14);color:#6ee7b7}
+/* টাইমার প্রিসেট */
+.t-presets{display:flex;gap:5px;justify-content:center;margin-top:8px}
+.t-presets button{font-size:.66rem;padding:3px 8px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-family:inherit}
+.t-presets button:hover{border-color:var(--c2);color:var(--c2)}
 .empty{text-align:center;padding:34px 14px;color:var(--dim);font-size:.88rem}
 .empty .big{font-size:2.4rem;margin-bottom:8px;opacity:.6}
 
@@ -421,7 +431,17 @@ input::placeholder,textarea::placeholder{color:var(--dim)}
 @keyframes flash{0%,100%{background:transparent}30%{background:rgba(99,102,241,.18)}}
 @media print{
   .sidebar,.topbar,.marquee,.timer,#toasts,.page:not(.active),.no-print{display:none!important}
-  body{background:#fff;color:#000}.card{border:1px solid #ccc;box-shadow:none;background:#fff}
+  body{background:#fff!important;color:#000!important}
+  .card{border:1px solid #ccc;box-shadow:none;background:#fff}
+  /* ইনভয়েস প্রিন্ট / PDF — শুধু ইনভয়েসটা পরিষ্কারভাবে প্রিন্ট হবে */
+  body > *:not(#m-invoice){display:none!important}
+  #m-invoice.on{display:block!important;position:static!important;inset:auto!important;background:#fff!important;padding:0!important;backdrop-filter:none!important}
+  #m-invoice .modal{max-width:100%!important;width:100%!important;border:0!important;box-shadow:none!important;background:#fff!important;color:#000!important;padding:0!important}
+  #m-invoice .modal .grad-text{background:none!important;-webkit-text-fill-color:#000!important;color:#000!important}
+  #m-invoice .modal *{color:#111!important;border-color:#bbb!important}
+  #m-invoice .modal .hint,#m-invoice .modal small{color:#555!important}
+  #m-invoice .modal .pill{background:#fff!important;border:1px solid #999!important;color:#000!important}
+  #m-invoice .modal .no-print{display:none!important}
 }
 </style>
 </head>
@@ -609,8 +629,9 @@ input::placeholder,textarea::placeholder{color:var(--dim)}
             <input id="p-client" placeholder="ক্লায়েন্টের নাম">
             <div class="grid" style="grid-template-columns:1fr 1fr;gap:10px">
               <div><label>মোট মূল্য (৳) *</label><input type="number" id="p-price" placeholder="15000"></div>
-              <div><label>বকেয়া (৳)</label><input type="number" id="p-due" placeholder="5000"></div>
+              <div><label>বকেয়া (৳)</label><input type="number" id="p-due" placeholder="খালি = পুরো টাকা বাকি"></div>
             </div>
+            <div class="hint" style="margin-top:-2px">💡 বকেয়া খালি রাখলে পুরো মূল্য বাকি ধরা হবে (আয় হিসেবে ধরা হবে না)। টাকা পেলে <b>💵 পেমেন্ট</b> বাটন দিয়ে যোগ করুন।</div>
             <label>⏳ আগে থেকে সময়ের অনুমান (ঘণ্টা) — এস্টিমেট</label>
             <div class="grid" style="grid-template-columns:1fr 1fr;gap:10px">
               <input type="number" id="p-est-hours" placeholder="যেমন: 8">
@@ -945,7 +966,7 @@ input::placeholder,textarea::placeholder{color:var(--dim)}
             <div class="grid" style="grid-template-columns:1fr 1fr;gap:10px">
               <div><label>ধরন</label>
                 <select id="g-type" onchange="updateGoalPreview()">
-                  <option value="income">💵 আয় (৳)</option>
+                  <option value="income">💵 আয় (কাজ+নগদ)</option>
                   <option value="projects">📂 প্রজেক্ট সংখ্যা</option>
                   <option value="hours">⏱️ কাজের ঘণ্টা</option>
                 </select>
@@ -1006,7 +1027,7 @@ input::placeholder,textarea::placeholder{color:var(--dim)}
           <h3 style="font-size:1.35rem;margin-bottom:10px">আজকের রেজাল্ট</h3>
           <p class="hint">আজকের টার্গেট: <b class="grad-text" style="font-size:1.05rem">৳<span id="rw-target-display">0</span></b></p>
           <div class="row" style="justify-content:center;margin:18px 0">
-            <div class="stat-mini" style="min-width:150px"><b style="color:var(--ok)">৳<span id="rw-today-earned">0</span></b><small>আজকের আয়</small></div>
+            <div class="stat-mini" style="min-width:150px"><b style="color:var(--ok)">৳<span id="rw-today-earned">0</span></b><small>আজকের অর্জন (কাজ+নগদ)</small></div>
             <div class="stat-mini" style="min-width:150px"><b style="color:var(--c2)"><span id="rw-today-hours">০</span> ঘ</b><small>আজকের কাজ</small></div>
           </div>
           <button class="btn" style="padding:12px 32px" onclick="checkDailyStatus()">🎯 রেজাল্ট দেখুন</button>
@@ -1130,6 +1151,12 @@ input::placeholder,textarea::placeholder{color:var(--dim)}
   <div id="t-name" style="text-align:center;font-size:.86rem;color:var(--c1);font-weight:600;margin-bottom:6px">প্রজেক্ট</div>
   <div class="tt" id="t-time">25:00</div>
   <div class="tp"><i id="t-prog" style="width:100%"></i></div>
+  <div class="t-presets">
+    <button onclick="setTimerPreset(15)">১৫ মি</button>
+    <button onclick="setTimerPreset(25)">২৫ মি</button>
+    <button onclick="setTimerPreset(50)">৫০ মি</button>
+    <button onclick="setTimerPreset(90)">৯০ মি</button>
+  </div>
   <div class="estwrap" style="margin-top:10px"><span>🎯 এস্টিমেট প্রোগ্রেস (লাইভ)</span><span id="t-est-pct">—</span></div>
   <div class="tp" id="t-estbar" style="margin:7px 0 10px"><i id="t-estfill" style="width:0%"></i></div>
   <div class="hint" style="text-align:center;margin-bottom:8px">⏰ সব প্রজেক্টে মোট ওভারটাইম: <b id="t-ot" style="color:var(--bad)">—</b></div>
@@ -1363,6 +1390,7 @@ const DEFAULT_STATE = {
   sessions: [],                       // সব কাজের সময়-লগ (analytics + est vs actual)
   payments: [],                       // আলাদা পেমেন্ট রেকর্ড (পুরনো ডেটার জন্য ভেতরেও থাকে)
   lastCheckin: 0,
+  lastCheckinPrompt: 0,
   target: 50000, dailyTarget: 1500, weeklyHours: 40,
   profileImage: '', theme: 'dark',
   rewards: { gift: '', penalty: '' },
@@ -1383,7 +1411,10 @@ const qsa = (s, r) => Array.from((r || document).querySelectorAll(s));
 const near = (n) => Math.round(n);
 
 function uid() { return Date.now() + Math.floor(Math.random() * 900) ; }
+function projById(id) { return (state.projects || []).find(x => String(x.id) === String(id)); }
 function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+/* inline onclick-এ নিরাপদে স্ট্রিং পাস করার জন্য */
+function jsArg(v) { return esc(JSON.stringify(String(v == null ? '' : v))); }
 function num(v) { const n = parseFloat(v); return isFinite(n) ? n : 0; }
 function CUR() { return state.settings.currency || '৳'; }
 function money(n) { return CUR() + near(num(n)).toLocaleString('en-US'); }
@@ -1555,7 +1586,9 @@ function speakFx(text) {
 function sound(kind) {
   const mode = soundMode();
   if (mode === 'off') return;
-  if (mode === 'beep' || mode === 'both') { if (!playCustom(kind)) beep(kind); }
+  // কাস্টম সাউন্ড থাকলে ভয়েস মোডেও বাজবে; না থাকলে মোড অনুযায়ী বিপ/ভয়েস
+  const custom = playCustom(kind);
+  if (!custom && (mode === 'beep' || mode === 'both')) beep(kind);
   if (mode === 'voice' || mode === 'both') speakFx(FX_VOICE[kind]);
 }
 function speak(text) {
@@ -1602,7 +1635,7 @@ function toast(msg, type) {
   const t = document.createElement('div');
   t.className = 'toast ' + (type || '');
   const icon = type === 'err' ? '⛔' : type === 'warn' ? '⚠️' : '✅';
-  t.innerHTML = icon + ' ' + msg;
+  t.innerHTML = icon + ' ' + esc(msg);
   c.appendChild(t);
   setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateY(10px)'; t.style.transition = '.3s'; setTimeout(() => t.remove(), 320); }, 3200);
 }
@@ -1679,6 +1712,8 @@ function normalize(s) {
   out.settings.soundMode = (s.settings && s.settings.soundMode)
     ? s.settings.soundMode
     : ((s.settings && s.settings.sound === false) ? 'off' : 'voice');
+  out.settings.workMin = Math.max(1, Math.min(240, num(out.settings.workMin) || 25));
+  out.settings.breakMin = Math.max(1, Math.min(120, num(out.settings.breakMin) || 5));
   out.rewards = Object.assign({}, d.rewards, s.rewards || {});
   out.ui = Object.assign({}, d.ui, s.ui || {});
   ['projects', 'expenses', 'loans', 'todos', 'logs', 'skills', 'sessions', 'payments', 'goals', 'incomes'].forEach(k => { if (!Array.isArray(out[k])) out[k] = []; });
@@ -1686,6 +1721,8 @@ function normalize(s) {
     { id: uid(), date: todayKey(), text: '', money: 0, time: 0, done: false, prio: 'medium' },
     t, { date: isoDay(t.date), text: String(t.text == null ? '' : t.text), money: num(t.money), time: num(t.time), done: !!t.done }
   ));
+  out.logs = out.logs.filter(l => l && typeof l === 'object').map(l => ({ date: isoDay(l.date), time: String(l.time || ''), text: String(l.text || '') }));
+  out.payments = out.payments.filter(x => x && typeof x === 'object');
   if (!out.motivations || typeof out.motivations !== 'object' || Array.isArray(out.motivations)) out.motivations = {};
   out.goals = out.goals.filter(g => g && typeof g === 'object').map(g => Object.assign({
     id: uid(), title: 'আমার গোল', type: 'income', target: 0,
@@ -1695,7 +1732,7 @@ function normalize(s) {
   if (!out.notes && s.planningNotes) out.notes = s.planningNotes;
   if (!out.lastCheckin && s.lastCheckinTime) out.lastCheckin = s.lastCheckinTime;
 
-  out.projects = out.projects.map(p => {
+  out.projects = out.projects.filter(p => p && typeof p === 'object').map(p => {
     const q = Object.assign({
       id: uid(), title: 'প্রজেক্ট', client: 'ক্লায়েন্ট', price: 0, due: 0,
       estHours: 0, estCost: 0, deadline: '', priority: 'medium', status: 'active',
@@ -1703,8 +1740,15 @@ function normalize(s) {
       createdAt: new Date().toISOString(), completedAt: null, startedAt: null,
       notes: '', payments: [], timeSpent: 0
     }, p);
+    q.id = (q.id == null || q.id === '') ? uid() : q.id;
+    q.title = String(q.title || 'প্রজেক্ট');
+    q.client = String(q.client || 'ক্লায়েন্ট');
+    q.price = Math.max(0, num(q.price));
+    q.due = Math.min(q.price, Math.max(0, num(q.due)));
+    q.estHours = Math.max(0, num(q.estHours));
+    q.estCost = Math.max(0, num(q.estCost));
     q.checklist = Object.assign({ vo: false, footage: false, revision: false }, p.checklist || {});
-    q.payments = Array.isArray(p.payments) ? p.payments : [];
+    q.payments = (Array.isArray(p.payments) ? p.payments : []).filter(x => x && typeof x === 'object');
     if (p.completed === true && q.status !== 'done') { q.status = 'done'; q.completedAt = q.completedAt || p.completedAt || null; }
     if (q.status === 'done' && !q.completedAt) q.completedAt = p.completedAt || q.createdAt;
     if (!num(q.estHours) && p.estTime) q.estHours = parseEstText(p.estTime);   // পুরনো "২ দিন / ৮ ঘণ্টা" টেক্সট থেকে এস্টিমেট
@@ -1715,14 +1759,21 @@ function normalize(s) {
     return q;
   });
 
-  out.expenses = out.expenses.map(e => Object.assign({ id: uid(), desc: 'খরচ', amount: 0, type: 'other', date: todayKey() }, e, { date: isoDay(e.date) }));
-  out.incomes = out.incomes.map(x => Object.assign({ id: uid(), desc: 'কাস্টম আয়', amount: 0, date: todayKey() }, x, { date: isoDay(x.date) }));
-  out.loans = out.loans.map(l => Object.assign({ id: uid(), desc: 'ঋণ', amount: 0, paid: 0, history: [], date: todayKey() }, l));
+  out.expenses = out.expenses.filter(e => e && typeof e === 'object').map(e => Object.assign({ id: uid(), desc: 'খরচ', amount: 0, type: 'other', date: todayKey() }, e, { date: isoDay(e.date) }));
+  out.incomes = out.incomes.filter(x => x && typeof x === 'object').map(x => Object.assign({ id: uid(), desc: 'কাস্টম আয়', amount: 0, date: todayKey() }, x, { date: isoDay(x.date) }));
+  out.loans = out.loans.filter(l => l && typeof l === 'object').map(l => Object.assign({ id: uid(), desc: 'ঋণ', amount: 0, paid: 0, history: [], date: todayKey() }, l));
   out.loans.forEach(l => { if (!Array.isArray(l.history)) l.history = []; if (!l.date) l.date = todayKey(); if (num(l.paid) < 0) l.paid = 0; });
   out.todos = out.todos.map(t => Object.assign({ id: uid(), date: todayKey(), text: '', money: 0, time: 0, done: false }, t, { date: isoDay(t.date) }));
-  out.sessions = out.sessions.filter(x => x && num(x.sec) > 0).map(x => Object.assign({ id: uid(), kind: 'work' }, x, { sec: num(x.sec) }));
-  out.skills = out.skills.map(x => Object.assign({ id: uid(), name: '', status: 'learning' }, x));
-  out.ideas = out.ideas.map(x => Object.assign({ id: uid(), name: '', status: 'thinking' }, x));
+  out.sessions = out.sessions.filter(x => x && num(x.sec) > 0 && x.kind !== 'break').map(x => Object.assign({ id: uid(), kind: 'work' }, x, { sec: num(x.sec) }));
+  // পুরনো ভার্সনে শুধু timeSpent ছিল, সেশন লগ ছিল না — সেটিকে সেশনে রূপান্তর করি
+  out.projects.forEach(p => {
+    if (num(p.timeSpent) > 0 && !out.sessions.some(s => String(s.projectId) === String(p.id))) {
+      const when = p.completedAt || p.createdAt || new Date().toISOString();
+      out.sessions.push({ id: String(uid()), projectId: p.id, title: p.title || 'পুরনো কাজ', start: when, end: when, sec: num(p.timeSpent), kind: 'imported' });
+    }
+  });
+  out.skills = out.skills.filter(x => x && typeof x === 'object').map(x => Object.assign({ id: uid(), name: '', status: 'learning' }, x));
+  out.ideas = out.ideas.filter(x => x && typeof x === 'object').map(x => Object.assign({ id: uid(), name: '', status: 'thinking' }, x));
   return out;
 }
 function isoDay(v) {
@@ -1892,6 +1943,17 @@ document.addEventListener('keydown', (e) => {
   if (typing) return;
   if (/^[1-9]$/.test(e.key)) { switchPage(Object.keys(PAGES)[+e.key - 1]); sound('click'); }
   if (e.key.toLowerCase() === 't') { e.preventDefault(); startTimerForNext(); }
+  if (e.key === '/') { e.preventDefault(); openPalette(); return; }
+  if (e.key.toLowerCase() === 'n') {
+    e.preventDefault(); switchPage('workspace');
+    setTimeout(() => { const x = el('p-title'); if (x) { x.focus(); x.scrollIntoView({ behavior: 'smooth', block: 'center' }); } }, 220);
+    return;
+  }
+  if (e.code === 'Space') {
+    e.preventDefault();
+    if (activeProjId != null) toggleTimer();
+    else startTimerForNext();
+  }
 });
 
 /* ---------------------------- charts (pure SVG) ---------------------------- */
@@ -2049,7 +2111,7 @@ function incomeEntries() {
       p.payments.forEach(x => out.push({ projectId: p.id, client: p.client, title: p.title, amount: num(x.amount), date: isoDay(x.date), note: x.note || '' }));
     } else {
       const fb = Math.max(0, num(p.price) - num(p.due));
-      if (fb > 0) out.push({ projectId: p.id, client: p.client, title: p.title, amount: fb, date: isoDay(p.completedAt || p.createdAt), note: 'শুরুর পেমেন্ট' });
+      if (fb > 0) out.push({ projectId: p.id, client: p.client, title: p.title, amount: fb, date: isoDay(p.completedAt || p.createdAt), note: 'শুরুর পেমেন্ট', assumed: true });
     }
   });
   (state.incomes || []).forEach(x => out.push({ manual: true, projectId: null, client: 'কাস্টম', title: '💰 ' + (x.desc || 'কাস্টম আয়'), amount: num(x.amount), date: isoDay(x.date), note: x.note || '' }));
@@ -2059,8 +2121,24 @@ function receivedOf(p) {
   if (p.payments && p.payments.length) return p.payments.reduce((s, x) => s + num(x.amount), 0);
   return Math.max(0, num(p.price) - num(p.due));
 }
-function sessionsOf(id) { return state.sessions.filter(s => s.projectId === id); }
-function actualSec(p) { const s = sessionsOf(p.id).reduce((a, x) => a + num(x.sec), 0); return s > 0 ? s : num(p.timeSpent); }
+function sessionsOf(id) { return state.sessions.filter(s => String(s.projectId) === String(id)); }
+function actualSec(p) { const s = sessionsOf(p.id).filter(x => x.kind !== 'break').reduce((a, x) => a + num(x.sec), 0); return s > 0 ? s : num(p.timeSpent); }
+/* টার্গেট অর্জন = ওই সময়ে শেষ হওয়া কাজের মূল্য + অন্য নগদ আয়।
+   একই প্রজেক্টের পেমেন্ট আলাদা করে যোগ হয় না — কাজ শেষ হলেই তার মূল্য ধরা হয়,
+   তাই পেমেন্ট বাকি থাকলেও টার্গেট পূরণ দেখায়। */
+function targetCredit(from, to) {
+  const f = isoDay(from), t = isoDay(to);
+  const doneIn = state.projects.filter(p => p.status === 'done' && p.completedAt && isoDay(p.completedAt) >= f && isoDay(p.completedAt) <= t);
+  const ids = {};
+  doneIn.forEach(p => { ids[String(p.id)] = 1; });
+  const work = doneIn.reduce((s, p) => s + num(p.price), 0);
+  const due = doneIn.reduce((s, p) => s + num(p.due), 0);
+  const allIn = incomeEntries().filter(x => x.date >= f && x.date <= t);
+  const cashAll = allIn.reduce((s, x) => s + num(x.amount), 0);
+  const cashActual = allIn.filter(x => !x.assumed).reduce((s, x) => s + num(x.amount), 0);
+  const cash = allIn.filter(x => !(x.projectId != null && ids[String(x.projectId)])).reduce((s, x) => s + num(x.amount), 0);
+  return { work: work, due: due, cash: cash, cashAll: cashAll, cashActual: cashActual, assumed: Math.max(0, cashAll - cashActual), total: work + cash, projects: doneIn.length };
+}
 /* লাইভ এস্টিমেট প্রোগ্রেস — টাইমার চলার সময় প্রতি সেকেন্ডে আপডেট হয় */
 function estTxt(h) {
   h = num(h);
@@ -2068,7 +2146,7 @@ function estTxt(h) {
   if (h >= 1) return (Math.round(h * 10) / 10) + 'ঘ';
   return Math.round(h * 60) + 'মিনিট';
 }
-function liveSec(p) { return actualSec(p) + ((tRun && activeProjId === p.id) ? tWorked : 0); }
+function liveSec(p) { return actualSec(p) + ((tRun && activeProjId != null && String(activeProjId) === String(p.id)) ? tWorked : 0); }
 /* ---------- এস্টিমেটের বাইরে কত সময় (ওভারটাইম) ---------- */
 function overSec(p) { const est = num(p.estHours) * 3600; return est > 0 ? Math.max(0, liveSec(p) - est) : 0; }
 function overtimeInfo() {
@@ -2086,7 +2164,7 @@ function overtimeInfo() {
     totalEst += est; totalAct += act;
     const over = Math.max(0, act - est);
     if (over > 0) { total += over; rows.push({ p: p, est: est, act: act, over: over }); }
-    saved += Math.max(0, est - act);
+    if (act > 0) saved += Math.max(0, est - act);
   });
   rows.sort((a, b) => b.over - a.over);
   return { rows: rows, total: total, saved: saved, count: rows.length, withEst: withEst, totalEst: totalEst, totalAct: totalAct };
@@ -2138,7 +2216,47 @@ function updateLiveBars() {
 function updateDashLive() {
   const box = el('dash-live'); if (!box) return;
   const p = activeProjId != null ? state.projects.find(x => String(x.id) === String(activeProjId)) : null;
-  if (!p) { box.style.display = 'none'; box.innerHTML = ''; return; }
+  if (!p) {
+    const focusActive = tRun || tWorked > 0 || tLeft < tTotal;
+    if (focusActive) {
+      const focusSec = Math.max(0, tTotal - tLeft);
+      const today = todaySec() + (tRun && tPhase === 'work' ? tWorked : 0);
+      box.style.display = 'block';
+      box.classList.toggle('running', tRun);
+      box.classList.remove('over');
+      box.innerHTML =
+        '<div class="dl-top">' +
+          '<span class="dl-dot"></span>' +
+          '<div class="dl-main">' +
+            '<div class="dl-proj">' + (tPhase === 'break' ? '☕ ব্রেক চলছে' : tRun ? '🔴 ফোকাস চলছে' : '⏸️ ফোকাস পজ') + ' — প্রজেক্ট ছাড়া</div>' +
+            '<div class="dl-time">' + clockStr(focusSec) + '<small> চলতি সেশন</small></div>' +
+            '<div class="dl-sub">সেশন বাকি <b>' + clockStr(tLeft) + '</b> • আজ মোট <b>' + clockStr(today) + '</b></div>' +
+          '</div>' +
+          '<div class="dl-actions">' +
+            (tRun ? '<button class="btn sm warn" onclick="pauseInline()">⏸️ পজ</button>' : '<button class="btn sm ok" onclick="resumeInline()">▶️ চালান</button>') +
+            '<button class="btn sm ghost" onclick="showTimerWidget()" title="টাইমার উইজেট খুলুন">🖥️</button>' +
+            '<button class="btn sm bad" onclick="endInline()" title="সেশন শেষ করে সেভ করুন">⏹️ শেষ</button>' +
+          '</div>' +
+        '</div>';
+      return;
+    }
+    const has = state.projects.some(x => x.status !== 'done');
+    box.style.display = 'block';
+    box.classList.remove('running', 'over');
+    box.innerHTML =
+      '<div class="dl-top">' +
+        '<span class="dl-dot"></span>' +
+        '<div class="dl-main">' +
+          '<div class="dl-proj">⏱️ টাইমার কন্ট্রোল</div>' +
+          '<div class="dl-time" style="font-size:1.25rem;letter-spacing:0">কোনো কাজ চলছে না</div>' +
+          '<div class="dl-sub">' + (has ? 'ড্যাশবোর্ড থেকেই কাজ শুরু করুন — পজ/রিজিউমও এখান থেকে হবে' : 'প্রজেক্ট ছাড়াও ফোকাস সেশন শুরু করতে পারেন, অথবা আগে একটি প্রজেক্ট যোগ করুন') + '</div>' +
+        '</div>' +
+        '<div class="dl-actions">' +
+          (has ? '<button class="btn sm ok" onclick="startTimerForNext()">▶️ কাজ শুরু</button>' : '<button class="btn sm ok" onclick="toggleTimer()">🧘 ফোকাস</button><button class="btn sm" onclick="switchPage(\'workspace\')">➕ প্রজেক্ট</button>') +
+        '</div>' +
+      '</div>';
+    return;
+  }
   const liveSec = actualSec(p) + (tRun ? tWorked : 0);
   const est = num(p.estHours) * 3600;
   const pr = est > 0 ? Math.min(100, pct(liveSec, est)) : 0;
@@ -2151,9 +2269,14 @@ function updateDashLive() {
     '<div class="dl-top">' +
       '<span class="dl-dot"></span>' +
       '<div class="dl-main">' +
-        '<div class="dl-proj">' + (tPhase === 'break' ? '☕ ব্রেক চলছে' : tRun ? '🔴 ফোকাস চলছে' : '⏸️ টাইমার পজ') + ' — ' + esc(p.title) + '</div>' +
+        '<div class="dl-proj">' + (tPhase === 'break' ? '☕ ব্রেক চলছে' : tRun ? '🔴 কাজ চলছে' : '⏸️ টাইমার পজ') + ' — ' + esc(p.title) + '</div>' +
         '<div class="dl-time">' + clockStr(liveSec) + '<small> প্রজেক্ট টাইম</small></div>' +
         '<div class="dl-sub">' + (tPhase === 'break' ? 'ব্রেক বাকি' : 'সেশন বাকি') + ' <b>' + clockStr(tLeft) + '</b> • আজ মোট <b>' + clockStr(today) + '</b> • চলতি সেশন <b>' + clockStr(tWorked) + '</b></div>' +
+      '</div>' +
+      '<div class="dl-actions">' +
+        (tRun ? '<button class="btn sm warn" onclick="pauseInline()">⏸️ পজ</button>' : '<button class="btn sm ok" onclick="resumeInline()">▶️ চালান</button>') +
+        '<button class="btn sm ghost" onclick="showTimerWidget()" title="টাইমার উইজেট খুলুন">🖥️</button>' +
+        '<button class="btn sm bad" onclick="endInline()" title="সেশন শেষ করে সেভ করুন">⏹️ শেষ</button>' +
       '</div>' +
       '<div class="dl-prog">' +
         '<div class="dl-bar' + (over ? ' over' : '') + '"><i style="width:' + pr + '%"></i></div>' +
@@ -2163,7 +2286,8 @@ function updateDashLive() {
       '</div>' +
     '</div>';
 }
-function isOverdue(p) { return p.status !== 'done' && p.deadline && daysBetween(todayKey(), p.deadline) < 0; }function daysLeft(p) { return p.deadline ? daysBetween(todayKey(), p.deadline) : null; }
+function isOverdue(p) { return p.status !== 'done' && p.deadline && daysBetween(todayKey(), p.deadline) < 0; }
+function daysLeft(p) { return p.deadline ? daysBetween(todayKey(), p.deadline) : null; }
 function totals() {
   const inc = incomeEntries();
   const earned = inc.reduce((s, x) => s + x.amount, 0);
@@ -2235,14 +2359,16 @@ function renderAll() {
 /* ---------------------------- dashboard ---------------------------- */
 function renderDashboard() {
   const t = totals();
-  const todayInc = incomeEntries().filter(x => x.date === todayKey()).reduce((s, x) => s + x.amount, 0);
-  const mInc = incomeEntries().filter(x => x.date.slice(0, 7) === todayKey().slice(0, 7)).reduce((s, x) => s + x.amount, 0);
+  const todayCredit = targetCredit(todayKey(), todayKey());
+  const todayInc = todayCredit.total;
+  const monthStart = todayKey().slice(0, 7) + '-01';
+  const mCredit = targetCredit(monthStart, todayKey());
   const tsec = todaySec();
   const msec = monthSec(), wsec = weekSec();
 
   const setTxt = (id, v) => { const e = el(id); if (e) e.textContent = v; };
   setTxt('k-earned', money(t.earned));
-  setTxt('k-earned-sub', 'এই মাসে ' + money(mInc) + ' • পাইপলাইনে ' + money(t.pipeline));
+  setTxt('k-earned-sub', 'এই মাসে নগদ ' + money(mCredit.cashActual) + ' • পাইপলাইনে ' + money(t.pipeline));
   setTxt('k-due', money(t.due));
   setTxt('k-due-sub', state.projects.filter(p => num(p.due) > 0).length + 'টি প্রজেক্টে বাকি');
   setTxt('k-hours', fmtDur(tsec));
@@ -2274,11 +2400,11 @@ function renderDashboard() {
     const r = el(id); if (r) r.style.setProperty('--p', Math.min(100, near(p)));
     const v = el(valId); if (v) v.textContent = near(p) + '%';
   };
-  ring('ring-month', 'ring-month-val', pct(mInc, state.target));
+  ring('ring-month', 'ring-month-val', pct(mCredit.total, state.target));
   ring('ring-week', 'ring-week-val', pct(wsec, num(state.weeklyHours) * 3600));
   ring('ring-day', 'ring-day-val', pct(todayInc, state.dailyTarget));
-  setTxt('goal-month', 'টার্গেট ' + money(state.target) + ' • বাকি ' + money(Math.max(0, state.target - mInc)));
-  renderTargetPlan(mInc);
+  setTxt('goal-month', 'টার্গেট ' + money(state.target) + ' • বাকি ' + money(Math.max(0, state.target - mCredit.total)));
+  renderTargetPlan();
   updateDashLive();
   setTxt('st-streak', String(streakDays()));
   setTxt('st-done', String(t.doneCount));
@@ -2291,7 +2417,7 @@ function renderDashboard() {
     uc.innerHTML = urg.length ? urg.map(o => {
       const cls = o.d < 0 ? 'p-bad' : o.d <= 2 ? 'p-mid' : 'p-ok';
       const txt = o.d < 0 ? Math.abs(o.d) + ' দিন পার 😱' : o.d === 0 ? 'আজই ডেডলাইন!' : o.d + ' দিন বাকি';
-      return '<div class="list-item"><div class="g"><div class="todo-title"><b>' + esc(o.p.title) + '</b></div><div class="hint">👤 ' + esc(o.p.client) + ' • ' + money(o.p.price) + '</div></div><span class="pill ' + cls + '">' + txt + '</span><button class="btn sm" onclick="openProjectTimer(' + o.p.id + ')">▶️</button></div>';
+      return '<div class="list-item"><div class="g"><div class="todo-title"><b>' + esc(o.p.title) + '</b></div><div class="hint">👤 ' + esc(o.p.client) + ' • ' + money(o.p.price) + '</div></div><span class="pill ' + cls + '">' + txt + '</span><button class="btn sm" onclick="openProjectTimer(' + jsArg(o.p.id) + ')">▶️</button></div>';
     }).join('') : '<div class="empty"><div class="big">🧘</div>কোনো জরুরি ডেডলাইন নেই</div>';
   }
   // today's todos
@@ -2299,31 +2425,36 @@ function renderDashboard() {
   const tc = el('dash-todos');
   if (tc) {
     tc.innerHTML = td.length ? td.slice(0, 7).map(x =>
-      '<div class="list-item"><div class="cbx ' + (x.done ? 'on' : '') + '" onclick="toggleTodo(' + x.id + ')">' + (x.done ? '✓' : '') + '</div><div class="g"><div class="todo-title" style="' + (x.done ? 'text-decoration:line-through;color:var(--muted)' : '') + '">' + esc(x.text) + '</div><div class="hint">' + (x.money ? money(x.money) : '') + (x.time ? ' • ' + x.time + 'ঘ' : '') + '</div></div></div>'
-    ).join('') : '<div class="empty"><div class="big">🌤️</div>আজকের জন্য কিছু সেট করা নেই — ওয়ার্কস্পেসে যোগ করুন</div>';
+      '<div class="list-item"><div class="cbx ' + (x.done ? 'on' : '') + '" onclick="toggleTodo(' + jsArg(x.id) + ')">' + (x.done ? '✓' : '') + '</div><div class="g"><div class="todo-title" style="' + (x.done ? 'text-decoration:line-through;color:var(--muted)' : '') + '">' + esc(x.text) + '</div><div class="hint">' + (x.money ? money(x.money) : '') + (x.time ? ' • ' + x.time + 'ঘ' : '') + '</div></div></div>'
+    ).join('') : '<div class="empty"><div class="big">🌤️</div>আজকের জন্য কিছু সেট করা নেই — <button class="th-link" onclick="switchPage(\'planner\')">প্ল্যানারে যোগ করুন →</button></div>';
   }
 }
 
 /* ---------------------------- মাসিক টার্গেট প্ল্যান (লাইভ) ---------------------------- */
-function renderTargetPlan(mInc) {
+function renderTargetPlan() {
   const box = el('target-plan'); if (!box) return;
   const tgt = Math.max(0, num(state.target));
   const now = new Date();
   const dim = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
   const daysLeft = Math.max(1, dim - now.getDate() + 1);
-  const remaining = Math.max(0, tgt - num(mInc));
+  const monthStart = todayKey().slice(0, 7) + '-01';
+  const mCredit = targetCredit(monthStart, todayKey());
+  const todayCredit = targetCredit(todayKey(), todayKey());
+  const remaining = Math.max(0, tgt - mCredit.total);
   const perDay = remaining / daysLeft;
   const perWeek = perDay * 7;
-  const todayInc = incomeEntries().filter(x => x.date === todayKey()).reduce((s, x) => s + x.amount, 0);
   const doneMonth = tgt > 0 && remaining <= 0;
-  const doneToday = tgt > 0 && perDay > 0 && todayInc >= perDay;
-  const dayPct = doneMonth ? 100 : (perDay > 0 ? Math.min(100, pct(todayInc, perDay)) : 0);
+  // বড় সংখ্যাটা মাসিক গোলের জন্য আজকের প্রয়োজন; ছোট কার্ডটা ইউজারের ডেইলি টার্গেট
+  const dTarget = Math.max(0, num(state.dailyTarget));
+  const dailyBase = dTarget > 0 ? dTarget : perDay;
+  const doneToday = tgt > 0 && dailyBase > 0 && todayCredit.total >= dailyBase;
+  const dayPct = doneMonth ? 100 : (dailyBase > 0 ? Math.min(100, pct(todayCredit.total, dailyBase)) : 0);
 
   if (tgt <= 0) {
     box.innerHTML = '<div class="th-top"><div>' +
-      '<div class="th-lbl">🎯 মাসিক আয়ের টার্গেট</div>' +
+      '<div class="th-lbl">🎯 মাসিক অর্জনের টার্গেট</div>' +
       '<div class="th-val">৳ —</div>' +
-      '<div class="th-sub">টার্গেট দিন — গোল পূরণে <b>প্রতিদিন</b> ও <b>সাপ্তাহিক</b> কত আয় দরকার অটো হিসাব হবে</div></div>' +
+      '<div class="th-sub">টার্গেট দিন — গোল পূরণে <b>প্রতিদিন</b> ও <b>সাপ্তাহিক</b> কত অর্জন দরকার অটো হিসাব হবে</div></div>' +
       '<div class="row tight" style="align-items:center"><input type="number" id="dash-target-input" placeholder="যেমন 90000" style="width:160px"><button class="btn ok" onclick="saveDashTarget()">সেভ</button></div></div>' +
       '<div class="hint" style="margin-top:10px;position:relative;z-index:1">💡 ১ দিন থেকে ৩ বছর — কাস্টম গোলও সেট করতে পারবেন <button class="th-link" onclick="switchPage(\'rewards\')">গোল পেজ →</button></div>';
     return;
@@ -2332,20 +2463,35 @@ function renderTargetPlan(mInc) {
   box.innerHTML =
     '<div class="th-top">' +
       '<div>' +
-        '<div class="th-lbl">' + (doneMonth ? '🎉 এই মাসের টার্গেট পূরণ হয়েছে' : '🎯 গোল পূরণে আজ আয় করতে হবে') + '</div>' +
+        '<div class="th-lbl">' + (doneMonth ? '🎉 এই মাসের টার্গেট পূরণ হয়েছে' : '🎯 মাসিক গোল পূরণে আজ অর্জন করতে হবে') + '</div>' +
         '<div class="th-val">' + (doneMonth ? '✅ সম্পন্ন' : money(perDay)) + '</div>' +
-        '<div class="th-sub">মাসিক টার্গেট <b>' + money(tgt) + '</b> • বাকি <b>' + money(remaining) + '</b> • <b>' + daysLeft + '</b> দিন বাকি</div>' +
+        '<div class="th-sub">মাসিক টার্গেট <b>' + money(tgt) + '</b> • এই মাসে অর্জন <b>' + money(mCredit.total) + '</b> • বাকি <b>' + money(remaining) + '</b> • <b>' + daysLeft + '</b> দিন বাকি</div>' +
       '</div>' +
       '<div class="th-side">' +
         '<div class="th-item"><small>প্রতি সপ্তাহে দরকার</small><b style="color:var(--c3)">' + (doneMonth ? '—' : money(perWeek)) + '</b></div>' +
-        '<div class="th-item"><small>আজ হয়েছে</small><b style="color:var(--ok)">' + money(todayInc) + '</b></div>' +
-        '<div class="th-item"><small>' + (doneToday || doneMonth ? 'আজকের লক্ষ্য' : 'আরও লাগবে') + '</small><b style="color:' + (doneToday || doneMonth ? 'var(--ok)' : 'var(--warn)') + '">' + (doneMonth ? '✅' : doneToday ? '✅ পূরণ' : money(perDay - todayInc)) + '</b></div>' +
+        '<div class="th-item" title="কাজের মূল্য + অন্য নগদ আয় (একই প্রজেক্টের পেমেন্ট দ্বিগুণ ধরা হয় না)"><small>আজ অর্জন</small><b style="color:var(--ok)">' + money(todayCredit.total) + '</b></div>' +
+        '<div class="th-item"><small>' + (dTarget > 0 ? 'আজকের ডেইলি টার্গেট' : 'আজকের প্রয়োজন') + '</small><b style="color:' + (doneToday || doneMonth ? 'var(--ok)' : 'var(--warn)') + '">' + (doneMonth ? '✅' : doneToday ? '✅ পূরণ' : money(Math.max(0, dailyBase - todayCredit.total)) + ' বাকি') + '</b></div>' +
         '<div class="th-item"><small>হাতে আছে</small><b style="color:var(--ok)">' + money(totals().cash) + '</b></div>' +
       '</div>' +
     '</div>' +
     '<div class="th-bar' + (dayPct >= 100 ? ' ok' : '') + '"><i style="width:' + dayPct + '%"></i></div>' +
+    '<div class="hint" style="margin:8px 0 0;position:relative;z-index:1">🛠️ আজ কাজের মূল্য <b>' + money(todayCredit.work) + '</b> • 💵 আজ নগদ পেয়েছেন <b>' + money(todayCredit.cashActual) + '</b>' +
+      (todayCredit.assumed > 0 ? ' • 🧾 অনুমানকৃত পেমেন্ট <b style="color:var(--muted)">' + money(todayCredit.assumed) + '</b>' : '') +
+      (todayCredit.due > 0 ? ' • 🧾 কাজের বাকি <b style="color:var(--warn)">' + money(todayCredit.due) + '</b> (কাজ শেষ, পেমেন্ট বাকি)' : '') +
+      ' • 📅 এই মাসে নগদ <b>' + money(mCredit.cashActual) + '</b></div>' +
+    (function () {
+      const gs = (state.goals || []).filter(g => g.type === 'income' && g.end >= todayKey() && num(g.target) > 0)
+        .sort((a, b) => String(a.end).localeCompare(String(b.end)));
+      const gg = gs[0];
+      if (!gg) return '';
+      const grem = Math.max(0, num(gg.target) - goalMetric(gg));
+      const gleft = Math.max(0, daysBetween(todayKey(), gg.end) + 1);
+      const gneed = grem / Math.max(1, gleft);
+      if (gneed <= 0) return '';
+      return '<div class="hint" style="margin:8px 0 0;position:relative;z-index:1">🎯 <b>' + esc(gg.title) + '</b> গোলের জন্য দিনে <b style="color:var(--c2)">' + money(gneed) + '</b> • সপ্তাহে <b>' + money(gneed * 7) + '</b> • বাকি ' + gleft + ' দিন</div>';
+    })() +
     '<div class="row tight" style="margin-top:10px;position:relative;z-index:1;align-items:center">' +
-      '<span class="hint" style="flex:1">আজকের লক্ষ্যের <b>' + near(dayPct) + '%</b> হয়েছে</span>' +
+      '<span class="hint" style="flex:1">' + (dTarget > 0 ? 'আজকের ডেইলি টার্গেটের' : 'আজকের প্রয়োজনের') + ' <b>' + near(dayPct) + '%</b> হয়েছে</span>' +
       '<button class="btn sm ghost" onclick="anEdit(\'rate\')">✏️ টার্গেট</button>' +
       '<button class="btn sm ghost" onclick="goAddIncome()">💰 আয় যোগ</button>' +
       '<button class="btn sm ghost" onclick="switchPage(\'rewards\')">🎯 গোল</button>' +
@@ -2365,8 +2511,9 @@ function updateMarquee() {
   const t = totals();
   const set = (id, v) => { const e = el(id); if (e) e.textContent = v; };
   set('mq-due', '⚠️ মোট বকেয়া: ' + money(t.due));
-  const mInc = incomeEntries().filter(x => x.date.slice(0, 7) === todayKey().slice(0, 7)).reduce((s, x) => s + x.amount, 0);
-  set('mq-target', '🎯 টার্গেট: ' + near(pct(mInc, state.target)) + '% (' + money(mInc) + '/' + money(state.target) + ')');
+  const monthStart = todayKey().slice(0, 7) + '-01';
+  const mc = targetCredit(monthStart, todayKey());
+  set('mq-target', num(state.target) > 0 ? '🎯 এই মাসের অর্জন: ' + near(pct(mc.total, state.target)) + '% (' + money(mc.total) + '/' + money(state.target) + ')' : '🎯 মাসিক টার্গেট সেট করুন — ড্যাশবোর্ডের উপরে');
   set('mq-hours', '⏱️ আজ: ' + fmtDur(todaySec()) + ' • সপ্তাহ: ' + fmtHours(weekSec()));
   set('mq-live', '⚡ ' + t.active + 'টি প্রজেক্ট চলমান • স্ট্রিক ' + streakDays() + ' দিন');
   set('mq-reward', state.rewards.gift ? '🎁 আজকের পুরস্কার: ' + state.rewards.gift : '🎁 গোল পূরণ করলে পুরস্কার সেট করুন');
@@ -2382,8 +2529,6 @@ function notifList() {
   if (t.due > 0) out.push({ i: '💸', c: 'var(--warn)', txt: 'ক্লায়েন্টের কাছে ' + money(t.due) + ' বকেয়া আছে' });
   const hs = todaySec();
   if (hs < 3600) out.push({ i: '🕒', c: 'var(--c1)', txt: 'আজ এখনো ১ ঘণ্টাও কাজ হয়নি — টাইমার চালু করুন' });
-  if (!state.settings.voice) out.push({ i: '🔇', c: 'var(--muted)', txt: 'ভয়েস অ্যানাউন্সমেন্ট বন্ধ আছে' });
-  if (!window.__authUser && window.isGuestMode()) out.push({ i: '☁️', c: 'var(--c1)', txt: 'Local Mode চলছে — লগ-ইন করলে ক্লাউডে সেভ হবে' });
   if (!out.length) out.push({ i: '🎉', c: 'var(--ok)', txt: 'সব ক্লিয়ার! কোনো পেন্ডিং নেই।' });
   return out;
 }
@@ -2452,7 +2597,7 @@ function renderProjects() {
   list.sort((a, b) => {
     if (sort === 'priority') return (pr[b.priority] || 0) - (pr[a.priority] || 0);
     if (sort === 'value') return num(b.price) - num(a.price);
-    if (sort === 'recent') return num(b.id) - num(a.id);
+    if (sort === 'recent') return String(b.createdAt || '').localeCompare(String(a.createdAt || '')) || String(b.id).localeCompare(String(a.id));
     const ad = a.deadline || '9999-12-31', bd = b.deadline || '9999-12-31';
     return ad < bd ? -1 : ad > bd ? 1 : 0;
   });
@@ -2479,40 +2624,47 @@ function renderProjects() {
     const diffTxt = est > 0 ? (diff > 60 ? '<span style="color:var(--bad)">+' + fmtDur(diff) + ' বেশি</span>' : diff < -60 ? '<span style="color:var(--ok)">' + fmtDur(-diff) + ' কম</span>' : '<span style="color:var(--ok)">এস্টিমেটে ঠিক</span>') : '<span class="hint">এস্টিমেট দেওয়া নেই</span>';
     const dl = p.deadline ? (() => { const d = daysLeft(p); const cls = done ? 'p-ok' : d < 0 ? 'p-bad' : d <= 2 ? 'p-mid' : 'p-low'; const txt = done ? 'শেষ: ' + dateLabel(p.completedAt) : d < 0 ? Math.abs(d) + ' দিন পার' : d === 0 ? 'আজ শেষ দিন' : d + ' দিন বাকি'; return '<span class="pill ' + cls + '">📅 ' + dateLabel(p.deadline) + ' • ' + txt + '</span>'; })() : '';
     const rate = sec > 0 ? num(p.price) / hours(sec) : 0;
+    const profit = num(p.estCost) > 0 ? num(p.price) - num(p.estCost) * hours(sec) : null;
+    const chk = p.checklist || {};
     const isA = String(activeProjId) === String(p.id);
     const run = isA && tRun, paused = isA && !tRun;
     const ctrl = done ? '' : (run
       ? '<button class="btn sm cy" onclick="pauseInline()">⏸️ পজ</button><button class="btn sm ghost" onclick="endInline()">⏹️ শেষ</button>'
       : paused
         ? '<button class="btn sm ok" onclick="resumeInline()">▶️ চালান</button><button class="btn sm ghost" onclick="endInline()">⏹️ শেষ</button>'
-        : '<button class="btn sm ok" onclick="startInline(' + p.id + ')">▶️ শুরু</button>');
+        : '<button class="btn sm ok" onclick="startInline(' + jsArg(p.id) + ')">▶️ শুরু</button>');
     return '<div class="proj ' + (done ? 'done' : '') + '">' +
       '<div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">' +
         '<div style="min-width:0"><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><b style="font-size:1rem">' + esc(p.title) + '</b>' + prioPill(p) + (done ? '<span class="pill p-ok">✅ শেষ</span>' : '') + '</div>' +
         '<div class="hint" style="margin-top:4px">👤 ' + esc(p.client) + ' • শুরু ' + dateLabel(p.createdAt) + '</div></div>' +
         '<div style="text-align:right;flex-shrink:0"><div style="font-weight:700;color:var(--ok)">' + money(p.price) + '</div>' + (num(p.due) > 0 ? '<div class="hint" style="color:var(--warn)">বাকি ' + money(p.due) + '</div>' : '<div class="hint" style="color:var(--ok)">সম্পূর্ণ পেয়েছি</div>') + '</div>' +
       '</div>' +
-      '<div class="estwrap"><span>🎯 এস্টিমেট প্রোগ্রেস</span><span id="estp-' + p.id + '"></span></div>' +
-      '<div class="bar' + (est > 0 && sec >= est ? ' over' : '') + '" data-estbar="' + p.id + '"><i style="width:' + (est > 0 ? Math.min(100, prog) : 0) + '%"></i></div>' +
+      '<div class="estwrap"><span>🎯 এস্টিমেট প্রোগ্রেস</span><span id="estp-' + esc(p.id) + '"></span></div>' +
+      '<div class="bar' + (est > 0 && sec >= est ? ' over' : '') + '" data-estbar="' + esc(p.id) + '"><i style="width:' + (est > 0 ? Math.min(100, prog) : 0) + '%"></i></div>' +
       '<div class="meta">' +
-        '<span>⏱️ কাজ: <b data-livetime="' + p.id + '">' + fmtDur(sec) + '</b></span>' +
+        '<span>⏱️ কাজ: <b data-livetime="' + esc(p.id) + '">' + fmtDur(sec) + '</b></span>' +
         '<span>🎯 এস্টিমেট: <b>' + (est > 0 ? estTxt(p.estHours) : '—') + '</b></span>' +
         '<span>' + diffTxt + '</span>' +
         (rate > 0 ? '<span>⚡ ' + money(near(rate)) + '/ঘ</span>' : '') +
         (p.estCost ? '<span>💰 খরচ/ঘ: ' + money(p.estCost) + '</span>' : '') +
+        (profit != null ? '<span style="color:' + (profit >= 0 ? 'var(--ok)' : 'var(--bad)') + '">📈 লাভ ≈ ' + money(near(profit)) + '</span>' : '') +
         dl +
+      '</div>' +
+      '<div class="deliv">' +
+        [['vo', '🎙️ ভয়েসওভার'], ['footage', '🎞️ ফুটেজ'], ['revision', '🔁 রিভিশন']].map(([k, l]) =>
+          '<button class="' + (chk[k] ? 'on' : '') + '" onclick="toggleChecklist(' + jsArg(p.id) + ',\'' + k + '\')" title="ডেলিভারি চেকলিস্ট — ক্লিক করে বদলান">' + (chk[k] ? '✅ ' : '○ ') + l + '</button>').join('') +
       '</div>' +
       (p.notes ? '<div class="hint" style="margin-top:8px">📝 ' + esc(p.notes) + '</div>' : '') +
       '<div class="acts">' +
         ctrl +
-        (!done ? '<button class="btn sm ghost" onclick="openProjectTimer(' + p.id + ')">🖥️ টাইমার</button>' : '') +
-        (!done ? '<button class="btn sm ok" onclick="completeProject(' + p.id + ')">✅ শেষ করুন</button>' : '') +
-        (num(p.due) > 0 ? '<button class="btn sm cy" onclick="openPayment(' + p.id + ')">💵 পেমেন্ট</button>' : '') +
-        '<button class="btn sm ghost" onclick="openManualTime(' + p.id + ')">➕ সময়</button>' +
-        '<button class="btn sm ghost" onclick="editProject(' + p.id + ')">✏️ এডিট</button>' +
-        '<button class="btn sm ghost" onclick="duplicateProject(' + p.id + ')">⧉ কপি</button>' +
-        '<button class="btn sm ghost" onclick="openInvoice(' + p.id + ')">🧾 ইনভয়েস</button>' +
-        '<button class="btn sm bad" onclick="deleteProject(' + p.id + ')">🗑️</button>' +
+        (!done ? '<button class="btn sm ghost" onclick="openProjectTimer(' + jsArg(p.id) + ',false)">🖥️ টাইমার</button>' : '') +
+        (!done ? '<button class="btn sm ok" onclick="completeProject(' + jsArg(p.id) + ')">✅ শেষ করুন</button>' : '') +
+        (num(p.due) > 0 ? '<button class="btn sm cy" onclick="openPayment(' + jsArg(p.id) + ')">💵 পেমেন্ট</button>' : '') +
+        '<button class="btn sm ghost" onclick="openManualTime(' + jsArg(p.id) + ')">➕ সময়</button>' +
+        '<button class="btn sm ghost" onclick="editProject(' + jsArg(p.id) + ')">✏️ এডিট</button>' +
+        '<button class="btn sm ghost" onclick="duplicateProject(' + jsArg(p.id) + ')">⧉ কপি</button>' +
+        '<button class="btn sm ghost" onclick="openInvoice(' + jsArg(p.id) + ')">🧾 ইনভয়েস</button>' +
+        '<button class="btn sm bad" onclick="deleteProject(' + jsArg(p.id) + ')">🗑️</button>' +
       '</div></div>';
   }).join('');
   updateLiveBars();
@@ -2523,9 +2675,12 @@ function addProject() {
   const title = g('p-title').trim(), client = g('p-client').trim(), price = num(g('p-price'));
   if (!title || !client) return toast('প্রজেক্টের নাম ও ক্লায়েন্টের নাম দিন', 'err');
   if (price <= 0) return toast('মোট মূল্য দিন', 'err');
+  // বকেয়া খালি রাখলে পুরো টাকা বাকি ধরা হবে (আয় ভুলভাবে বেড়ে যাবে না)
+  const dueRaw = String(g('p-due')).trim();
+  const due = dueRaw === '' ? price : Math.min(price, Math.max(0, num(dueRaw)));
   const p = {
-    id: uid(), title, client, price, due: num(g('p-due')),
-    estHours: num(g('p-est-hours')), estCost: num(g('p-est-cost')),
+    id: uid(), title, client, price, due,
+    estHours: Math.max(0, num(g('p-est-hours'))), estCost: Math.max(0, num(g('p-est-cost'))),
     deadline: g('p-deadline'), priority: g('p-priority') || 'medium', status: 'active',
     checklist: { vo: false, footage: false, revision: false },
     createdAt: new Date().toISOString(), completedAt: null, payments: [], timeSpent: 0,
@@ -2539,23 +2694,34 @@ function addProject() {
   toast('প্রজেক্ট সেভ হয়েছে! ' + (p.estHours ? '(' + p.estHours + ' ঘণ্টা এস্টিমেট)' : ''), 'ok');
   if (p.estHours) toast('টিপস: টাইমার চালালে এস্টিমেট vs আসল সময় অ্যানালিটিক্সে দেখতে পাবেন', 'ok');
 }
+function toggleChecklist(id, key) {
+  const p = state.projects.find(x => String(x.id) === String(id)); if (!p) return;
+  p.checklist = Object.assign({ vo: false, footage: false, revision: false }, p.checklist || {});
+  if (!(key in p.checklist)) return;
+  p.checklist[key] = !p.checklist[key];
+  saveData(); sound('click');
+  const label = { vo: 'ভয়েসওভার', footage: 'ফুটেজ', revision: 'রিভিশন' }[key] || key;
+  toast((p.checklist[key] ? '✅ ' : '○ ') + label + ' — ' + (p.checklist[key] ? 'সম্পন্ন' : 'বাকি'), p.checklist[key] ? 'ok' : 'warn');
+}
 function duplicateProject(id) {
-  const p = state.projects.find(x => x.id === id); if (!p) return;
+  const p = projById(id); if (!p) return;
   const c = JSON.parse(JSON.stringify(p));
   c.id = uid(); c.title = p.title + ' (কপি)'; c.status = 'active'; c.completedAt = null; c.payments = []; c.timeSpent = 0;
   c.createdAt = new Date().toISOString(); c.checklist = { vo: false, footage: false, revision: false };
   state.projects.unshift(c); saveData(); toast('প্রজেক্ট কপি হয়েছে ⧉', 'ok');
 }
 function deleteProject(id) {
-  const p = state.projects.find(x => x.id === id); if (!p) return;
+  const p = projById(id); if (!p) return;
   askConfirm('প্রজেক্ট মুছবেন?', '"' + p.title + '" এবং এর হিসাব মুছে যাবে।', () => {
-    state.projects = state.projects.filter(x => x.id !== id);
-    state.sessions = state.sessions.filter(x => x.projectId !== id);
+    stopTimerForProject(id, true);
+    state.projects = state.projects.filter(x => String(x.id) !== String(id));
+    state.sessions = state.sessions.filter(x => String(x.projectId) !== String(id));
     saveData(); toast('প্রজেক্ট মুছে ফেলা হয়েছে', 'warn');
   });
 }
 function completeProject(id) {
-  const p = state.projects.find(x => x.id === id); if (!p) return;
+  const p = projById(id); if (!p) return;
+  stopTimerForProject(p.id, false);
   const sec = actualSec(p), est = num(p.estHours) * 3600;
   p.status = 'done'; p.completedAt = new Date().toISOString();
   saveData();
@@ -2572,11 +2738,11 @@ function completeProject(id) {
     '<div class="drow"><span>⚡ কার্যকর ঘণ্টা-রেট</span><b class="grad-text">' + money(near(rate)) + '/ঘ</b></div>' +
     (est > 0 ? '<div class="drow"><span>📈 এস্টিমেট নির্ভুলতা</span><b>' + near(pct(Math.min(sec, est), Math.max(sec, est))) + '%</b></div>' : '') +
     '<div class="drow"><span>💵 এখনো বাকি</span><b style="color:var(--warn)">' + money(p.due) + '</b></div>' +
-    '<div class="row" style="margin-top:16px"><button class="btn ok" style="flex:1" onclick="closeOverlay(\'m-complete\')">ঠিক আছে</button>' + (num(p.due) > 0 ? '<button class="btn cy" style="flex:1" onclick="closeOverlay(\'m-complete\');openPayment(' + p.id + ')">💵 পেমেন্ট নিন</button>' : '') + '</div>';
+    '<div class="row" style="margin-top:16px"><button class="btn ok" style="flex:1" onclick="closeOverlay(\'m-complete\')">ঠিক আছে</button>' + (num(p.due) > 0 ? '<button class="btn cy" style="flex:1" onclick="closeOverlay(\'m-complete\');openPayment(' + jsArg(p.id) + ')">💵 পেমেন্ট নিন</button>' : '') + '</div>';
   openOverlay('m-complete');
 }
 function editProject(id) {
-  const p = state.projects.find(x => x.id === id); if (!p) return;
+  const p = projById(id); if (!p) return;
   el('m-details-title').textContent = '✏️ প্রজেক্ট এডিট';
   el('m-details-body').innerHTML =
     '<label>নাম</label><input id="ed-title" value="' + esc(p.title) + '">' +
@@ -2587,60 +2753,62 @@ function editProject(id) {
       ['high:🔥 হাই', 'medium:⚡ মিডিয়াম', 'low:🧊 লো'].map(o => { const v = o.split(':')[0]; return '<option value="' + v + '"' + (p.priority === v ? ' selected' : '') + '>' + o.split(':')[1] + '</option>'; }).join('') +
     '</select></div></div>' +
     '<label>নোট</label><input id="ed-notes" value="' + esc(p.notes || '') + '">' +
-    '<div class="row" style="margin-top:16px"><button class="btn" style="flex:1" onclick="saveEditProject(' + p.id + ')">সেভ করুন</button>' +
-    '<button class="btn ' + (p.status === 'done' ? 'warn' : 'ok') + '" style="flex:1" onclick="toggleProjectStatus(' + p.id + ')">' + (p.status === 'done' ? '↩️ আবার চালু' : '✅ শেষ করুন') + '</button></div>';
+    '<div class="row" style="margin-top:16px"><button class="btn" style="flex:1" onclick="saveEditProject(' + jsArg(p.id) + ')">সেভ করুন</button>' +
+    '<button class="btn ' + (p.status === 'done' ? 'warn' : 'ok') + '" style="flex:1" onclick="toggleProjectStatus(' + jsArg(p.id) + ')">' + (p.status === 'done' ? '↩️ আবার চালু' : '✅ শেষ করুন') + '</button></div>';
   openOverlay('m-details');
 }
 function saveEditProject(id) {
-  const p = state.projects.find(x => x.id === id); if (!p) return;
+  const p = projById(id); if (!p) return;
   p.title = el('ed-title').value.trim() || p.title;
   p.client = el('ed-client').value.trim() || p.client;
-  p.price = num(el('ed-price').value); p.due = num(el('ed-due').value);
-  p.estHours = num(el('ed-est').value); p.estCost = num(el('ed-cost').value);
+  p.price = Math.max(0, num(el('ed-price').value));
+  p.due = Math.min(p.price, Math.max(0, num(el('ed-due').value)));
+  p.estHours = Math.max(0, num(el('ed-est').value)); p.estCost = Math.max(0, num(el('ed-cost').value));
   p.deadline = el('ed-dl').value; p.priority = el('ed-prio').value; p.notes = el('ed-notes').value.trim();
   closeOverlay('m-details'); saveData(); toast('আপডেট হয়েছে ✏️', 'ok');
 }
 function toggleProjectStatus(id) {
-  const p = state.projects.find(x => x.id === id); if (!p) return;
+  const p = projById(id); if (!p) return;
   closeOverlay('m-details');
   if (p.status === 'done') { p.status = 'active'; p.completedAt = null; saveData(); toast('আবার চলমান করা হলো', 'ok'); }
   else completeProject(id);
 }
 function openPayment(id) {
-  const p = state.projects.find(x => x.id === id); if (!p) return;
+  const p = projById(id); if (!p) return;
   const list = (p.payments || []).slice().reverse();
   el('m-payment-body').innerHTML =
     '<div class="hint" style="margin-bottom:12px">' + esc(p.title) + ' • মোট ' + money(p.price) + ' • বাকি <b style="color:var(--warn)">' + money(p.due) + '</b></div>' +
     '<label>কত টাকা পেয়েছেন?</label><input type="number" id="pay-amt" value="' + num(p.due) + '">' +
     '<label>তারিখ</label><input type="date" id="pay-date" value="' + todayKey() + '">' +
     '<label>নোট (ঐচ্ছিক)</label><input id="pay-note" placeholder="যেমন: বিকাশে পেয়েছি">' +
-    '<div class="row" style="margin-top:12px"><button class="btn ok" style="flex:1" onclick="savePayment(' + p.id + ')">✔️ পেমেন্ট সেভ</button><button class="btn ghost" style="flex:1" onclick="closeOverlay(\'m-payment\')">বাতিল</button></div>' +
+    '<div class="row" style="margin-top:12px"><button class="btn ok" style="flex:1" onclick="savePayment(' + jsArg(p.id) + ')">✔️ পেমেন্ট সেভ</button><button class="btn ghost" style="flex:1" onclick="closeOverlay(\'m-payment\')">বাতিল</button></div>' +
     (list.length ? '<div class="sec-title">পেমেন্ট হিস্ট্রি</div>' + list.map(x => '<div class="drow"><span>' + dateLabel(x.date) + ' ' + esc(x.note || '') + '</span><b style="color:var(--ok)">' + money(x.amount) + '</b></div>').join('') : '');
   openOverlay('m-payment');
 }
 function savePayment(id) {
-  const p = state.projects.find(x => x.id === id); if (!p) return;
+  const p = projById(id); if (!p) return;
   const amt = num(el('pay-amt').value);
   if (amt <= 0) return toast('সঠিক পরিমাণ দিন', 'err');
   p.payments = p.payments || [];
-  p.payments.push({ id: uid(), amount: amt, date: isoDay(el('pay-date').value), note: el('pay-note').value.trim(), projectId: p.id, client: p.client });
-  p.due = Math.max(0, num(p.due) - amt);
+  const dueAdj = Math.min(amt, Math.max(0, num(p.due)));
+  p.payments.push({ id: uid(), amount: amt, date: isoDay(el('pay-date').value), note: el('pay-note').value.trim(), projectId: p.id, client: p.client, dueAdj: dueAdj });
+  p.due = Math.max(0, num(p.due) - dueAdj);
   closeOverlay('m-payment'); saveData();
   sound('cash'); speak('পেমেন্ট পেয়েছেন ' + amt + ' টাকা');
-  toast('পেমেন্ট যোগ হয়েছে ' + money(amt) + ' 💵', 'ok');
+  toast('পেমেন্ট যোগ হয়েছে ' + money(amt) + ' 💵' + (amt > dueAdj ? ' (বাকির বেশি — অগ্রিম হিসেবে রাখা হলো)' : ''), 'ok');
 }
 function openManualTime(id) {
-  const p = state.projects.find(x => x.id === id); if (!p) return;
+  const p = projById(id); if (!p) return;
   el('m-time-body').innerHTML =
     '<div class="hint" style="margin-bottom:12px">' + esc(p.title) + ' • এখন পর্যন্ত ' + fmtDur(actualSec(p)) + ' কাজ হয়েছে</div>' +
     '<div class="grid" style="grid-template-columns:1fr 1fr;gap:10px"><div><label>ঘণ্টা</label><input type="number" id="mt-h" value="0"></div><div><label>মিনিট</label><input type="number" id="mt-m" value="30"></div></div>' +
     '<label>তারিখ</label><input type="date" id="mt-date" value="' + todayKey() + '">' +
     '<label>নোট</label><input id="mt-note" placeholder="অফলাইনে কাজ করেছি">' +
-    '<div class="row" style="margin-top:12px"><button class="btn" style="flex:1" onclick="saveManualTime(' + p.id + ')">সময় যোগ করুন</button><button class="btn ghost" style="flex:1" onclick="closeOverlay(\'m-time\')">বাতিল</button></div>';
+    '<div class="row" style="margin-top:12px"><button class="btn" style="flex:1" onclick="saveManualTime(' + jsArg(p.id) + ')">সময় যোগ করুন</button><button class="btn ghost" style="flex:1" onclick="closeOverlay(\'m-time\')">বাতিল</button></div>';
   openOverlay('m-time');
 }
 function saveManualTime(id) {
-  const p = state.projects.find(x => x.id === id); if (!p) return;
+  const p = projById(id); if (!p) return;
   const sec = (num(el('mt-h').value) * 3600) + (num(el('mt-m').value) * 60);
   if (sec <= 0) return toast('সময় দিন', 'err');
   const d = isoDay(el('mt-date').value);
@@ -2656,11 +2824,11 @@ function openDetails(type) {
   if (type === 'earned') {
     title = '💵 আয়ের বিস্তারিত';
     html = '<div class="drow"><span>মোট আয় (পাওয়া টাকা)</span><b style="color:var(--ok)">' + money(t.earned) + '</b></div>' +
-      '<div class="drow"><span>সব প্রজেক্টের মোট মূল্য</span><b>' + money(inc.length ? state.projects.reduce((s, p) => s + num(p.price), 0) : 0) + '</b></div>' +
+      '<div class="drow"><span>সব প্রজেক্টের মোট মূল্য</span><b>' + money(state.projects.reduce((s, p) => s + num(p.price), 0)) + '</b></div>' +
       '<div class="drow"><span>পাইপলাইনে (চলমান)</span><b style="color:var(--c3)">' + money(t.pipeline) + '</b></div>' +
       '<div class="drow"><span>মোট পেমেন্ট রেকর্ড</span><b>' + inc.length + 'টি</b></div>' +
       '<div class="sec-title">শেষ ৫টি পেমেন্ট</div>' +
-      inc.slice(-5).reverse().map(x => '<div class="drow"><span>' + dateLabel(x.date) + ' • ' + esc(x.client) + '</span><b>' + money(x.amount) + '</b></div>').join('');
+      inc.slice().sort((a, b) => String(b.date).localeCompare(String(a.date))).slice(0, 5).map(x => '<div class="drow"><span>' + dateLabel(x.date) + ' • ' + esc(x.client) + '</span><b>' + money(x.amount) + '</b></div>').join('');
   } else if (type === 'due') {
     title = '🤝 বকেয়ার তালিকা';
     const d = state.projects.filter(p => num(p.due) > 0);
@@ -2698,20 +2866,66 @@ function openDetails(type) {
   el('m-details-body').innerHTML = html;
   openOverlay('m-details');
 }
+function invoiceNo(p) { return 'INV-' + todayKey().replace(/-/g, '') + '-' + String(p.id).slice(-4); }
+function invoiceText(p) {
+  const sec = actualSec(p), rate = sec > 0 ? num(p.price) / hours(sec) : 0;
+  return 'ইনভয়েস ' + invoiceNo(p) + '\n' +
+    'Naim\'s OS — ' + (state.name || 'Naim') + '\n' +
+    'ক্লায়েন্ট: ' + p.client + '\n' +
+    'প্রজেক্ট: ' + p.title + '\n' +
+    'মোট মূল্য: ' + money(p.price) + '\n' +
+    'পরিশোধিত: ' + money(receivedOf(p)) + '\n' +
+    'বাকি: ' + money(p.due) + '\n' +
+    (sec > 0 ? 'কাজের সময়: ' + fmtDur(sec) + ' • রেট: ' + money(near(rate)) + '/ঘ\n' : '') +
+    'তারিখ: ' + dateLabel(new Date()) + '\nধন্যবাদ!';
+}
+function copyInvoice(id) {
+  const p = projById(id); if (!p) return;
+  const txt = invoiceText(p);
+  const done = () => { toast('📋 ইনভয়েস কপি হয়েছে — ক্লায়েন্টকে পাঠিয়ে দিন', 'ok'); sound('click'); };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(txt).then(done).catch(() => fallbackCopy(txt, done));
+  } else fallbackCopy(txt, done);
+}
+function fallbackCopy(txt, done) {
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    done();
+  } catch (e) { toast('কপি করা যায়নি — ম্যানুয়ালি সিলেক্ট করুন', 'err'); }
+}
 function openInvoice(id) {
-  const p = state.projects.find(x => x.id === id); if (!p) return;
-  const sec = actualSec(p);
-  const rows = [
-    ['প্রজেক্ট', p.title], ['ক্লায়েন্ট', p.client], ['মোট মূল্য', money(p.price)],
-    ['পরিশোধিত', money(receivedOf(p))], ['বাকি', money(p.due)],
-    ['কাজের সময়', fmtDur(sec)], ['তারিখ', dateLabel(new Date())]
-  ];
+  const p = projById(id); if (!p) return;
+  const sec = actualSec(p), paid = receivedOf(p);
+  const rate = sec > 0 ? num(p.price) / hours(sec) : 0;
+  const status = num(p.due) <= 0 ? '<span class="pill p-ok">✅ পরিশোধিত</span>' : paid > 0 ? '<span class="pill p-mid">🟡 আংশিক</span>' : '<span class="pill p-bad">🔴 বাকি</span>';
   el('m-invoice-body').innerHTML =
-    '<div style="padding:10px 4px">' +
-    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px"><div><div style="font-size:1.5rem;font-weight:800" class="grad-text">INVOICE</div><div class="hint">Naim\'s OS — ' + esc(state.name) + '</div></div><div style="text-align:right" class="hint">#' + p.id + '<br>' + dateLabel(new Date()) + '</div></div>' +
-    rows.map(r => '<div class="drow"><span>' + r[0] + '</span><b>' + esc(r[1]) + '</b></div>').join('') +
-    '<div class="drow" style="margin-top:12px;border-top:2px solid var(--border);font-size:1.1rem"><span><b>পরিশোধযোগ্য</b></span><b style="color:var(--warn)">' + money(p.due) + '</b></div>' +
-    '<p class="hint" style="margin-top:16px">ধন্যবাদ! যেকোনো প্রশ্নে যোগাযোগ করুন।</p></div>';
+    '<div style="padding:6px 2px">' +
+    '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:18px;flex-wrap:wrap">' +
+      '<div><div style="font-size:1.7rem;font-weight:800;letter-spacing:.5px" class="grad-text">INVOICE</div>' +
+      '<div class="hint" style="margin-top:2px">' + esc(state.name || 'Naim') + ' • ' + esc(state.role || 'Pro Video Editor') + '</div></div>' +
+      '<div style="text-align:right"><div style="font-family:monospace;font-weight:700;color:var(--c1)">' + invoiceNo(p) + '</div>' +
+      '<div class="hint">' + dateLabel(new Date()) + '</div>' + status + '</div>' +
+    '</div>' +
+    '<div class="grid g-2" style="gap:14px;margin-bottom:16px">' +
+      '<div><div class="hint">বিল টু</div><b>' + esc(p.client) + '</b></div>' +
+      '<div style="text-align:right"><div class="hint">প্রজেক্ট</div><b>' + esc(p.title) + '</b></div>' +
+    '</div>' +
+    '<table class="tbl"><thead><tr><th>বিবরণ</th><th>সময়</th><th style="text-align:right">পরিমাণ</th></tr></thead><tbody>' +
+      '<tr><td><b>' + esc(p.title) + '</b><br><small class="hint">ভিডিও এডিটিং / প্রোডাকশন সার্ভিস</small></td>' +
+      '<td>' + (sec > 0 ? fmtDur(sec) + '<br><small class="hint">' + money(near(rate)) + '/ঘ</small>' : '—') + '</td>' +
+      '<td class="num" style="text-align:right">' + money(p.price) + '</td></tr>' +
+    '</tbody></table>' +
+    '<div style="max-width:320px;margin-left:auto;margin-top:14px">' +
+      '<div class="drow"><span>মোট</span><b>' + money(p.price) + '</b></div>' +
+      '<div class="drow"><span>পরিশোধিত</span><b style="color:var(--ok)">' + money(paid) + '</b></div>' +
+      '<div class="drow" style="border-top:2px solid var(--border);font-size:1.1rem"><span><b>পরিশোধযোগ্য</b></span><b style="color:' + (num(p.due) > 0 ? 'var(--warn)' : 'var(--ok)') + '">' + money(p.due) + '</b></div>' +
+    '</div>' +
+    (p.notes ? '<p class="hint" style="margin-top:14px">📝 ' + esc(p.notes) + '</p>' : '') +
+    '<p class="hint" style="margin-top:14px">ধন্যবাদ! যেকোনো প্রশ্নে যোগাযোগ করুন।</p>' +
+    '<div class="row no-print" style="margin-top:12px"><button class="btn ghost" style="flex:1" onclick="copyInvoice(' + jsArg(p.id) + ')">📋 ইনভয়েস কপি করুন</button></div>' +
+    '</div>';
   openOverlay('m-invoice');
 }
 
@@ -2721,10 +2935,10 @@ function renderTodos() {
   const d = el('todo-date') ? el('todo-date').value : todayKey();
   const list = state.todos.filter(t => t.date === d);
   box.innerHTML = list.length ? list.map(t =>
-    '<div class="list-item"><div class="cbx ' + (t.done ? 'on' : '') + '" onclick="toggleTodo(' + t.id + ')">' + (t.done ? '✓' : '') + '</div>' +
+    '<div class="list-item"><div class="cbx ' + (t.done ? 'on' : '') + '" onclick="toggleTodo(' + jsArg(t.id) + ')">' + (t.done ? '✓' : '') + '</div>' +
     '<div class="g"><div class="todo-title" style="' + (t.done ? 'text-decoration:line-through;color:var(--muted)' : '') + '">' + esc(t.text) + '</div>' +
     '<div class="hint">' + (t.money ? '💰 ' + money(t.money) : '') + (t.time ? ' • ⏳ ' + t.time + 'ঘ' : '') + (t.time > 0 && t.money > 0 ? ' • ⚡ ' + money(near(t.money / t.time)) + '/ঘ' : '') + '</div></div>' +
-    '<button class="btn sm bad" onclick="deleteTodo(' + t.id + ')">🗑️</button></div>'
+    '<button class="btn sm bad" onclick="deleteTodo(' + jsArg(t.id) + ')">🗑️</button></div>'
   ).join('') : '<div class="empty">এই দিনে কোনো কাজ নেই</div>';
   const done = list.filter(t => t.done).length;
   if (list.length) box.innerHTML = '<div class="hint" style="margin-bottom:8px">' + done + '/' + list.length + ' সম্পন্ন • ' + near(pct(done, list.length)) + '%</div>' + box.innerHTML;
@@ -2732,22 +2946,29 @@ function renderTodos() {
 function addTodo() {
   const d = el('todo-date').value || todayKey(), text = el('todo-input').value.trim();
   if (!text) return toast('কাজের নাম লিখুন', 'err');
-  state.todos.unshift({ id: uid(), date: d, text, money: num(el('todo-money').value), time: num(el('todo-time').value), done: false });
+  state.todos.unshift({ id: uid(), date: d, text, money: Math.max(0, num(el('todo-money').value)), time: Math.max(0, num(el('todo-time').value)), done: false });
   el('todo-input').value = ''; el('todo-money').value = ''; el('todo-time').value = '';
   saveData(); sound('click'); toast('টু-ডু যোগ হয়েছে 📝', 'ok');
 }
 function toggleTodo(id) {
   const t = state.todos.find(x => String(x.id) === String(id)); if (!t) return;
-  t.done = !t.done; sound(t.done ? 'click' : 'click'); saveData();
+  t.done = !t.done; sound(t.done ? 'success' : 'click'); saveData();
   if (t.done) toast('কাজ শেষ: ' + t.text + ' ✅', 'ok');
 }
-function deleteTodo(id) { state.todos = state.todos.filter(x => String(x.id) !== String(id)); saveData(); }
+function deleteTodo(id) {
+  const t = state.todos.find(x => String(x.id) === String(id)); if (!t) return;
+  askConfirm('কাজ মুছবেন?', '"' + t.text + '" মুছে ফেলা হবে।', () => {
+    state.todos = state.todos.filter(x => String(x.id) !== String(id));
+    saveData(); toast('কাজ মুছে ফেলা হয়েছে', 'warn');
+  });
+}
 function carryOver() {
   const today = todayKey();
   const pend = state.todos.filter(t => !t.done && t.date < today);
   if (!pend.length) return toast('আগের কোনো বাকি কাজ নেই', 'ok');
-  pend.forEach(t => state.todos.unshift({ id: uid(), date: today, text: t.text + ' (ক্যারি)', money: t.money, time: t.time, done: false }));
-  saveData(); toast(pend.length + 'টি কাজ আজকের লিস্টে আনা হয়েছে ↪️', 'ok');
+  // কপি নয় — আসল কাজটাই আজকের তারিখে সরানো হয়, নাহলে বারবার ক্লিকে ডুপ্লিকেট হবে
+  pend.forEach(t => { t.date = today; });
+  saveData(); toast(pend.length + 'টি বাকি কাজ আজকের লিস্টে সরানো হয়েছে ↪️', 'ok');
 }
 
 /* ---------------------------- finance ---------------------------- */
@@ -2770,7 +2991,7 @@ function renderFinance() {
     const incs = (state.incomes || []).slice().sort((a, b) => String(b.date).localeCompare(String(a.date)));
     ciList.innerHTML = incs.length ? incs.map(x =>
       '<div class="list-item"><span>💰</span><div class="g"><div class="todo-title">' + esc(x.desc) + '</div><div class="hint">' + dateLabel(x.date) + ' • কাস্টম আয়</div></div>' +
-      '<b style="color:var(--ok)">' + money(x.amount) + '</b><button class="btn sm ghost" onclick="delCustomIncome(\'' + x.id + '\')">✖</button></div>'
+      '<b style="color:var(--ok)">' + money(x.amount) + '</b><button class="btn sm ghost" onclick="delCustomIncome(' + jsArg(x.id) + ')">✖</button></div>'
     ).join('') : '<div class="empty">এখনো কাস্টম আয় যোগ করা হয়নি</div>';
   }
 
@@ -2785,7 +3006,7 @@ function renderFinance() {
   if (list) list.innerHTML = state.expenses.length ? state.expenses.slice(0, 60).map(e =>
     '<div class="list-item"><span>' + (e.type === 'family' ? '🏠' : e.type === 'software' ? '💻' : e.type === 'equipment' ? '🎧' : e.type === 'business' ? '🏢' : '📦') + '</span>' +
     '<div class="g"><div class="todo-title">' + esc(e.desc) + '</div><div class="hint">' + dateLabel(e.date) + ' • ' + (label[e.type] || e.type) + '</div></div>' +
-    '<b style="color:var(--bad)">' + money(e.amount) + '</b><button class="btn sm ghost" onclick="deleteExpense(' + e.id + ')">✖</button></div>'
+    '<b style="color:var(--bad)">' + money(e.amount) + '</b><button class="btn sm ghost" onclick="deleteExpense(' + jsArg(e.id) + ')">✖</button></div>'
   ).join('') : '<div class="empty">কোনো খরচ যোগ করা হয়নি</div>';
 
   const ll = el('loan-list');
@@ -2794,7 +3015,7 @@ function renderFinance() {
     const pr = pct(num(l.paid), num(l.amount));
     return '<div class="proj" style="margin-bottom:10px"><div style="display:flex;justify-content:space-between"><b>' + esc(l.desc) + '</b><b style="color:var(--bad)">' + money(rem) + '</b></div>' +
       '<div class="bar"><i style="width:' + pr + '%"></i></div><div class="hint">পরিশোধ ' + money(l.paid) + ' / ' + money(l.amount) + ' (' + near(pr) + '%) • শুরু ' + dateLabel(l.date) + '</div>' +
-      '<div class="row tight" style="margin-top:10px"><input type="number" id="pay-amt-' + l.id + '" placeholder="কত টাকা দিচ্ছেন?" style="flex:2"><button class="btn sm ok" onclick="payLoan(' + l.id + ')">💸 পরিশোধ</button><button class="btn sm ghost" onclick="removeLoan(' + l.id + ')">শোধ শেষ</button></div></div>';
+      '<div class="row tight" style="margin-top:10px"><input type="number" id="pay-amt-' + esc(l.id) + '" placeholder="কত টাকা দিচ্ছেন?" style="flex:2"><button class="btn sm ok" onclick="payLoan(' + jsArg(l.id) + ')">💸 পরিশোধ</button><button class="btn sm ghost" onclick="removeLoan(' + jsArg(l.id) + ')">শোধ শেষ</button></div></div>';
   }).join('') : '<div class="empty">কোনো ঋণ নেই — দারুণ! 🚀</div>';
 }
 function addExpense() {
@@ -2804,7 +3025,14 @@ function addExpense() {
   el('e-desc').value = ''; el('e-amount').value = '';
   saveData(); sound('click'); toast('খরচ যোগ হয়েছে ' + money(amount), 'warn');
 }
-function deleteExpense(id) { state.expenses = state.expenses.filter(x => x.id !== id); saveData(); toast('মুছে ফেলা হয়েছে', 'warn'); }
+function deleteExpense(id) {
+  const x = state.expenses.find(e => String(e.id) === String(id));
+  if (!x) return;
+  askConfirm('খরচ মুছবেন?', '"' + x.desc + '" — ' + money(x.amount) + ' মুছে যাবে।', () => {
+    state.expenses = state.expenses.filter(e => String(e.id) !== String(id));
+    saveData(); toast('খরচ মুছে ফেলা হয়েছে', 'warn');
+  });
+}
 /* ---------- কাস্টম আয় (প্রজেক্ট ছাড়া হাতে টাকা) ---------- */
 function addCustomIncome() {
   const desc = ((el('ci-desc') && el('ci-desc').value) || '').trim() || 'কাস্টম আয়';
@@ -2820,8 +3048,12 @@ function addCustomIncome() {
   toast('💰 আয় যোগ হয়েছে: ' + money(amount), 'ok');
 }
 function delCustomIncome(id) {
-  state.incomes = (state.incomes || []).filter(x => String(x.id) !== String(id));
-  saveData(); sound('click'); toast('আয় রেকর্ড মুছে ফেলা হয়েছে', 'warn');
+  const x = state.incomes.find(i => String(i.id) === String(id));
+  if (!x) return;
+  askConfirm('আয়ের রেকর্ড মুছবেন?', '"' + x.desc + '" — ' + money(x.amount) + ' মুছে যাবে।', () => {
+    state.incomes = (state.incomes || []).filter(i => String(i.id) !== String(id));
+    saveData(); sound('click'); toast('আয় রেকর্ড মুছে ফেলা হয়েছে', 'warn');
+  });
 }
 function goAddIncome() {
   switchPage('finance');
@@ -2839,17 +3071,23 @@ function addLoan() {
   saveData(); toast('ঋণ যোগ হয়েছে', 'warn');
 }
 function payLoan(id) {
-  const l = state.loans.find(x => x.id === id); if (!l) return;
-  const v = num(el('pay-amt-' + id).value);
+  const l = state.loans.find(x => String(x.id) === String(id)); if (!l) return;
+  const v = num(el('pay-amt-' + l.id).value);
   if (v <= 0) return toast('সঠিক পরিমাণ দিন', 'err');
   const pay = Math.min(v, num(l.amount) - num(l.paid));
   l.paid = num(l.paid) + pay;
   l.history.push({ amount: pay, date: todayKey() });
   saveData(); sound('cash');
   toast('পরিশোধ ' + money(pay) + ' — বাকি ' + money(Math.max(0, num(l.amount) - num(l.paid))), 'ok');
-  if (num(l.paid) >= num(l.amount)) { state.loans = state.loans.filter(x => x.id !== id); saveData(); toast('ঋণ সম্পূর্ণ শোধ! 🎉', 'ok'); }
+  if (num(l.paid) >= num(l.amount)) { state.loans = state.loans.filter(x => String(x.id) !== String(l.id)); saveData(); toast('ঋণ সম্পূর্ণ শোধ! 🎉', 'ok'); }
 }
-function removeLoan(id) { state.loans = state.loans.filter(x => x.id !== id); saveData(); toast('ঋণ লিস্ট থেকে সরানো হলো', 'ok'); }
+function removeLoan(id) {
+  const l = state.loans.find(x => String(x.id) === String(id)); if (!l) return;
+  askConfirm('ঋণ লিস্ট থেকে সরাবেন?', '"' + l.desc + '" — বাকি ' + money(Math.max(0, num(l.amount) - num(l.paid))) + '। তালিকা থেকে মুছে যাবে।', () => {
+    state.loans = state.loans.filter(x => String(x.id) !== String(l.id));
+    saveData(); toast('ঋণ লিস্ট থেকে সরানো হলো', 'ok');
+  });
+}
 
 /* ---------------------------- clients ---------------------------- */
 function clientStats() {
@@ -2872,8 +3110,8 @@ function renderClients() {
     '<div class="proj" style="margin:0"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><b style="color:var(--c1);font-size:1.02rem">' + esc(c.name) + '</b><div class="hint">শেষ কাজ ' + dateLabel(c.last) + '</div></div><div style="text-align:right"><div style="font-weight:700;color:var(--ok)">' + money(c.total) + '</div>' + (c.due > 0 ? '<div class="hint" style="color:var(--warn)">বাকি ' + money(c.due) + '</div>' : '<div class="hint" style="color:var(--ok)">✅ ক্লিয়ার</div>') + '</div></div>' +
     '<div class="bar"><i style="width:' + pct(c.received, c.total) + '%"></i></div>' +
     '<div class="meta"><span>📂 ' + c.projects + 'টি প্রজেক্ট (' + c.done + ' শেষ)</span><span>⏱️ ' + fmtHours(c.sec) + '</span>' + (c.sec > 0 ? '<span>⚡ ' + money(near(c.total / hours(c.sec))) + '/ঘ</span>' : '') + '</div>' +
-    '<div class="acts"><button class="btn sm ghost" onclick="invoiceForClient(\'' + esc(c.name).replace(/'/g, '') + '\')">🧾 ইনভয়েস</button>' +
-    '<button class="btn sm ghost" onclick="openDetails(\'due\')">💵 বাকি</button>' +
+    '<div class="acts"><button class="btn sm ghost" onclick="openClientInvoice(' + jsArg(c.name) + ')">🧾 ক্লায়েন্ট ইনভয়েস</button>' +
+    '<button class="btn sm ghost" onclick="openClientDue(' + jsArg(c.name) + ')">💵 বাকি</button>' +
     '<a class="btn sm ghost" style="text-decoration:none" href="https://wa.me/?text=' + encodeURIComponent('হ্যালো ' + c.name + ', আপনার প্রজেক্ট নিয়ে আপডেট...') + '" target="_blank">💬 WhatsApp</a></div></div>'
   ).join('') : '<div class="empty" style="grid-column:1/-1"><div class="big">👥</div>প্রজেক্ট যোগ করলে ক্লায়েন্টরা এখানে দেখাবে</div>';
 
@@ -2883,27 +3121,85 @@ function renderClients() {
 function invoiceForClient(name) {
   const p = state.projects.find(x => x.client === name); if (p) openInvoice(p.id);
 }
+function clientInvoiceText(name) {
+  const ps = state.projects.filter(p => String(p.client) === String(name));
+  const tot = ps.reduce((s, p) => s + num(p.price), 0);
+  const paid = ps.reduce((s, p) => s + receivedOf(p), 0);
+  return 'ইনভয়েস — ' + name + '\n' + 'Naim\'s OS — ' + (state.name || 'Naim') + '\n' +
+    ps.map(p => '• ' + p.title + ' — ' + money(p.price) + (num(p.due) > 0 ? ' (বাকি ' + money(p.due) + ')' : ' (পরিশোধিত)')).join('\n') +
+    '\nমোট: ' + money(tot) + ' • পরিশোধিত: ' + money(paid) + ' • বাকি: ' + money(Math.max(0, tot - paid)) +
+    '\nতারিখ: ' + dateLabel(new Date()) + '\nধন্যবাদ!';
+}
+function copyClientInvoice(name) {
+  const txt = clientInvoiceText(name);
+  const done = () => { toast('📋 ক্লায়েন্ট ইনভয়েস কপি হয়েছে', 'ok'); sound('click'); };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done).catch(() => fallbackCopy(txt, done));
+  else fallbackCopy(txt, done);
+}
+function openClientInvoice(name) {
+  const ps = state.projects.filter(p => String(p.client) === String(name));
+  if (!ps.length) return toast('এই ক্লায়েন্টের কোনো প্রজেক্ট নেই', 'err');
+  const tot = ps.reduce((s, p) => s + num(p.price), 0);
+  const paid = ps.reduce((s, p) => s + receivedOf(p), 0);
+  const due = Math.max(0, tot - paid);
+  const no = 'INV-' + todayKey().replace(/-/g, '') + '-C' + String(name).length + ps.length;
+  el('m-invoice-body').innerHTML =
+    '<div style="padding:6px 2px">' +
+    '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:18px;flex-wrap:wrap">' +
+      '<div><div style="font-size:1.7rem;font-weight:800" class="grad-text">INVOICE</div>' +
+      '<div class="hint">' + esc(state.name || 'Naim') + ' • ' + esc(state.role || 'Pro Video Editor') + '</div></div>' +
+      '<div style="text-align:right"><div style="font-family:monospace;font-weight:700;color:var(--c1)">' + no + '</div>' +
+      '<div class="hint">' + dateLabel(new Date()) + '</div>' +
+      (due <= 0 ? '<span class="pill p-ok">✅ পরিশোধিত</span>' : '<span class="pill p-bad">🔴 বাকি</span>') + '</div>' +
+    '</div>' +
+    '<div style="margin-bottom:14px"><div class="hint">বিল টু</div><b style="font-size:1.05rem">' + esc(name) + '</b></div>' +
+    '<table class="tbl"><thead><tr><th>প্রজেক্ট</th><th>সময়</th><th style="text-align:right">মূল্য</th><th style="text-align:right">বাকি</th></tr></thead><tbody>' +
+      ps.map(p => '<tr><td><b>' + esc(p.title) + '</b><br><small class="hint">' + dateLabel(p.completedAt || p.createdAt) + '</small></td>' +
+        '<td>' + (actualSec(p) > 0 ? fmtDur(actualSec(p)) : '—') + '</td>' +
+        '<td class="num" style="text-align:right">' + money(p.price) + '</td>' +
+        '<td class="num" style="text-align:right;color:' + (num(p.due) > 0 ? 'var(--warn)' : 'var(--ok)') + '">' + money(p.due) + '</td></tr>').join('') +
+    '</tbody></table>' +
+    '<div style="max-width:340px;margin-left:auto;margin-top:14px">' +
+      '<div class="drow"><span>মোট (' + ps.length + ' প্রজেক্ট)</span><b>' + money(tot) + '</b></div>' +
+      '<div class="drow"><span>পরিশোধিত</span><b style="color:var(--ok)">' + money(paid) + '</b></div>' +
+      '<div class="drow" style="border-top:2px solid var(--border);font-size:1.1rem"><span><b>পরিশোধযোগ্য</b></span><b style="color:' + (due > 0 ? 'var(--warn)' : 'var(--ok)') + '">' + money(due) + '</b></div>' +
+    '</div>' +
+    '<p class="hint" style="margin-top:14px">ধন্যবাদ! যেকোনো প্রশ্নে যোগাযোগ করুন।</p>' +
+    '<div class="row no-print" style="margin-top:12px"><button class="btn ghost" style="flex:1" onclick="copyClientInvoice(' + jsArg(name) + ')">📋 ইনভয়েস কপি করুন</button></div>' +
+    '</div>';
+  openOverlay('m-invoice');
+}
+function openClientDue(name) {
+  const ps = state.projects.filter(p => String(p.client) === String(name) && num(p.due) > 0);
+  const t = el('m-details-title'), b = el('m-details-body');
+  t.textContent = '💵 ' + name + ' — বাকি';
+  b.innerHTML = ps.length
+    ? ps.map(p => '<div class="drow"><span>' + esc(p.title) + '<br><small class="hint">মোট ' + money(p.price) + ' • পরিশোধিত ' + money(receivedOf(p)) + '</small></span><b style="color:var(--warn)">' + money(p.due) + '</b></div>').join('') +
+      '<div class="drow" style="border-top:2px solid var(--border)"><span><b>মোট বাকি</b></span><b style="color:var(--warn)">' + money(ps.reduce((s, p) => s + num(p.due), 0)) + '</b></div>'
+    : '<div class="empty">এই ক্লায়েন্টের কোনো বাকি নেই 🎉</div>';
+  openOverlay('m-details');
+}
 
 /* ---------------------------- planning ---------------------------- */
 function renderPlanning() {
   const s = el('skill-list');
   if (s) s.innerHTML = state.skills.length ? state.skills.map(x => {
     const st = x.status === 'learning' ? '<span class="pill p-mid">⏳ শিখছি</span>' : x.status === 'done' ? '<span class="pill p-ok">✅ শেখা শেষ</span>' : '<span class="pill p-low">⏸ পরে</span>';
-    return '<div class="list-item"><div class="g">' + esc(x.name) + '</div><button onclick="toggleSkill(' + x.id + ')" style="background:none;border:none;cursor:pointer">' + st + '</button><button class="btn sm ghost" onclick="deleteSkill(' + x.id + ')">✖</button></div>';
+    return '<div class="list-item"><div class="g">' + esc(x.name) + '</div><button onclick="toggleSkill(' + jsArg(x.id) + ')" style="background:none;border:none;cursor:pointer">' + st + '</button><button class="btn sm ghost" onclick="deleteSkill(' + jsArg(x.id) + ')">✖</button></div>';
   }).join('') : '<div class="empty">নতুন স্কিল যোগ করুন</div>';
 
   const i = el('idea-list');
   if (i) i.innerHTML = state.ideas.length ? state.ideas.map(x => {
     const st = x.status === 'thinking' ? '<span class="pill p-mid">🤔 ভাবছি</span>' : x.status === 'researching' ? '<span class="pill p-low">🔍 রিসার্চ</span>' : '<span class="pill p-ok">🚀 শুরু</span>';
-    return '<div class="list-item"><div class="g">' + esc(x.name) + '</div><button onclick="toggleIdea(' + x.id + ')" style="background:none;border:none;cursor:pointer">' + st + '</button><button class="btn sm ghost" onclick="deleteIdea(' + x.id + ')">✖</button></div>';
+    return '<div class="list-item"><div class="g">' + esc(x.name) + '</div><button onclick="toggleIdea(' + jsArg(x.id) + ')" style="background:none;border:none;cursor:pointer">' + st + '</button><button class="btn sm ghost" onclick="deleteIdea(' + jsArg(x.id) + ')">✖</button></div>';
   }).join('') : '<div class="empty">নতুন আইডিয়া যোগ করুন</div>';
 }
 function addSkill() { const v = el('new-skill').value.trim(); if (!v) return; state.skills.unshift({ id: uid(), name: v, status: 'learning' }); el('new-skill').value = ''; saveData(); toast('স্কিল যোগ হয়েছে 🚀', 'ok'); }
-function toggleSkill(id) { const x = state.skills.find(k => k.id === id); if (!x) return; x.status = x.status === 'learning' ? 'done' : x.status === 'done' ? 'later' : 'learning'; saveData(); }
-function deleteSkill(id) { state.skills = state.skills.filter(k => k.id !== id); saveData(); }
+function toggleSkill(id) { const x = state.skills.find(k => String(k.id) === String(id)); if (!x) return; x.status = x.status === 'learning' ? 'done' : x.status === 'done' ? 'later' : 'learning'; saveData(); }
+function deleteSkill(id) { state.skills = state.skills.filter(k => String(k.id) !== String(id)); saveData(); }
 function addIdea() { const v = el('new-idea').value.trim(); if (!v) return; state.ideas.unshift({ id: uid(), name: v, status: 'thinking' }); el('new-idea').value = ''; saveData(); toast('আইডিয়া সেভ হয়েছে 💡', 'ok'); }
-function toggleIdea(id) { const x = state.ideas.find(k => k.id === id); if (!x) return; x.status = x.status === 'thinking' ? 'researching' : x.status === 'researching' ? 'building' : 'thinking'; saveData(); }
-function deleteIdea(id) { state.ideas = state.ideas.filter(k => k.id !== id); saveData(); }
+function toggleIdea(id) { const x = state.ideas.find(k => String(k.id) === String(id)); if (!x) return; x.status = x.status === 'thinking' ? 'researching' : x.status === 'researching' ? 'building' : 'thinking'; saveData(); }
+function deleteIdea(id) { state.ideas = state.ideas.filter(k => String(k.id) !== String(id)); saveData(); }
 
 /* ---------------------------- calculator ---------------------------- */
 function calcInput(v) { calcVal = v === 'C' ? '' : calcVal + v; el('calc-display').textContent = calcVal || '0'; }
@@ -2934,11 +3230,11 @@ function exportCSV(kind) {
     clientStats().forEach(c => rows.push([c.name, c.projects, c.done, c.total, c.received, c.due, (c.sec / 3600).toFixed(2)]));
   } else {
     name = 'analytics.csv';
-    const m = (typeof anModel === 'function') ? anModel(state.ui.range === 'custom' ? 30 : state.ui.range) : null;
+    const m = (typeof anModel === 'function') ? anModel(state.ui.range) : null;
     rows.push(['Bucket', 'Income', 'Expenses', 'Hours', 'Sessions', 'ProjectsDone', 'AvgRate']);
     if (m) m.buckets.forEach(b => rows.push([b.label, near(b.income), near(b.expense), (b.sec / 3600).toFixed(2), b.sessions, b.done, b.sec > 0 ? near(b.income / hours(b.sec)) : 0]));
   }
-  download(name, rows.map(r => r.map(csvEsc).join(',')).join('\n'), 'text/csv;charset=utf-8');
+  download(name, '\ufeff' + rows.map(r => r.map(csvEsc).join(',')).join('\n'), 'text/csv;charset=utf-8');
   toast('CSV ডাউনলোড হয়েছে ⬇️', 'ok');
 }
 function exportJSON() {
@@ -2955,16 +3251,21 @@ function importJSON(ev) {
         customSounds = parsed.__customSounds; delete parsed.__customSounds;
         saveCustomSounds(); renderCustomSounds();
       }
+      stopTimerSilently();
       state = normalize(parsed);
       applyTheme(state.theme); syncInputs(); saveData();
       toast('ডেটা রিস্টোর হয়েছে ✅', 'ok');
     } catch (err) { toast('ফাইল পড়া যায়নি', 'err'); }
   };
   r.readAsText(f);
+  try { ev.target.value = ''; } catch (e) { }
 }
 function confirmReset() {
-  askConfirm('সব ডেটা মুছে ফেলবেন?', 'এই ব্রাউজারের সব প্রজেক্ট, খরচ, টাইম-লগ মুছে যাবে (ক্লাউড ডেটা থাকবে কিন্তু)।', () => {
+  askConfirm('সব ডেটা মুছে ফেলবেন?', 'এই ব্রাউজারের সব প্রজেক্ট, খরচ, টাইম-লগ, গোল ও কাস্টম সাউন্ড মুছে যাবে। লগ-ইন থাকলে ক্লাউড ব্যাকআপও খালি হয়ে যাবে — আগে ব্যাকআপ ডাউনলোড করে নিন।', () => {
+    stopTimerSilently();
     localStorage.removeItem('naims_os_data_v3');
+    localStorage.removeItem('naims_os_sounds_v1');
+    customSounds = {};
     state = JSON.parse(JSON.stringify(DEFAULT_STATE));
     applyTheme('dark'); syncInputs(); saveData();
     toast('সব ডেটা মুছে ফেলা হয়েছে', 'warn');
@@ -2981,9 +3282,10 @@ function loadDemoData() {
       state.projects.push(p);
       const totalH = n[4] + (i % 2 === 0 ? 2.5 : -1.2);
       let left = totalH * 3600;
+      const endDay = done ? -(3 - i) : 0;
       for (let d = 0; d < 4 && left > 0; d++) {
         const sec = Math.min(left, (1 + Math.random() * 2.4) * 3600);
-        const day = dayKey(addDays(new Date(), -(i + d + 1)));
+        const day = dayKey(addDays(new Date(), endDay - d));
         state.sessions.push({ id: uid(), projectId: p.id, title: p.title, start: day + 'T10:00:00', end: day + 'T12:00:00', sec: near(sec), kind: 'work' });
         left -= sec;
       }
@@ -3013,8 +3315,9 @@ function rangeFromTo() {
   const r = state.ui.range;
   const to = todayKey();
   if (r === 'custom') {
-    const f = el('an-from') && el('an-from').value ? el('an-from').value : dayKey(addDays(new Date(), -29));
-    const t = el('an-to') && el('an-to').value ? el('an-to').value : to;
+    let f = el('an-from') && el('an-from').value ? el('an-from').value : dayKey(addDays(new Date(), -29));
+    let t = el('an-to') && el('an-to').value ? el('an-to').value : to;
+    if (f > t) { const tmp = f; f = t; t = tmp; }
     return { from: f, to: t, days: Math.max(1, daysBetween(f, t) + 1) };
   }
   const n = num(r) || 30;
@@ -3070,7 +3373,7 @@ function anModel(rng) {
   // এস্টিমেট vs আসল
   const eva = state.projects.filter(p => num(p.estHours) > 0).map(p => ({ p, est: num(p.estHours), act: hours(actualSec(p)) })).sort((a, b) => b.est - a.est).slice(0, 12);
   const estTotal = eva.reduce((s, x) => s + x.est, 0), actTotal = eva.reduce((s, x) => s + x.act, 0);
-  const acc = eva.length ? near(100 - Math.abs(actTotal - estTotal) / (estTotal || 1) * 100) : 0;
+  const acc = eva.length ? Math.max(0, near(100 - Math.abs(actTotal - estTotal) / (estTotal || 1) * 100)) : 0;
 
   // ব্যাজ
   const tot = totals();
@@ -3124,7 +3427,7 @@ function renderAnalytics() {
   const kpi = [
     { l: '💰 মোট আয়', v: money(m.income), s: 'দৈনিক গড় ' + money(m.avgDaily), b: delta(m.income, m.prevInc), c: 'var(--ok)', e: 'income', hint: 'পেমেন্ট যোগ / মুছুন' },
     { l: '⏱️ কাজের সময়', v: fmtHours(m.sec), s: m.sessions + 'টি সেশন', b: delta(m.sec, m.prevSec), c: 'var(--c2)', e: 'hours', hint: 'সময় যোগ / মুছুন' },
-    { l: '⚡ গড় ঘণ্টা-রেট', v: money(near(m.avgRate)) + '/ঘ', s: 'সেরা মাস: ' + (m.busiest ? m.busiest.label : '—'), c: 'var(--c3)', e: 'rate', hint: 'টার্গেট এডিট' },
+    { l: '⚡ গড় ঘণ্টা-রেট', v: money(near(m.avgRate)) + '/ঘ', s: 'সেরা পিরিয়ড: ' + (m.busiest ? m.busiest.label : '—'), c: 'var(--c3)', e: 'rate', hint: 'টার্গেট এডিট' },
     { l: '⏰ ওভারটাইম (মোট)', v: otAn.total > 0 ? fmtDur(otAn.total) : '০ ঘ', s: otAn.count ? otAn.count + '/' + otAn.withEst + 'টি প্রজেক্টে এস্টিমেটের বাইরে' : 'সব এস্টিমেটের ভেতরে ✅', c: otAn.total > 0 ? 'var(--bad)' : 'var(--ok)', e: 'overtime', hint: 'বিস্তারিত' },
     { l: '🔥 সেরা দিন', v: m.best ? dateLabel(m.best) : '—', s: m.best && m.daily[m.best] ? money(m.daily[m.best].income) + ' আয়' : '', c: 'var(--c4)', e: 'bestday', hint: 'দিনের বিস্তারিত' },
     { l: '✅ শেষ হওয়া প্রজেক্ট', v: String(m.doneCount), s: 'সময়মতো ' + m.tot.onTimePct + '%', c: 'var(--ok)', e: 'projects', hint: 'প্রজেক্ট এডিট' },
@@ -3151,9 +3454,10 @@ function renderAnalytics() {
   if (ce) ce.innerHTML = m.eva.length ? svgGrouped(m.eva.map(x => ({ label: x.p.title, short: x.p.title.slice(0, 9), a: x.est, b: x.act })), { aLabel: '🎯 এস্টিমেট (ঘণ্টা)', bLabel: '⏱️ আসল (ঘণ্টা)', aColor: '#6366f1', bColor: '#22d3ee', fmt: (v) => near(v * 10) / 10 + ' ঘ', empty: 'এস্টিমেট দেওয়া প্রজেক্ট নেই' }) : emptyBox('এস্টিমেট দেওয়া কোনো প্রজেক্ট নেই — নতুন প্রজেক্টে "আগে থেকে সময়ের অনুমান" দিন');
   const es = el('est-summary');
   const overH = otAn.total / 3600;
-  if (es) es.innerHTML = m.eva.length ? 'মোট এস্টিমেট <b>' + m.estTotal.toFixed(1) + 'ঘ</b> • আসল <b>' + m.actTotal.toFixed(1) + 'ঘ</b> • নিট পার্থক্য <b style="color:' + (m.actTotal > m.estTotal ? 'var(--bad)' : 'var(--ok)') + '">' + (m.actTotal - m.estTotal >= 0 ? '+' : '') + (m.actTotal - m.estTotal).toFixed(1) + 'ঘ</b>' +
-    (overH > 0 ? ' • ⏰ এস্টিমেটের বাইরে <b style="color:var(--bad)">+' + overH.toFixed(1) + 'ঘ</b> (' + otAn.count + 'টি প্রজেক্টে)' : ' • ✅ কোনো ওভারটাইম নেই') +
-    ' • নির্ভুলতা ' + m.acc + '%' : '—';
+  if (es) es.innerHTML = m.eva.length
+    ? '🎯 নির্ভুলতা <b>' + m.acc + '%</b>' +
+      (overH > 0 ? ' • ⏰ এস্টিমেটের বাইরে <b style="color:var(--bad)">+' + overH.toFixed(1) + 'ঘ</b> (' + otAn.count + 'টি প্রজেক্টে)' : ' • ✅ কোনো ওভারটাইম নেই')
+    : '—';
 
   // weekday
   const cw = el('ch-weekday');
@@ -3163,7 +3467,7 @@ function renderAnalytics() {
   const hm = el('ch-heat');
   if (hm) hm.innerHTML = heatmapHTML(m.keys.map(k => ({
     key: k, full: dateLabel(k) + ' — ' + money(m.daily[k].income) + ' • ' + fmtDur(m.daily[k].sec),
-    value: metric === 'income' ? m.daily[k].income : metric === 'hours' ? m.daily[k].sec / 3600 : (m.daily[k].sec > 0 ? 1 : 0)
+    value: metric === 'income' ? m.daily[k].income : metric === 'hours' ? m.daily[k].sec / 3600 : m.daily[k].sessions
   })), { fmt: metric === 'income' ? (v) => money(v) : metric === 'hours' ? (v) => v.toFixed(1) + 'ঘ' : (v) => v + ' সেশন' });
   const hc = el('hm-caption');
   if (hc) hc.textContent = 'প্রতিটি ঘর = ১ দিন • স্কেল: ' + (metric === 'income' ? 'আয় (৳)' : metric === 'hours' ? 'কাজের ঘণ্টা' : 'সেশন');
@@ -3250,7 +3554,7 @@ function anEdit(kind) {
       '<div class="sec-title">📋 পেমেন্ট তালিকা (' + pays.length + 'টি)</div>' +
       (pays.length ? anExpRows(pays.slice(0, 80).map(x => ({ left: x.ptitle, sub: dateLabel(x.date) + (x.note ? ' • ' + esc(x.note) : ''), right: '<span style="color:var(--ok)">' + money(x.amount) + '</span>' })), i => '<button class="btn sm ghost" onclick="anDelPayment(' + i + ')" title="মুছুন">✕</button>')
         : '<div class="empty">কোনো পেমেন্ট নেই — উপরে যোগ করুন</div>') +
-      '<div class="hint" style="margin-top:10px">💡 পেমেন্ট মুছলে প্রজেক্টের বকেয়া (due) স্বয়ংক্রিয়ভাবে ঠিক হবে না — ওয়ার্কস্পেস থেকে ঠিক করে নিন।</div>';
+      '<div class="hint" style="margin-top:10px">💡 পেমেন্ট মুছলে প্রজেক্টের বকেয়া (due) অটো ঠিক হয়ে যাবে। বেশি টাকা দিলে অগ্রিম হিসেবে গণনা হবে।</div>';
 
   } else if (kind === 'hours') {
     title = '⏱️ কাজের সময় এডিট';
@@ -3328,16 +3632,15 @@ function anEdit(kind) {
 
   } else if (kind === 'accuracy') {
     title = '📈 এস্টিমেট নির্ভুলতা এডিট';
-    const ps = state.projects.filter(p => num(p.estHours) > 0);
-    const te = ps.reduce((s, p) => s + num(p.estHours), 0), ta = ps.reduce((s, p) => s + hours(actualSec(p)), 0);
+    const ps = state.projects.slice();
     html = '<div class="drow"><span>এই রেঞ্জের নির্ভুলতা</span><b style="color:var(--c1)">' + m.acc + '%</b></div>' +
       '<div class="hint" style="margin-top:8px">এস্টিমেট বদলে দিলে সঙ্গে সঙ্গে নির্ভুলতা ও ওভারটাইম আপডেট হবে।</div>' +
       '<div class="sec-title">প্রজেক্ট অনুযায়ী এস্টিমেট (ঘণ্টা)</div>' +
       (ps.length ? ps.map((p, i) => {
-        const act = hours(actualSec(p)), pr = near(act / num(p.estHours) * 100);
-        return '<div class="drow"><span>' + esc(p.title) + '<br><small class="hint">আসল ' + act.toFixed(1) + 'ঘ • ' + pr + '%' + (pr > 100 ? ' ⏰' : '') + '</small></span>' +
-          '<span style="white-space:nowrap"><input type="number" step="0.5" min="0" id="ane-' + i + '" value="' + num(p.estHours) + '" style="width:74px;display:inline-block;padding:6px 8px"><button class="btn sm" onclick="anSaveEst(' + i + ')">✔️</button></span></div>';
-      }).join('') : '<div class="empty">এস্টিমেট দেওয়া প্রজেক্ট নেই</div>');
+        const est = num(p.estHours), act = hours(actualSec(p)), pr = est > 0 ? near(act / est * 100) : 0;
+        return '<div class="drow"><span>' + esc(p.title) + '<br><small class="hint">আসল ' + act.toFixed(1) + 'ঘ • ' + (est > 0 ? pr + '%' + (pr > 100 ? ' ⏰' : '') : '<span style="color:var(--warn)">এস্টিমেট নেই</span>') + '</small></span>' +
+          '<span style="white-space:nowrap"><input type="number" step="0.5" min="0" id="ane-' + i + '" value="' + est + '" style="width:74px;display:inline-block;padding:6px 8px"><button class="btn sm" onclick="anSaveEst(' + i + ')">✔️</button></span></div>';
+      }).join('') : '<div class="empty">কোনো প্রজেক্ট নেই — আগে প্রজেক্ট যোগ করুন</div>');
 
   } else if (kind === 'streak') {
     title = '🔥 স্ট্রিক ও কনসিস্টেন্সি';
@@ -3379,7 +3682,11 @@ function anDelPayment(i) {
   if (!p) return;
   const pay = (p.payments || []).find(y => String(y.id) === String(x.id));
   p.payments = (p.payments || []).filter(y => String(y.id) !== String(x.id));
-  if (pay && pay.dueAdj) p.due = Math.min(num(p.price), num(p.due) + num(pay.dueAdj));
+  if (pay) {
+    // পুরনো পেমেন্টে dueAdj না থাকলে বর্তমান বাকি থেকে অনুমান করে ফেরত দিই
+    const adj = pay.dueAdj != null ? num(pay.dueAdj) : Math.min(num(pay.amount), Math.max(0, num(p.price) - num(p.due)));
+    p.due = Math.min(num(p.price), num(p.due) + adj);
+  }
   saveData(); toast('পেমেন্ট মুছে ফেলা হয়েছে', 'warn');
   anEdit('income');
 }
@@ -3399,7 +3706,7 @@ function anDelSession(i) {
   if (!x) return;
   state.sessions = state.sessions.filter(s => String(s.id) !== String(x.id));
   const p = state.projects.find(pp => String(pp.id) === String(x.projectId));
-  if (p) p.timeSpent = actualSec(p);
+  if (p) p.timeSpent = state.sessions.filter(s => String(s.projectId) === String(p.id) && s.kind !== 'break').reduce((a, s) => a + num(s.sec), 0);
   saveData(); toast('সেশন মুছে ফেলা হয়েছে', 'warn');
   anEdit('hours');
 }
@@ -3414,7 +3721,7 @@ function anToggleProj(i) {
   const p = state.projects[i];
   if (!p) return;
   if (p.status === 'done') { p.status = 'active'; p.completedAt = null; toast('↩️ আবার চলমান করা হয়েছে', 'ok'); }
-  else { p.status = 'done'; p.completedAt = new Date().toISOString(); toast('✅ শেষ করা হয়েছে', 'ok'); sound('ok'); }
+  else { stopTimerForProject(p.id, false); p.status = 'done'; p.completedAt = new Date().toISOString(); toast('✅ শেষ করা হয়েছে', 'ok'); sound('ok'); }
   saveData();
   anEdit('projects');
 }
@@ -3449,8 +3756,7 @@ function anDelExpenseAt(i) {
   anEdit('expense');
 }
 function anSaveEst(i) {
-  const ps = state.projects.filter(p => num(p.estHours) > 0);
-  const p = ps[i];
+  const p = state.projects[i];
   if (!p) return;
   const v = num(el('ane-' + i).value);
   if (v < 0) return toast('সঠিক ঘণ্টা দিন', 'err');
@@ -3464,7 +3770,7 @@ function anSaveEst(i) {
    ========================================================================= */
 const GOAL_MIN_DAYS = 1, GOAL_MAX_DAYS = 1095;
 
-function goalTypeName(t) { return t === 'projects' ? '📂 প্রজেক্ট' : t === 'hours' ? '⏱️ ঘণ্টা' : '💵 আয়'; }
+function goalTypeName(t) { return t === 'projects' ? '📂 প্রজেক্ট' : t === 'hours' ? '⏱️ ঘণ্টা' : '💵 আয়/কাজ'; }
 function goalFmt(g, v) {
   if (g.type === 'projects') return near(v) + 'টি';
   if (g.type === 'hours') return (Math.round(num(v) * 10) / 10) + 'ঘ';
@@ -3476,7 +3782,7 @@ function goalMetric(g, toKey) {
   const inside = (k) => k && k >= from && k <= to;
   if (g.type === 'projects') return state.projects.filter(p => p.status === 'done' && inside(isoDay(p.completedAt))).length;
   if (g.type === 'hours') return state.sessions.filter(s => inside(isoDay(s.end || s.start))).reduce((a, x) => a + num(x.sec), 0) / 3600;
-  return incomeEntries().filter(x => inside(x.date)).reduce((s, x) => s + x.amount, 0);
+  return targetCredit(from, to).total;
 }
 function setGoalDays(d) {
   state.ui.goalDays = d;
@@ -3553,9 +3859,9 @@ function addGoal() {
   updateGoalPreview();
 }
 function deleteGoal(id) {
-  const g = state.goals.find(x => x.id === id); if (!g) return;
+  const g = state.goals.find(x => String(x.id) === String(id)); if (!g) return;
   askConfirm('গোল মুছবেন?', '"' + g.title + '" মুছে ফেলা হবে।', () => {
-    state.goals = state.goals.filter(x => x.id !== id);
+    state.goals = state.goals.filter(x => String(x.id) !== String(id));
     saveData(); toast('গোল মুছে ফেলা হয়েছে', 'warn');
   });
 }
@@ -3564,15 +3870,16 @@ function goalStats(g) {
   const total = Math.max(1, daysBetween(g.start, g.end) + 1);
   const achieved = goalMetric(g);
   const elapsed = Math.max(1, Math.min(total, daysBetween(g.start, today) + 1));
-  const left = Math.max(0, daysBetween(today, g.end));
+  // আজকের দিনটিও বাকি হিসেবে ধরা হয় (শেষ দিনে "০ দিন বাকি" দেখাবে না)
+  const left = Math.max(0, daysBetween(today, g.end) + 1);
   const target = num(g.target) || 1;
   const pr = pct(achieved, target);
   const done = achieved >= num(g.target) && num(g.target) > 0;
   const notStarted = today < g.start;
-  const over = !done && !notStarted && left <= 0;
+  const over = !done && !notStarted && today > g.end;
   const pace = notStarted ? 0 : achieved / elapsed;
   const needPace = target / total;
-  const needDay = Math.max(0, target - achieved) / Math.max(1, left);
+  const needDay = Math.max(0, target - achieved) / Math.max(1, over ? 1 : left);
   const onTrack = pace >= needPace;
   let cls = '', pill = '';
   if (done) { cls = 'achieved'; pill = '<span class="pill p-ok">✅ অর্জিত</span>'; }
@@ -3611,7 +3918,7 @@ function goalCardHTML(g, compact) {
               (s.projDays != null ? '<span>🔮 এই গতিতে পূর্ণ হবে <b>' + dateLabel(dayKey(addDays(new Date(), s.projDays))) + '</b></span>' : '<span class="hint">এখনো গতি নেই — কাজ শুরু করুন</span>')) +
       '<span>⏱️ সময় <b>' + near(pct(s.elapsed, s.total)) + '%</b> • অর্জিত <b>' + near(s.pr) + '%</b></span>' +
     '</div>' +
-    '<div class="acts"><button class="btn sm ghost" onclick="deleteGoal(\'' + esc(g.id) + '\')">🗑️ গোল মুছুন</button></div>' +
+    '<div class="acts"><button class="btn sm ghost" onclick="deleteGoal(' + jsArg(g.id) + ')">🗑️ গোল মুছুন</button></div>' +
     '</div>';
 }
 function renderGoals() {
@@ -3676,9 +3983,9 @@ const PLAN_DOW = ['রবি', 'সোম', 'মঙ্গল', 'বুধ', 'ব
 let planFilter = 'all';
 let planDragId = null;
 
-function planDate() { return state.ui.planDate || todayKey(); }
-function planMonthKey() { return state.ui.planMonth || planDate().slice(0, 7); }
-function planIdAttr(id) { return /^\d+$/.test(String(id)) ? String(id) : "'" + String(id).replace(/'/g, "\\'") + "'"; }
+function planDate() { return isoDay(state.ui.planDate || todayKey()); }
+function planMonthKey() { const m = state.ui.planMonth; return /^\d{4}-\d{2}$/.test(String(m || '')) ? m : planDate().slice(0, 7); }
+function planIdAttr(id) { return jsArg(id); }
 function planShort(d) {
   if (d === todayKey()) return 'আজ';
   if (d === dayKey(addDays(new Date(), 1))) return 'কাল';
@@ -3703,6 +4010,7 @@ function setPlanDate(d) {
 function shiftPlanMonth(n) {
   const p = planMonthKey().split('-').map(Number);
   const dt = new Date(p[0], p[1] - 1 + n, 1);
+  if (isNaN(dt)) { state.ui.planMonth = todayKey().slice(0, 7); saveData(); return; }
   state.ui.planMonth = dayKey(dt).slice(0, 7);
   saveData();
 }
@@ -3721,8 +4029,8 @@ function addPlanTask() {
   const d = picked || planDate();
   state.todos.unshift({
     id: uid(), date: d, text: txt,
-    money: num((el('pl-money') || {}).value),
-    time: num((el('pl-time') || {}).value),
+    money: Math.max(0, num((el('pl-money') || {}).value)),
+    time: Math.max(0, num((el('pl-time') || {}).value)),
     done: false, prio: (el('pl-prio') || {}).value || 'medium',
     createdAt: new Date().toISOString()
   });
@@ -3761,7 +4069,7 @@ function moveAllOverdue() {
   if (!list.length) return toast('কোনো ওভারডিউ কাজ নেই ✅', 'ok');
   list.forEach(t => { t.date = today; });
   saveData(); fireConfetti(); sound('success');
-  toast(list.length + 'টি বেকার কাজ আজে আনা হয়েছে ⏰', 'ok');
+  toast(list.length + 'টি বেকার কাজ আজকের লিস্টে আনা হয়েছে ⏰', 'ok');
 }
 function completePlanDay(dk) {
   const list = state.todos.filter(t => t.date === dk && !t.done);
@@ -3893,7 +4201,7 @@ function renderPlanner() {
   if (ob) {
     const od = state.todos.filter(t => !t.done && t.date < todayKey());
     ob.innerHTML = od.length
-      ? '<div class="plan-group" style="border-color:rgba(239,68,68,.35)"><div class="plan-group-head" style="background:rgba(239,68,68,.12)">⏰ ওভারডিউ — ' + od.length + 'টি বাকি<button class="btn sm ok" style="margin-left:auto" onclick="moveAllOverdue()">সব আজে আনুন</button></div><div class="plan-group-body">' +
+      ? '<div class="plan-group" style="border-color:rgba(239,68,68,.35)"><div class="plan-group-head" style="background:rgba(239,68,68,.12)">⏰ ওভারডিউ — ' + od.length + 'টি বাকি<button class="btn sm ok" style="margin-left:auto" onclick="moveAllOverdue()">সব আজ আনুন</button></div><div class="plan-group-body">' +
         od.slice(0, 8).map(planRow).join('') + (od.length > 8 ? '<div class="hint">আরও ' + (od.length - 8) + 'টি আছে…</div>' : '') + '</div></div>'
       : '';
   }
@@ -3956,17 +4264,24 @@ function renderPlanCalendar() {
    ========================================================================= */
 let tPhase = 'work', tLeft = 1500, tTotal = 1500, tRun = false, tInt = null;
 let activeProjId = null, tWorked = 0, tLogStart = null, estWarned = false;
+let tLastTick = Date.now(), tLastAnnounceMin = -1, tPersistAt = 0;
 
 function timerEl() { return el('timer'); }
 function openProjectTimer(id, autostart) {
-  const p = state.projects.find(x => x.id === id); if (!p) return;
+  const p = projById(id); if (!p) return;
+  const same = activeProjId != null && String(activeProjId) === String(p.id);
+  // অন্য প্রজেক্ট/ফোকাস চললে তার সময় আগে সেভ হবে — হারাবে না
+  if (!same && (tRun || tWorked > 0)) logSession(true);
   activeProjId = p.id;
-  tPhase = 'work'; tLeft = num(state.settings.workMin) * 60; tTotal = tLeft; tRun = false; tWorked = 0; tLogStart = null; estWarned = false;
+  if (!same) {
+    tPhase = 'work'; tLeft = num(state.settings.workMin) * 60; tTotal = tLeft;
+    tRun = false; tWorked = 0; tLogStart = null; estWarned = false;
+  }
   const t = timerEl(); if (t) t.classList.add('on');
+  applyPhaseUI();
   const n = el('t-name'); if (n) n.textContent = p.title + ' • ' + p.client;
-  updateTimerUI();
-  if (autostart !== false) startTimerClock(true);
-  else updToggleBtn();
+  if (!tRun && autostart !== false) startTimerClock(true);
+  else { updToggleBtn(); updateTimerUI(); persistTimer(true); }
 }
 function startTimerForNext() {
   const act = state.projects.filter(p => p.status !== 'done');
@@ -3980,27 +4295,58 @@ function startTimerForNext() {
 function startTimerClock(speakIt) {
   if (tRun) return;
   tRun = true;
+  tLastTick = Date.now();
   if (!tLogStart) tLogStart = new Date();
   clearInterval(tInt);
   tInt = setInterval(tick, 1000);
   updToggleBtn();
+  persistTimer(true);
   if (speakIt) {
-    const p = state.projects.find(x => x.id === activeProjId);
-    sound('start');
-    speak('কাজ শুরু করুন। ' + (p ? p.title + '। ' : '') + num(state.settings.workMin) + ' মিনিটের টাইমার চালু হলো।');
-    toast('⏱️ টাইমার শুরু — ' + (p ? p.title : 'ফোকাস সেশন'), 'ok');
+    const p = projById(activeProjId);
+    const mins = Math.max(1, Math.round(tLeft / 60));
+    if (tPhase === 'break') {
+      sound('break');
+      speak('ব্রেক শুরু। ' + mins + ' মিনিট বিশ্রাম নিন।');
+      toast('☕ ব্রেক শুরু — ' + mins + ' মিনিট', 'ok');
+    } else {
+      sound('start');
+      speak('কাজ শুরু করুন। ' + (p ? p.title + '। ' : '') + mins + ' মিনিটের টাইমার চালু হলো।');
+      toast('⏱️ টাইমার শুরু — ' + (p ? p.title : 'ফোকাস সেশন'), 'ok');
+    }
   }
+  updateDashLive(); renderProjects();
 }
-function updToggleBtn() { const b = el('t-toggle'); if (b) b.innerHTML = tRun ? '⏸️ পজ' : (tWorked > 0 ? '▶️ চালান' : '▶️ স্টার্ট'); }
+function showTimerWidget() {
+  if (!activeProjId && !tRun && !(tLeft < tTotal || tWorked > 0)) return toast('টাইমার চালু নেই — আগে কাজ শুরু করুন', 'warn');
+  const p = activeProjId != null ? projById(activeProjId) : null;
+  const tw = timerEl(); if (tw) tw.classList.add('on');
+  const n = el('t-name'); if (n) n.textContent = p ? (p.title + ' • ' + p.client) : 'ফোকাস সেশন • প্রজেক্ট ছাড়া';
+  applyPhaseUI(); updToggleBtn(); updateTimerUI(); persistTimer(true);
+}
+function updToggleBtn() { const b = el('t-toggle'); if (b) b.innerHTML = tRun ? '⏸️ পজ' : (tWorked > 0 || tLeft < tTotal ? '▶️ চালান' : '▶️ স্টার্ট'); }
+function applyPhaseUI() {
+  const tw = timerEl(); if (tw) tw.classList.toggle('brk', tPhase === 'break');
+  const m = el('t-mode'); if (m) m.textContent = tPhase === 'work' ? '🎯 ওয়ার্ক সেশন' : '☕ ব্রেক টাইম';
+}
 function toggleTimer() {
   if (tRun) {
     clearInterval(tInt); tRun = false;
+    const worked = tWorked;
     logSession(false);
+    persistTimer(true); // কাজ ০ সেকেন্ড হলেও পজ অবস্থাটা সেভ থাকুক
     updToggleBtn(); sound('stop');
     speak('টাইমার পজ করা হলো।');
-    toast('⏸️ পজ — ' + fmtDur(tWorked) + ' কাজ হয়েছে', 'warn');
+    toast('⏸️ পজ — ' + fmtDur(worked) + ' কাজ হয়েছে', 'warn');
   } else startTimerClock(true);
-  updateTimerUI();
+  updateTimerUI(); updateDashLive(); renderProjects();
+}
+function setTimerPreset(min) {
+  min = Math.max(1, Math.min(240, num(min)));
+  if (!min) return;
+  if (tRun) return toast('আগে টাইমার পজ করুন, তারপর সময় বদলান', 'warn');
+  tLeft = min * 60; tTotal = tLeft; tWorked = 0; tLogStart = null; tLastAnnounceMin = -1;
+  updateTimerUI(); persistTimer(true); sound('click');
+  toast('⏱️ টাইমার ' + min + ' মিনিটে সেট হয়েছে', 'ok');
 }
 /* ---------- প্রজেক্ট কার্ড থেকে সরাসরি টাইমার (উইজেট না খুলেই) ---------- */
 function startInline(id) {
@@ -4010,16 +4356,18 @@ function startInline(id) {
   if (!same && (tRun || tWorked > 0)) logSession(true);
   if (!same) {
     tRun = false; tWorked = 0; tLogStart = null;
+    tPhase = 'work';
     tLeft = num(state.settings.workMin) * 60; tTotal = tLeft;
   }
   activeProjId = p.id;
   estWarned = false;
+  applyPhaseUI();
   const n = el('t-name'); if (n) n.textContent = p.title + ' • ' + p.client;
   startTimerClock(true);
   updateTimerUI(); renderProjects();
 }
 function resumeInline() {
-  if (!activeProjId) return;
+  if (!activeProjId && !tRun && !(tLeft < tTotal || tWorked > 0)) return;
   startTimerClock(true);
   updateTimerUI(); renderProjects();
 }
@@ -4027,30 +4375,108 @@ function pauseInline() {
   if (!tRun) return;
   clearInterval(tInt); tRun = false;
   logSession(false);
-  updateTimerUI(); renderProjects();
+  persistTimer(true);
+  updToggleBtn(); updateTimerUI(); renderProjects(); updateDashLive();
 }
 function endInline() {
   if (tRun || tWorked > 0) logSession(false);
   clearInterval(tInt); tRun = false;
   tWorked = 0; tLogStart = null; activeProjId = null;
   tLeft = num(state.settings.workMin) * 60; tTotal = tLeft;
-  updateTimerUI(); renderProjects();
+  persistTimer(true);
+  updToggleBtn(); updateTimerUI(); renderProjects(); updateDashLive();
   toast('⏹️ টাইমার শেষ — সেশন সেভ হয়েছে', 'warn');
 }
+/* রিসেট / ইমপোর্টের সময় পুরনো টাইমার যেন ভূতের মতো না চলে */
+function stopTimerSilently() {
+  clearInterval(tInt); tRun = false; tWorked = 0; tLogStart = null; activeProjId = null;
+  tLeft = num(state.settings.workMin) * 60; tTotal = tLeft;
+  try { localStorage.removeItem('naims_os_timer_v1'); } catch (e) { }
+  updToggleBtn(); updateTimerUI();
+  const tw = timerEl(); if (tw) tw.classList.remove('on');
+  updateDashLive();
+}
+/* প্রজেক্ট শেষ/ডিলিট হলে তার চলতি টাইমারও থামবে */
+function stopTimerForProject(id, discard) {
+  if (activeProjId == null || String(activeProjId) !== String(id)) return false;
+  if (!discard && (tRun || tWorked > 0)) logSession(false);
+  clearInterval(tInt); tRun = false; tWorked = 0; tLogStart = null; activeProjId = null;
+  tLeft = num(state.settings.workMin) * 60; tTotal = tLeft;
+  persistTimer(true); updToggleBtn(); updateTimerUI(); updateDashLive();
+  return true;
+}
+/* ---------- টাইমার স্টেট সেভ/রিস্টোর (ট্যাব বন্ধ করলেও টাইমার চলবে) ---------- */
+function persistTimer(force) {
+  try {
+    if (activeProjId == null && !tRun) { localStorage.removeItem('naims_os_timer_v1'); return; }
+    const now = Date.now();
+    if (!force && now - tPersistAt < 3000) return;
+    tPersistAt = now;
+    localStorage.setItem('naims_os_timer_v1', JSON.stringify({
+      pid: activeProjId, phase: tPhase, running: tRun,
+      worked: tWorked, left: tLeft, total: tTotal, at: now
+    }));
+  } catch (e) { }
+}
+function restoreTimer() {
+  let raw = null;
+  try { raw = JSON.parse(localStorage.getItem('naims_os_timer_v1') || 'null'); } catch (e) { }
+  if (!raw || !raw.running) return;
+  const p = raw.pid != null ? projById(raw.pid) : null;
+  if (raw.pid != null && !p) { localStorage.removeItem('naims_os_timer_v1'); return; }
+  const now = Date.now();
+  const elapsed = Math.max(0, Math.min(86400, (now - num(raw.at)) / 1000));
+  activeProjId = p ? p.id : null;
+  tPhase = raw.phase === 'break' ? 'break' : 'work';
+  tTotal = num(raw.total) || num(tPhase === 'work' ? state.settings.workMin : state.settings.breakMin) * 60;
+  const leftRaw = Math.max(0, num(raw.left));
+  const activeElapsed = Math.min(elapsed, leftRaw); // সেশন শেষের পরের সময় কাজ হিসেবে ধরা হবে না
+  tLeft = Math.max(0, leftRaw - elapsed);
+  tWorked = tPhase === 'work' ? (num(raw.worked) + activeElapsed) : 0;
+  tRun = false; tLogStart = null; estWarned = false; tLastAnnounceMin = -1;
+  applyPhaseUI();
+  const tw = timerEl(); if (tw) tw.classList.add('on');
+  const n = el('t-name'); if (n) n.textContent = p ? (p.title + ' • ' + p.client) : 'ফোকাস সেশন • প্রজেক্ট ছাড়া';
+  if (tLeft <= 0.5) {
+    if (tPhase === 'work') {
+      const done = tWorked;
+      tLeft = 0;
+      logSession(true);
+      toast('⏱️ ট্যাব বন্ধ থাকলেও কাজ চলেছে — ' + fmtDur(done) + ' সেভ হয়েছে', 'ok');
+    }
+    setPhase(tPhase === 'work' ? 'break' : 'work', false);
+  } else {
+    tLastTick = now;
+    startTimerClock(false);
+    toast('⏱️ ট্যাব বন্ধ থাকলেও টাইমার চলছিল — ' + fmtDur(activeElapsed) + ' যোগ হয়েছে', 'ok');
+    updateTimerUI();
+  }
+  persistTimer(true);
+}
 function tick() {
+  const now = Date.now();
+  const delta = Math.max(0, (now - tLastTick) / 1000);
+  tLastTick = now;
   if (tLeft > 0) {
-    tLeft--; tWorked++;
-    if (state.settings.announce5 && tLeft > 0 && tLeft % 300 === 0) {
-      speak(Math.round(tLeft / 60) + ' মিনিট বাকি');
+    // ব্যাকগ্রাউন্ডে অনেকক্ষণ পর টিক এলে সেশন শেষের বেশি সময় যোগ হবে না
+    const step = Math.min(delta, tLeft);
+    tLeft = Math.max(0, tLeft - delta);
+    if (tPhase === 'work') tWorked += step;
+    const minsLeft = Math.ceil(tLeft / 60);
+    if (state.settings.announce5 && tLeft > 0 && minsLeft > 0 && minsLeft % 5 === 0 && minsLeft !== tLastAnnounceMin) {
+      tLastAnnounceMin = minsLeft;
+      speak(minsLeft + ' মিনিট বাকি');
       sound('click');
     }
     updateTimerUI();
     checkEstimateCross();
+    persistTimer(false);
+    if (tLeft <= 0) finishPhase();
   } else finishPhase();
 }
 function checkEstimateCross() {
   if (!activeProjId || tPhase !== 'work' || estWarned) return;
-  const p = state.projects.find(x => x.id === activeProjId);
+  const p = projById(activeProjId);
   if (!p || num(p.estHours) <= 0) return;
   const est = num(p.estHours) * 3600, sec = actualSec(p) + tWorked;
   if (sec < est) return;
@@ -4061,12 +4487,13 @@ function checkEstimateCross() {
 }
 function finishPhase() {
   clearInterval(tInt); tRun = false;
+  const doneSec = tWorked;
   logSession(true);
   if (tPhase === 'work') {
     sound('break'); fireConfetti();
-    const p = state.projects.find(x => x.id === activeProjId);
-    speak('কাজের সেশন শেষ!' + (p ? ' ' + p.title + ' এ ' + fmtDur(tWorked) + ' কাজ হয়েছে।' : '') + ' এখন একটু ব্রেক নিন।');
-    toast('✅ সেশন শেষ — ' + fmtDur(tWorked) + ' কাজ হয়েছে', 'ok');
+    const p = projById(activeProjId);
+    speak('কাজের সেশন শেষ!' + (p ? ' ' + p.title + ' এ ' + fmtDur(doneSec) + ' কাজ হয়েছে।' : '') + ' এখন একটু ব্রেক নিন।');
+    toast('✅ সেশন শেষ — ' + fmtDur(doneSec) + ' কাজ হয়েছে', 'ok');
     if (state.settings.autoBreak) { setPhase('break', true); return; }
   } else {
     sound('start');
@@ -4074,37 +4501,37 @@ function finishPhase() {
     toast('☕ ব্রেক শেষ — আবার শুরু করুন', 'ok');
     if (state.settings.autoBreak) { setPhase('work', false); return; }
   }
-  setPhase(tPhase, false);
+  setPhase('work', false);
 }
 function setPhase(phase, autostart) {
   tPhase = phase;
   tLeft = num(phase === 'work' ? state.settings.workMin : state.settings.breakMin) * 60;
-  tTotal = tLeft; tWorked = 0; tLogStart = null;
-  const t = timerEl(); if (t) t.classList.toggle('brk', phase === 'break');
-  const m = el('t-mode'); if (m) m.textContent = phase === 'work' ? '🎯 ওয়ার্ক সেশন' : '☕ ব্রেক টাইম';
+  tTotal = tLeft; tWorked = 0; tLogStart = null; tLastAnnounceMin = -1;
+  applyPhaseUI();
   updToggleBtn(); updateTimerUI();
+  persistTimer(true); renderProjects();
   if (autostart) startTimerClock(phase === 'break');
 }
-function skipPhase() { clearInterval(tInt); tRun = false; logSession(false); setPhase(tPhase === 'work' ? 'break' : 'work', false); toast('⏭️ পরের ধাপে গেলাম', 'warn'); }
-function resetTimer() { clearInterval(tInt); tRun = false; logSession(false); tLeft = tTotal; tWorked = 0; tLogStart = null; updToggleBtn(); updateTimerUI(); sound('click'); }
-function closeTimer() { clearInterval(tInt); tRun = false; logSession(false); const t = timerEl(); if (t) { t.classList.remove('on'); t.style.left = t.style.top = t.style.bottom = t.style.right = ''; } }
+function skipPhase() { clearInterval(tInt); tRun = false; logSession(false); setPhase(tPhase === 'work' ? 'break' : 'work', false); renderProjects(); toast('⏭️ পরের ধাপে গেলাম', 'warn'); }
+function resetTimer() { clearInterval(tInt); tRun = false; logSession(false); tLeft = tTotal; tWorked = 0; tLogStart = null; updToggleBtn(); updateTimerUI(); persistTimer(true); renderProjects(); sound('click'); }
+function closeTimer() { clearInterval(tInt); tRun = false; logSession(false); persistTimer(true); renderProjects(); const t = timerEl(); if (t) { t.classList.remove('on'); t.style.left = t.style.top = t.style.bottom = t.style.right = ''; } updateTimerUI(); updateDashLive(); }
 function logSession(silent) {
-  if (tWorked <= 0) return;
-  const sec = tWorked;
+  if (tPhase !== 'work' || tWorked <= 0) { tWorked = 0; tLogStart = null; return; }
+  const sec = Math.max(1, Math.round(tWorked));
   const startISO = (tLogStart || new Date(Date.now() - sec * 1000)).toISOString();
-  state.sessions.push({ id: uid(), projectId: activeProjId, title: (state.projects.find(x => x.id === activeProjId) || {}).title || 'ফোকাস সেশন', start: startISO, end: new Date().toISOString(), sec, kind: tPhase });
-  const p = state.projects.find(x => x.id === activeProjId);
+  state.sessions.push({ id: uid(), projectId: activeProjId, title: (projById(activeProjId) || {}).title || 'ফোকাস সেশন', start: startISO, end: new Date().toISOString(), sec, kind: tPhase });
+  const p = projById(activeProjId);
   if (p) p.timeSpent = actualSec(p);
   tWorked = 0; tLogStart = null;
+  persistTimer(true);
   saveData(true);
-  if (window.cloudSaveData) window.cloudSaveData(state);
   if (!silent) toast('📥 ' + fmtDur(sec) + ' লগ হয়েছে' + (p ? ' — ' + p.title : ''), 'ok');
 }
 function updateTimerUI() {
-  const m = Math.floor(tLeft / 60), s = tLeft % 60;
-  const tt = el('t-time'); if (tt) tt.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  const m = Math.floor(tLeft / 60), s = Math.floor(tLeft % 60);
+  const tt = el('t-time'); if (tt) tt.textContent = String(m).padStart(2, '0') + ':' + String(Math.floor(s)).padStart(2, '0');
   const pr = el('t-prog'); if (pr) pr.style.width = pct(tLeft, tTotal) + '%';
-  const p = state.projects.find(x => x.id === activeProjId);
+  const p = projById(activeProjId);
   const st = el('t-stat');
   if (st) {
     const sec = p ? actualSec(p) + tWorked : tWorked;
@@ -4160,7 +4587,8 @@ function setupTimerDrag() {
    ========================================================================= */
 function renderRewards() {
   const today = todayKey();
-  const inc = incomeEntries().filter(x => x.date === today).reduce((s, x) => s + x.amount, 0);
+  const tc = targetCredit(today, today);
+  const inc = tc.total;
   const hrs = todaySec();
   const set = (id, v) => { const e = el(id); if (e) e.textContent = v; };
   set('rw-target-display', near(state.dailyTarget).toLocaleString('en-US'));
@@ -4180,27 +4608,37 @@ function saveRewards() {
 }
 function checkDailyStatus() {
   const today = todayKey();
-  const inc = incomeEntries().filter(x => x.date === today).reduce((s, x) => s + x.amount, 0);
+  const tc = targetCredit(today, today);
+  const inc = tc.total;
   const box = el('reward-result-area');
   const ok = inc >= num(state.dailyTarget) && num(state.dailyTarget) > 0;
+  if (num(state.dailyTarget) <= 0) {
+    box.innerHTML = '<div class="empty">আগে দৈনিক টার্গেট সেট করুন — উপরে বা ড্যাশবোর্ডের টার্গেট থেকে।</div>';
+    return toast('দৈনিক টার্গেট সেট করা নেই', 'warn');
+  }
   if (ok) { fireConfetti(); sound('success'); speak('অভিনন্দন! আজকের টার্গেট পূরণ হয়েছে। আপনার পুরস্কার: ' + (state.rewards.gift || 'নিজেকে কিছু ভালো উপহার দিন')); }
   else { sound('warn'); speak('আজকের টার্গেট এখনো পূরণ হয়নি। আরও ' + near(num(state.dailyTarget) - inc) + ' টাকা দরকার।'); }
   box.innerHTML = ok
-    ? '<div class="reward-box" style="background:rgba(16,185,129,.1);border:1px solid var(--ok);padding:16px;border-radius:14px"><h3 style="color:var(--ok)">🎉 টার্গেট পূরণ! (' + near(pct(inc, state.dailyTarget)) + '%)</h3><p style="margin-top:6px">আজকের পুরস্কার: <b>' + esc(state.rewards.gift || 'নিজেকে কিছু ভালো উপহার দিন') + '</b></p></div>'
-    : '<div style="background:rgba(239,68,68,.08);border:1px solid var(--bad);padding:16px;border-radius:14px"><h3 style="color:var(--bad)">⚠️ টার্গেট বাকি — ' + near(pct(inc, state.dailyTarget)) + '%</h3><p style="margin-top:6px">আরও <b>' + money(Math.max(0, num(state.dailyTarget) - inc)) + '</b> দরকার (কাজ ' + fmtDur(todaySec()) + ')</p><p style="margin-top:8px">শাস্তি: <b>' + esc(state.rewards.penalty || 'কিছু সেট করা নেই') + '</b></p></div>';
+    ? '<div class="reward-box" style="background:rgba(16,185,129,.1);border:1px solid var(--ok);padding:16px;border-radius:14px"><h3 style="color:var(--ok)">🎉 টার্গেট পূরণ! (' + near(pct(inc, state.dailyTarget)) + '%)</h3><p style="margin-top:6px">আজকের পুরস্কার: <b>' + esc(state.rewards.gift || 'নিজেকে কিছু ভালো উপহার দিন') + '</b></p><p class="hint" style="margin-top:6px">কাজের মূল্য ' + money(tc.work) + ' • নগদ ' + money(tc.cashActual) + (tc.assumed > 0 ? ' • অনুমান ' + money(tc.assumed) : '') + (tc.due > 0 ? ' • বাকি ' + money(tc.due) : '') + '</p></div>'
+    : '<div style="background:rgba(239,68,68,.08);border:1px solid var(--bad);padding:16px;border-radius:14px"><h3 style="color:var(--bad)">⚠️ টার্গেট বাকি — ' + near(pct(inc, state.dailyTarget)) + '%</h3><p style="margin-top:6px">আরও <b>' + money(Math.max(0, num(state.dailyTarget) - inc)) + '</b> দরকার (কাজ ' + fmtDur(todaySec()) + ')</p><p class="hint" style="margin-top:4px">কাজের মূল্য ' + money(tc.work) + ' • নগদ ' + money(tc.cashActual) + (tc.assumed > 0 ? ' • অনুমান ' + money(tc.assumed) : '') + (tc.due > 0 ? ' • বাকি ' + money(tc.due) : '') + '</p><p style="margin-top:8px">শাস্তি: <b>' + esc(state.rewards.penalty || 'কিছু সেট করা নেই') + '</b></p></div>';
 }
 function check4HourTimer() {
-  if (!state.lastCheckin) { state.lastCheckin = Date.now(); saveData(true); return; }
-  if ((Date.now() - state.lastCheckin) / 3600000 >= 4) {
-    openOverlay('m-checkin');
-    speak('৪ ঘণ্টা পার হয়েছে। গত ৪ ঘণ্টায় কী কী কাজ করেছেন লিখে রাখুন।');
-    sound('warn');
-  }
+  const now = Date.now();
+  if (!state.lastCheckin) { state.lastCheckin = now; saveData(true); return; }
+  if (now - num(state.lastCheckin) < 4 * 3600000) return;
+  // একই রিমাইন্ডার বারবার পপ-আপ যেন না হয়
+  if (state.lastCheckinPrompt && now - num(state.lastCheckinPrompt) < 4 * 3600000) return;
+  state.lastCheckinPrompt = now;
+  saveData(true);
+  openOverlay('m-checkin');
+  speak('৪ ঘণ্টা পার হয়েছে। গত ৪ ঘণ্টায় কী কী কাজ করেছেন লিখে রাখুন।');
+  sound('warn');
 }
 function saveCheckin(text) {
   if (!text || !text.trim()) return toast('লগ খালি রাখা যাবে না', 'err');
   state.logs.push({ date: todayKey(), time: bnTime(new Date()), text: text.trim() });
   state.lastCheckin = Date.now();
+  const ta = el('checkin-text'); if (ta) ta.value = '';
   closeOverlay('m-checkin');
   saveData(); sound('click');
   toast('লগ সেভ হয়েছে ✅', 'ok');
@@ -4213,11 +4651,12 @@ function showDailyReport() {
   const m = anModel(1);
   const t = todayKey();
   const logs = state.logs.filter(l => l.date === t);
+  const cash = targetCredit(t, t).cashActual;
   const done = state.projects.filter(p => p.status === 'done' && isoDay(p.completedAt) === t);
   const todos = state.todos.filter(x => x.date === t);
   el('report-body').innerHTML =
     '<div class="grid g-2" style="margin-bottom:14px">' +
-      '<div class="stat-mini"><b style="color:var(--ok)">' + money(m.income) + '</b><small>আজকের আয়</small></div>' +
+      '<div class="stat-mini"><b style="color:var(--ok)">' + money(cash) + '</b><small>আজকের নগদ আয়</small></div>' +
       '<div class="stat-mini"><b style="color:var(--c2)">' + fmtDur(m.sec) + '</b><small>আজ কাজ</small></div>' +
       '<div class="stat-mini"><b>' + done.length + '</b><small>শেষ হওয়া প্রজেক্ট</small></div>' +
       '<div class="stat-mini"><b>' + todos.filter(x => x.done).length + '/' + todos.length + '</b><small>টু-ডু সম্পন্ন</small></div>' +
@@ -4230,14 +4669,15 @@ function showDailyReport() {
 }
 function showWeeklyReport() {
   const m = anModel(7);
+  const cash = targetCredit(dayKey(addDays(new Date(), -6)), todayKey()).cashActual;
   el('report-body').innerHTML =
     '<div class="grid g-kpi" style="margin-bottom:14px">' +
-      '<div class="stat-mini"><b style="color:var(--ok)">' + money(m.income) + '</b><small>৭ দিনের আয়</small></div>' +
+      '<div class="stat-mini"><b style="color:var(--ok)">' + money(cash) + '</b><small>৭ দিনের নগদ আয়</small></div>' +
       '<div class="stat-mini"><b style="color:var(--c2)">' + fmtHours(m.sec) + '</b><small>কাজের সময়</small></div>' +
       '<div class="stat-mini"><b>' + m.sessions + '</b><small>সেশন</small></div>' +
       '<div class="stat-mini"><b>' + m.doneCount + '</b><small>শেষ হওয়া প্রজেক্ট</small></div>' +
     '</div>' + svgBars(m.buckets.map(b => ({ label: b.short, value: b.income })), { fmt: (v) => money(v), color: '#10b981', height: 210 }) +
-    '<div class="sec-title">দিনভিত্তিক</div><table class="tbl"><thead><tr><th>দিন</th><th>আয়</th><th>কাজ</th><th>সেশন</th></tr></thead><tbody>' +
+    '<div class="sec-title">দিনভিত্তিক</div><table class="tbl"><thead><tr><th>দিন</th><th>আয় (হিসাব)</th><th>কাজ</th><th>সেশন</th></tr></thead><tbody>' +
     m.keys.slice().reverse().map(k => '<tr><td>' + dateLabel(k) + '</td><td class="num">' + money(m.daily[k].income) + '</td><td class="num">' + fmtDur(m.daily[k].sec) + '</td><td class="num">' + m.daily[k].sessions + '</td></tr>').join('') + '</tbody></table>';
   openOverlay('m-report');
 }
@@ -4290,6 +4730,7 @@ window.onload = () => {
   if (localStorage.getItem('naims_guest_mode') === '1') { const a = el('auth'); if (a) a.style.display = 'none'; }
   loadData();
   bindUI();
+  restoreTimer();
   applyTheme(state.theme);
   switchPage('dashboard');
   updateClock();
@@ -4301,9 +4742,12 @@ window.onload = () => {
   const edd = el('e-date'); if (edd) edd.value = todayKey();
   const af = el('an-from'); if (af) af.value = dayKey(addDays(new Date(), -29));
   const at = el('an-to'); if (at) at.value = todayKey();
-  const t2 = el('t-time'); if (t2) { tLeft = num(state.settings.workMin) * 60; tTotal = tLeft; updateTimerUI(); }
+  const t2 = el('t-time'); if (t2 && activeProjId == null) { tLeft = num(state.settings.workMin) * 60; tTotal = tLeft; updateTimerUI(); }
   setTimeout(() => { const s = el('t-session-info'); if (s && !activeProjId) s.textContent = 'প্রজেক্টের ▶️ বাটনে চাপ দিয়ে টাইমার চালু করুন'; }, 400);
   const g = el('greeting'); if (g) g.textContent = 'সিস্টেম রেডি — ' + dateLabel(new Date());
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') persistTimer(true); });
+  window.addEventListener('pagehide', () => persistTimer(true));
+  window.addEventListener('beforeunload', () => persistTimer(true));
 };
 </script>
 </body>
