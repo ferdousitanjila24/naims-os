@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naims OS - Dashboard</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Light and Dark Mode Colors */
+        :root {
+            --bg-color: #f3f4f6;
+            --text-color: #1f2937;
+            --card-bg: #ffffff;
+            --border-color: #e5e7eb;
+        }
+        [data-theme="dark"] {
+            --bg-color: #111827;
+            --text-color: #f9fafb;
+            --card-bg: #1f2937;
+            --border-color: #374151;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border-color: var(--border-color);
+        }
+        .draggable {
+            cursor: grab;
+        }
+        .draggable:active {
+            cursor: grabbing;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 font-sans transition-colors duration-300">
+
+    <!-- Header Section -->
+    <header class="flex justify-between items-center mb-8 card p-4 rounded-lg shadow border transition-colors duration-300">
+        <h1 class="text-2xl font-bold"><i class="fa-solid fa-bolt text-yellow-500"></i> Naims OS</h1>
+        <div class="flex gap-4 items-center">
+            <button id="themeToggle" class="text-2xl p-2 rounded hover:opacity-70 transition">☀️</button>
+            <button id="dailyReportBtn" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 font-semibold"><i class="fa-solid fa-chart-line"></i> Daily Report</button>
+            <button id="loginBtn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 font-semibold"><i class="fa-brands fa-google"></i> Google Login</button>
+        </div>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        
+        <!-- Left Sidebar (To-Do & Calculator) -->
+        <div class="space-y-6 md:col-span-1">
+            <!-- To-Do List -->
+            <div class="card p-4 rounded-lg shadow border transition-colors duration-300">
+                <h2 class="text-lg font-bold mb-4 border-b pb-2"><i class="fa-solid fa-list-check text-blue-500"></i> To-Do List</h2>
+                <div class="flex gap-2 mb-4">
+                    <input type="text" id="todoInput" class="w-full p-2 border rounded text-black outline-none" placeholder="Add task...">
+                    <button onclick="addTodo()" class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-600"><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <ul id="todoList" class="space-y-2 text-sm max-h-60 overflow-y-auto"></ul>
+            </div>
+
+            <!-- Quick Calculator -->
+            <div class="card p-4 rounded-lg shadow border transition-colors duration-300">
+                <h2 class="text-lg font-bold mb-4 border-b pb-2"><i class="fa-solid fa-calculator text-purple-500"></i> Calculator</h2>
+                <input type="text" id="calcDisplay" class="w-full p-2 border rounded mb-2 text-right text-lg font-semibold text-black bg-gray-100 outline-none" disabled placeholder="0">
+                <div class="grid grid-cols-4 gap-2">
+                    <button class="bg-gray-200 text-black p-2 rounded hover:bg-gray-300 font-bold" onclick="calcInput('7')">7</button>
+                    <button class="bg-gray-200 text-black p-2 rounded hover:bg-gray-300 font-bold" onclick="calcInput('8')">8</button>
+                    <button class="bg-gray-200 text-black p-2 rounded hover:bg-gray-300 font-bold" onclick="calcInput('9')">9</button>
+                    <button class="bg-purple-500 text-white p-2 rounded hover:bg-purple-600 font-bold" onclick="calcInput('/')">÷</button>
+                    <button class="bg-gray-200 text-black p-2 rounded hover:bg-gray-300 font-bold" onclick="calcInput('4')">4</button>
+                    <button class="bg-gray-200 text-black p-2 rounded hover:bg-gray-300 font-bold" onclick="calcInput('5')">5</button>
+                    <button class="bg-gray-200 text-black p-2 rounded hover:bg-gray-300 font-bold" onclick="calcInput('6')">6</button>
+                    <button class="bg-purple-500 text-white p-2 rounded hover:bg-purple-600 font-bold" onclick="calcInput('*')">×</button>
+                    <button class="bg-gray-200 text-black p-2 rounded hover:bg-gray-300 font-bold" onclick="calcInput('1')">1</button>
+                    <button class="bg-gray-200 text-black p-2 rounded hover:bg-gray-300 font-bold" onclick="calcInput('2')">2</button>
+                    <button class="bg-gray-200 text-black p-2 rounded hover:bg-gray-300 font-bold" onclick="calcInput('3')">3</button>
+                    <button class="bg-purple-500 text-white p-2 rounded hover:bg-purple-600 font-bold" onclick="calcInput('-')">-</button>
+                    <button class="bg-red-500 text-white p-2 rounded hover:bg-red-600 font-bold" onclick="calcClear()">C</button>
+                    <button class="bg-gray-200 text-black p-2 rounded hover:bg-gray-300 font-bold" onclick="calcInput('0')">0</button>
+                    <button class="bg-green-500 text-white p-2 rounded hover:bg-green-600 font-bold" onclick="calcResult()">=</button>
+                    <button class="bg-purple-500 text-white p-2 rounded hover:bg-purple-600 font-bold" onclick="calcInput('+')">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content (Tabs) -->
+        <div class="md:col-span-3 space-y-6">
+            
+            <!-- Tab Buttons -->
+            <div class="flex gap-4 border-b border-gray-300 pb-2">
+                <button id="btnDashboard" class="text-blue-600 font-bold text-lg border-b-2 border-blue-600 px-2 pb-1" onclick="switchTab('dashboard')"><i class="fa-solid fa-briefcase"></i> Dashboard</button>
+                <button id="btnPlanning" class="text-gray-500 font-bold text-lg px-2 pb-1 hover:text-blue-500" onclick="switchTab('planning')"><i class="fa-solid fa-brain"></i> Research & Planning</button>
+            </div>
+
+            <!-- Dashboard Tab -->
+            <div id="tabDashboard" class="space-y-6 block">
+                <!-- Add Project Area -->
+                <div class="card p-4 rounded-lg shadow border transition-colors duration-300">
+                    <h2 class="text-lg font-bold mb-4"><i class="fa-solid fa-folder-plus text-green-500"></i> Add New Project</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <input type="text" id="pName" class="p-2 border rounded outline-none text-black md:col-span-2" placeholder="Project Title...">
+                        <select id="pPriority" class="p-2 border rounded outline-none text-black">
+                            <option value="High">🔥 High Priority</option>
+                            <option value="Medium">⚡ Medium Priority</option>
+                            <option value="Low">🧊 Low Priority</option>
+                        </select>
+                        <input type="date" id="pDeadline" class="p-2 border rounded outline-none text-black">
+                    </div>
+                    <button onclick="addProject()" class="mt-4 bg-gray-800 text-white px-4 py-2 rounded w-full font-bold hover:bg-black transition"><i class="fa-solid fa-plus"></i> Create Project</button>
+                </div>
+
+                <!-- Projects Grid -->
+                <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Projects will dynamically load here -->
+                </div>
+            </div>
+
+            <!-- Research & Planning Tab -->
+            <div id="tabPlanning" class="space-y-6 hidden">
+                <div class="card p-4 rounded-lg shadow border transition-colors duration-300">
+                    <h2 class="text-lg font-bold mb-2"><i class="fa-solid fa-pen-nib text-blue-500"></i> Master Notes (Auto-saving)</h2>
+                    <textarea id="masterNotes" class="w-full h-48 p-3 border rounded outline-none text-black bg-gray-50" placeholder="Type your video scripts, business plans, or research here..."></textarea>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="card p-4 rounded-lg shadow border transition-colors duration-300">
+                        <h2 class="text-lg font-bold mb-4 border-b pb-2"><i class="fa-solid fa-laptop-code text-orange-500"></i> Skill Tracker</h2>
+                        <div class="flex gap-2 mb-4">
+                            <input type="text" id="skillInput" class="w-full p-2 border rounded outline-none text-black" placeholder="e.g. Advanced After Effects">
+                            <button class="bg-orange-500 text-white px-3 py-2 rounded" onclick="addSkill()"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                        <ul id="skillList" class="space-y-2 text-sm"></ul>
+                    </div>
+                    <div class="card p-4 rounded-lg shadow border transition-colors duration-300">
+                        <h2 class="text-lg font-bold mb-4 border-b pb-2"><i class="fa-solid fa-lightbulb text-yellow-500"></i> Business Ideas</h2>
+                        <div class="flex gap-2 mb-4">
+                            <input type="text" id="ideaInput" class="w-full p-2 border rounded outline-none text-black" placeholder="e.g. Digital Product Bundle">
+                            <button class="bg-yellow-500 text-white px-3 py-2 rounded" onclick="addIdea()"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                        <ul id="ideaList" class="space-y-2 text-sm"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4 Hour Check-in Modal -->
+    <div id="checkinModal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+        <div class="bg-white p-6 rounded-lg shadow-2xl w-11/12 md:w-1/3 text-center text-black">
+            <i class="fa-solid fa-stopwatch text-5xl text-red-500 mb-4 animate-bounce"></i>
+            <h2 class="text-2xl font-bold mb-2">4-Hour Check-in!</h2>
+            <p class="text-gray-600 mb-4">What have you accomplished in the last 4 hours?</p>
+            <textarea id="checkinText" class="w-full p-3 border rounded mb-4 outline-none" placeholder="I finished editing the ad script..."></textarea>
+            <div class="flex gap-4 justify-center">
+                <button onclick="closeCheckin(true)" class="bg-green-500 text-white px-4 py-2 rounded font-bold hover:bg-green-600 w-full">Submitted Work</button>
+                <button onclick="closeCheckin(false)" class="bg-red-500 text-white px-4 py-2 rounded font-bold hover:bg-red-600 w-full">Did Nothing</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase & Custom Script -->
+    <script type="module">
+        // 1. Firebase Setup with Your Real API Keys
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAh-w6kxP6h6i3K35yACd5Z-01W7u_MtAI",
+            authDomain: "naims-os.firebaseapp.com",
+            projectId: "naims-os",
+            storageBucket: "naims-os.firebasestorage.app",
+            messagingSenderId: "327101185480",
+            appId: "1:327101185480:web:3b2bee72ffb0cda4d094fd",
+            measurementId: "G-PXQJXZP1WP"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // 2. Auth Logic (Login/Logout)
+        const loginBtn = document.getElementById('loginBtn');
+        loginBtn.addEventListener('click', () => {
+            if(auth.currentUser) {
+                signOut(auth).then(() => alert("Logged out successfully!"));
+            } else {
+                signInWithPopup(auth, provider)
+                    .then((result) => alert("Welcome, " + result.user.displayName + "!"))
+                    .catch((error) => alert("Error: " + error.message));
+            }
+        });
+
+        onAuthStateChanged(auth, (user) => {
+            if(user) {
+                loginBtn.innerHTML = `<i class="fa-solid fa-right-from-bracket"></i> Logout`;
+                loginBtn.classList.replace('bg-blue-600', 'bg-red-500');
+                loginBtn.classList.replace('hover:bg-blue-700', 'hover:bg-red-600');
+            } else {
+                loginBtn.innerHTML = `<i class="fa-brands fa-google"></i> Google Login`;
+                loginBtn.classList.replace('bg-red-500', 'bg-blue-600');
+                loginBtn.classList.replace('hover:bg-red-600', 'hover:bg-blue-700');
+            }
+        });
+
+        // 3. Light & Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.body.getAttribute('data-theme');
+            if(currentTheme === 'dark') {
+                document.body.removeAttribute('data-theme');
+                themeToggle.textContent = '🌙';
+            } else {
+                document.body.setAttribute('data-theme', 'dark');
+                themeToggle.textContent = '☀️';
+            }
+        });
+
+        // Set Default Theme (Dark)
+        document.body.setAttribute('data-theme', 'dark');
+
+        // 4. Tab Switching Logic
+        window.switchTab = (tab) => {
+            document.getElementById('tabDashboard').classList.add('hidden');
+            document.getElementById('tabPlanning').classList.add('hidden');
+            document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.remove('hidden');
+            
+            document.getElementById('btnDashboard').classList.remove('text-blue-600', 'border-b-2', 'border-blue-600');
+            document.getElementById('btnDashboard').classList.add('text-gray-500');
+            document.getElementById('btnPlanning').classList.remove('text-blue-600', 'border-b-2', 'border-blue-600');
+            document.getElementById('btnPlanning').classList.add('text-gray-500');
+
+            document.getElementById('btn' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('text-blue-600', 'border-b-2', 'border-blue-600');
+            document.getElementById('btn' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.remove('text-gray-500');
+        };
+
+        // 5. Calculator Logic
+        window.calcInput = (val) => document.getElementById('calcDisplay').value += val;
+        window.calcClear = () => document.getElementById('calcDisplay').value = '';
+        window.calcResult = () => {
+            try {
+                document.getElementById('calcDisplay').value = eval(document.getElementById('calcDisplay').value);
+            } catch(e) {
+                document.getElementById('calcDisplay').value = 'Error';
+            }
+        };
+
+        // 6. Master Notes Auto-save
+        const notes = document.getElementById('masterNotes');
+        notes.value = localStorage.getItem('masterNotes') || '';
+        notes.addEventListener('input', () => {
+            localStorage.setItem('masterNotes', notes.value);
+        });
+
+        // 7. To-Do, Skills, Ideas (Local Storage Demo)
+        window.addTodo = () => addItem('todoInput', 'todoList', 'todo');
+        window.addSkill = () => addItem('skillInput', 'skillList', 'skill');
+        window.addIdea = () => addItem('ideaInput', 'ideaList', 'idea');
+
+        function addItem(inputId, listId, iconType) {
+            const val = document.getElementById(inputId).value;
+            if(!val) return;
+            const li = document.createElement('li');
+            li.className = "flex justify-between items-center p-2 bg-gray-100 dark:bg-gray-700 rounded text-black dark:text-white";
+            li.innerHTML = `<span><i class="fa-solid fa-caret-right text-gray-400 mr-2"></i>${val}</span> <button onclick="this.parentElement.remove()" class="text-red-500"><i class="fa-solid fa-trash"></i></button>`;
+            document.getElementById(listId).prepend(li);
+            document.getElementById(inputId).value = '';
+        }
+
+        // 8. Add Project Logic (Priority & Deadline Sorting)
+        window.addProject = () => {
+            const name = document.getElementById('pName').value;
+            const priority = document.getElementById('pPriority').value;
+            const deadline = document.getElementById('pDeadline').value;
+            
+            if(!name || !deadline) return alert("Please fill up the Name and Deadline!");
+
+            let badgeColor = priority === 'High' ? 'bg-red-500' : (priority === 'Medium' ? 'bg-yellow-500' : 'bg-blue-500');
+            
+            const card = document.createElement('div');
+            card.className = "card p-4 rounded shadow border hover:shadow-lg transition cursor-pointer";
+            card.innerHTML = `
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="font-bold text-lg">${name}</h3>
+                    <span class="text-xs text-white px-2 py-1 rounded ${badgeColor}">${priority}</span>
+                </div>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-2"><i class="fa-regular fa-clock"></i> Deadline: ${deadline}</p>
+            `;
+            
+            document.getElementById('projectsGrid').prepend(card);
+            
+            document.getElementById('pName').value = '';
+            document.getElementById('pDeadline').value = '';
+        };
+
+        // 9. 4-Hour Auto Check-in Timer
+        setTimeout(() => {
+            document.getElementById('checkinModal').classList.remove('hidden');
+        }, 14400000); // Opens after exactly 4 Hours (4 * 60 * 60 * 1000 ms)
+
+        window.closeCheckin = (didWork) => {
+            document.getElementById('checkinModal').classList.add('hidden');
+            document.getElementById('checkinText').value = '';
+            alert(didWork ? "Great job! Keep the momentum going." : "No problem! Take a breath and let's get back to work.");
+        };
+
+    </script>
+</body>
+</html>
