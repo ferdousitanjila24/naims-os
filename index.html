@@ -12,21 +12,21 @@
 <style>
 :root{
   --bg:#05060f; --bg2:#0a0c19;
-  --panel:rgba(19,22,38,.75); --panel2:rgba(26,30,50,.68); --solid:#111426;
+  --panel:rgba(19,22,38,.75); --panel2:rgba(26,30,50,.65); --solid:#111426;
   --border:rgba(120,140,255,.14); --border2:rgba(120,140,255,.32);
   --text:#e9ecff; --muted:#8b94bb; --dim:#5f688c;
-  --c1:#6366f1; --c2:#22d3ee; --c3:#a855f7; --c4:#f472b6; --gold:#f59e0b;
-  --ok:#10b981; --warn:#f59e0b; --bad:#ef4444; --info:#3b82f6;
+  --c1:#6366f1; --c2:#22d3ee; --c3:#a855f7; --c4:#f472b6;
+  --ok:#10b981; --warn:#f59e0b; --bad:#ef4444; --gold:#f59e0b;
   --grad:linear-gradient(135deg,#6366f1 0%,#a855f7 48%,#22d3ee 100%);
-  --grad-dream:linear-gradient(135deg,#f59e0b 0%,#ec4899 50%,#8b5cf6 100%);
   --grad2:linear-gradient(135deg,#22d3ee,#6366f1);
+  --grad-dream:linear-gradient(135deg,#f59e0b 0%,#ec4899 50%,#8b5cf6 100%);
   --glow:0 0 30px rgba(99,102,241,.28);
   --r:18px; --r2:12px;
   --shadow:0 18px 45px rgba(0,0,0,.45);
 }
 [data-theme="light"]{
   --bg:#f4f6fc; --bg2:#eaeefb;
-  --panel:rgba(255,255,255,.86); --panel2:rgba(255,255,255,.72); --solid:#ffffff;
+  --panel:rgba(255,255,255,.85); --panel2:rgba(255,255,255,.7); --solid:#ffffff;
   --border:rgba(30,41,120,.12); --border2:rgba(30,41,120,.28);
   --text:#0d1230; --muted:#5a6488; --dim:#8a93b6;
   --glow:0 0 26px rgba(99,102,241,.18);
@@ -34,42 +34,22 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
-body{
-  font-family:'Inter','Hind Siliguri',system-ui,sans-serif;
-  background:var(--bg); color:var(--text); line-height:1.55;
-  overflow-x:hidden; -webkit-font-smoothing:antialiased;
-}
+body{font-family:'Inter','Hind Siliguri',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;overflow-x:hidden}
 .aurora{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
 .aurora b{position:absolute;display:block;border-radius:50%;filter:blur(90px);opacity:.45;animation:float 22s ease-in-out infinite}
 .aurora b:nth-child(1){width:46vw;height:46vw;left:-8vw;top:-10vw;background:radial-gradient(circle,#6366f1,transparent 70%)}
 .aurora b:nth-child(2){width:40vw;height:40vw;right:-6vw;top:12vh;background:radial-gradient(circle,#22d3ee,transparent 70%);animation-delay:-7s}
 .aurora b:nth-child(3){width:38vw;height:38vw;left:22vw;bottom:-14vw;background:radial-gradient(circle,#a855f7,transparent 70%);animation-delay:-13s}
-[data-theme="light"] .aurora b{opacity:.25}
-.grid-bg{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.3;
-  background-image:linear-gradient(rgba(120,140,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(120,140,255,.07) 1px,transparent 1px);
-  background-size:44px 44px;mask-image:radial-gradient(ellipse at 50% 0%,#000,transparent 82%)}
 @keyframes float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(3vw,4vh) scale(1.08)}66%{transform:translate(-3vw,-3vh) scale(.95)}}
-::-webkit-scrollbar{width:8px;height:8px}
-::-webkit-scrollbar-thumb{background:rgba(120,140,255,.22);border-radius:10px}
-::-webkit-scrollbar-thumb:hover{background:rgba(120,140,255,.4)}
 
 .shell{display:flex;min-height:100vh}
-.sidebar{
-  width:260px;flex-shrink:0;position:sticky;top:0;height:100vh;z-index:60;
-  background:var(--panel);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
-  border-right:1px solid var(--border);padding:18px 14px;display:flex;flex-direction:column;gap:5px;
-  transition:transform .3s ease
-}
+.sidebar{width:260px;flex-shrink:0;position:sticky;top:0;height:100vh;z-index:60;background:var(--panel);backdrop-filter:blur(22px);border-right:1px solid var(--border);padding:18px 14px;display:flex;flex-direction:column;gap:5px;transition:transform .3s ease}
 .brand{display:flex;align-items:center;gap:12px;padding:6px 8px 16px;border-bottom:1px solid var(--border);margin-bottom:8px}
 .brand .logo{width:42px;height:42px;border-radius:13px;background:var(--grad);display:grid;place-items:center;font-weight:800;font-size:18px;color:#fff;box-shadow:var(--glow)}
 .brand h1{font-size:1.05rem;font-weight:700;letter-spacing:.3px}
 .brand p{font-size:.72rem;color:var(--muted)}
 .nav-title{font-size:.66rem;text-transform:uppercase;letter-spacing:1.4px;color:var(--dim);padding:12px 10px 4px;font-weight:700}
-.nav-btn{
-  display:flex;align-items:center;gap:11px;width:100%;padding:10px 12px;border:none;background:transparent;
-  color:var(--muted);font-family:inherit;font-size:.9rem;font-weight:500;border-radius:12px;cursor:pointer;
-  transition:.2s;text-align:left;position:relative
-}
+.nav-btn{display:flex;align-items:center;gap:11px;width:100%;padding:10px 12px;border:none;background:transparent;color:var(--muted);font-family:inherit;font-size:.88rem;font-weight:500;border-radius:12px;cursor:pointer;transition:.2s;text-align:left}
 .nav-btn i{font-style:normal;font-size:1.05rem;width:22px;text-align:center}
 .nav-btn:hover{background:var(--panel2);color:var(--text);transform:translateX(2px)}
 .nav-btn.active{background:var(--grad);color:#fff;box-shadow:var(--glow)}
@@ -78,28 +58,20 @@ body{
 .nav-btn .kbd{margin-left:auto;font-size:.65rem;opacity:.6;font-family:monospace}
 .side-foot{margin-top:auto;padding-top:10px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px}
 .profile{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:14px;background:var(--panel2);border:1px solid var(--border)}
-.profile img{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid transparent;background:linear-gradient(var(--bg2),var(--bg2)) padding-box,var(--grad) border-box}
+.profile img{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid transparent;background:linear-gradient(var(--bg2),var(--bg2)) padding-box,var(--grad) border-box}
 .profile .pn{font-size:.88rem;font-weight:600;line-height:1.2}
 .profile .ps{font-size:.7rem;color:var(--muted)}
 
 .main{flex:1;min-width:0;display:flex;flex-direction:column}
-.topbar{
-  position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:10px;padding:12px 20px;
-  background:var(--panel);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);flex-wrap:wrap
-}
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:10px;padding:12px 20px;background:var(--panel);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);flex-wrap:wrap}
 .topbar h2{font-size:1.1rem;font-weight:700;white-space:nowrap}
-.topbar .sub{font-size:.73rem;color:var(--muted);font-weight:400}
+.topbar .sub{font-size:.73rem;color:var(--muted)}
 .spacer{flex:1}
-.icon-btn{
-  width:38px;height:38px;border-radius:11px;border:1px solid var(--border);background:var(--panel2);color:var(--text);
-  display:grid;place-items:center;cursor:pointer;font-size:1rem;transition:.2s;position:relative
-}
+.icon-btn{width:38px;height:38px;border-radius:11px;border:1px solid var(--border);background:var(--panel2);color:var(--text);display:grid;place-items:center;cursor:pointer;font-size:1rem;transition:.2s}
 .icon-btn:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:var(--glow)}
 .chip-clock{font-family:monospace;font-size:.82rem;background:var(--panel2);border:1px solid var(--border);padding:7px 12px;border-radius:30px;color:var(--c2);font-weight:600;white-space:nowrap}
 .chip-checkin{font-family:monospace;font-size:.76rem;background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.35);padding:6px 11px;border-radius:30px;color:var(--c1);font-weight:600;white-space:nowrap;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
-.chip-checkin:hover{background:rgba(99,102,241,.24)}
 .chip-deadline{font-family:monospace;font-size:.76rem;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.35);padding:6px 11px;border-radius:30px;color:#fca5a5;font-weight:600;white-space:nowrap;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
-.chip-deadline:hover{background:rgba(239,68,68,.24)}
 
 .marquee{display:flex;overflow:hidden;white-space:nowrap;background:var(--panel2);border-bottom:1px solid var(--border);padding:8px 0;font-size:.84rem}
 .marquee:hover .mtrack{animation-play-state:paused}
@@ -111,11 +83,7 @@ body{
 .page.active{display:block}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
-.card{
-  background:var(--panel);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
-  border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:18px;position:relative;overflow:hidden
-}
-.card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(120,140,255,.5),transparent);opacity:.7}
+.card{background:var(--panel);backdrop-filter:blur(18px);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:18px;position:relative;overflow:hidden}
 .card-h{display:flex;align-items:center;gap:10px;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap}
 .card-h h3{font-size:1rem;font-weight:650;display:flex;align-items:center;gap:8px}
 .card-h h3::before{content:'';width:4px;height:18px;border-radius:4px;background:var(--grad)}
@@ -130,220 +98,137 @@ body{
   .sidebar.open{transform:none}
   .menu-btn{display:grid!important}
   .page{padding:14px}
-  .topbar{padding:10px 14px}
   .chip-clock{display:none}
 }
 .menu-btn{display:none}
 
-/* DREAM HERO BANNER ON DASHBOARD */
-.dream-banner{
-  background:linear-gradient(135deg,rgba(245,158,11,.15),rgba(236,72,153,.12) 50%,rgba(139,92,246,.12));
-  border:1px solid rgba(245,158,11,.35);border-radius:var(--r);padding:18px 22px;margin-bottom:18px;
-  position:relative;overflow:hidden;box-shadow:0 10px 30px rgba(245,158,11,.12);cursor:pointer;transition:.25s
-}
-.dream-banner:hover{transform:translateY(-2px);border-color:rgba(245,158,11,.6);box-shadow:0 12px 36px rgba(245,158,11,.2)}
-.dream-banner::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(245,158,11,.25),transparent 70%);pointer-events:none}
+.dream-banner{background:linear-gradient(135deg,rgba(245,158,11,.15),rgba(236,72,153,.12) 50%,rgba(139,92,246,.12));border:1px solid rgba(245,158,11,.35);border-radius:var(--r);padding:18px 22px;margin-bottom:18px;cursor:pointer;transition:.25s;position:relative;overflow:hidden}
+.dream-banner:hover{transform:translateY(-2px);border-color:rgba(245,158,11,.6)}
 .db-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:8px}
-.db-tag{font-size:.76rem;font-weight:700;color:var(--gold);letter-spacing:.8px;text-transform:uppercase;display:flex;align-items:center;gap:6px}
-.db-countdown{font-family:monospace;font-size:.82rem;background:rgba(245,158,11,.2);color:#fef08a;padding:3px 10px;border-radius:20px;font-weight:700;border:1px solid rgba(245,158,11,.35)}
-.db-title{font-size:1.35rem;font-weight:800;color:#fff;line-height:1.3;margin-bottom:6px}
-[data-theme="light"] .db-title{color:#1e1b4b}
-.db-sub{font-size:.82rem;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.db-tag{font-size:.76rem;font-weight:700;color:var(--gold);letter-spacing:.8px;text-transform:uppercase}
+.db-countdown{font-family:monospace;font-size:.82rem;background:rgba(245,158,11,.2);color:#fef08a;padding:3px 10px;border-radius:20px;font-weight:700}
+.db-title{font-size:1.35rem;font-weight:800;line-height:1.3;margin-bottom:6px}
+.db-sub{font-size:.82rem;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap}
 .db-prog{height:9px;border-radius:9px;background:rgba(120,140,255,.14);overflow:hidden;margin-top:12px}
-.db-prog i{display:block;height:100%;border-radius:9px;background:var(--grad-dream);box-shadow:0 0 14px rgba(245,158,11,.5);transition:width .6s ease}
+.db-prog i{display:block;height:100%;border-radius:9px;background:var(--grad-dream);transition:width .6s ease}
 
-/* MOTIVE BANNER */
-.motive-banner{
-  background:linear-gradient(135deg,rgba(99,102,241,.18),rgba(168,85,247,.12) 50%,rgba(34,211,238,.1));
-  border:1px solid rgba(120,140,255,.28);border-radius:var(--r);padding:16px 20px;margin-bottom:18px;
-  position:relative;overflow:hidden;box-shadow:0 8px 24px rgba(30,40,120,.14)
-}
-.motive-banner::before{content:'';position:absolute;top:-60px;right:-40px;width:180px;height:180px;background:radial-gradient(circle,rgba(34,211,238,.2),transparent 70%);pointer-events:none}
-.mb-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;font-size:.76rem;color:var(--c2);font-weight:700;letter-spacing:.5px}
-.mb-slider{position:relative;min-height:54px;display:flex;align-items:center}
-.mb-text{font-size:1.05rem;font-weight:650;line-height:1.55;color:var(--text);animation:fadeUp .4s ease;max-width:92%}
+.motive-banner{background:linear-gradient(135deg,rgba(99,102,241,.18),rgba(168,85,247,.12) 50%,rgba(34,211,238,.1));border:1px solid rgba(120,140,255,.28);border-radius:var(--r);padding:16px 20px;margin-bottom:18px}
+.mb-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;font-size:.76rem;color:var(--c2);font-weight:700}
+.mb-slider{min-height:50px;display:flex;align-items:center}
+.mb-text{font-size:1.02rem;font-weight:650;line-height:1.55}
 .mb-controls{display:flex;align-items:center;gap:8px;margin-top:10px}
-.mb-dots{display:flex;gap:6px;align-items:center}
-.mb-dot{width:8px;height:8px;border-radius:50%;background:rgba(120,140,255,.25);cursor:pointer;transition:.2s}
+.mb-dots{display:flex;gap:6px}
+.mb-dot{width:8px;height:8px;border-radius:50%;background:rgba(120,140,255,.25);cursor:pointer}
 .mb-dot.active{background:var(--c2);width:22px;border-radius:10px}
-.mb-btn{background:rgba(120,140,255,.1);border:1px solid var(--border);color:var(--text);width:26px;height:26px;border-radius:8px;display:grid;place-items:center;cursor:pointer;font-size:.8rem}
-.mb-btn:hover{background:var(--panel2);border-color:var(--border2)}
+.mb-btn{background:rgba(120,140,255,.1);border:1px solid var(--border);color:var(--text);width:26px;height:26px;border-radius:8px;display:grid;place-items:center;cursor:pointer}
 
-.target-hero-v3{
-  background:linear-gradient(135deg,rgba(15,20,40,.9),rgba(20,26,55,.85));
-  border:1px solid rgba(120,140,255,.32);border-radius:20px;padding:20px;position:relative;overflow:hidden;
-  box-shadow:0 12px 36px rgba(0,0,0,.35);margin-bottom:18px
-}
-.target-hero-v3::after{content:'';position:absolute;inset:0;background:radial-gradient(600px 140px at 10% -10%,rgba(99,102,241,.25),transparent 70%);pointer-events:none}
-.focus-cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px;position:relative;z-index:1}
-.fc-card{
-  background:rgba(10,13,28,.65);border:1px solid rgba(120,140,255,.2);border-radius:16px;padding:16px;
-  display:flex;flex-direction:column;justify-content:space-between;transition:.25s;position:relative;overflow:hidden
-}
+.target-hero-v3{background:linear-gradient(135deg,rgba(15,20,40,.9),rgba(20,26,55,.85));border:1px solid rgba(120,140,255,.32);border-radius:20px;padding:20px;margin-bottom:18px}
+.focus-cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px}
+.fc-card{background:rgba(10,13,28,.65);border:1px solid rgba(120,140,255,.2);border-radius:16px;padding:16px;display:flex;flex-direction:column;justify-content:space-between}
 [data-theme="light"] .fc-card{background:rgba(255,255,255,.8)}
-.fc-card:hover{transform:translateY(-2px);border-color:var(--border2);box-shadow:var(--shadow)}
-.fc-tag{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.fc-tag{font-size:.72rem;font-weight:700;text-transform:uppercase;display:flex;align-items:center;gap:6px;margin-bottom:6px}
 .fc-val{font-size:2rem;font-weight:800;line-height:1.15;letter-spacing:-.5px}
-.fc-sub{font-size:.76rem;color:var(--muted);margin-top:6px;line-height:1.4}
+.fc-sub{font-size:.76rem;color:var(--muted);margin-top:6px}
 .fc-bar{height:7px;border-radius:7px;background:rgba(120,140,255,.14);overflow:hidden;margin-top:10px}
 .fc-bar i{display:block;height:100%;border-radius:7px;transition:width .5s ease}
 
-.dash-live{
-  margin:0 0 18px;border:1px solid rgba(34,211,238,.45);border-radius:18px;padding:16px 20px;
-  background:linear-gradient(135deg,rgba(34,211,238,.12),rgba(99,102,241,.08) 55%,rgba(16,185,129,.08));
-  position:relative;overflow:hidden;transition:.3s
-}
-.dash-live.running{animation:dlglow 2.4s ease-in-out infinite}
-@keyframes dlglow{0%,100%{box-shadow:0 0 16px rgba(34,211,238,.12)}50%{box-shadow:0 0 34px rgba(34,211,238,.38)}}
+.dash-live{margin:0 0 18px;border:1px solid rgba(34,211,238,.45);border-radius:18px;padding:16px 20px;background:linear-gradient(135deg,rgba(34,211,238,.12),rgba(99,102,241,.08) 55%,rgba(16,185,129,.08))}
 .dash-live.over{border-color:rgba(239,68,68,.6);background:linear-gradient(135deg,rgba(239,68,68,.16),rgba(99,102,241,.08) 55%,rgba(239,68,68,.08))}
 .dash-live .dl-top{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.dash-live .dl-dot{width:12px;height:12px;border-radius:50%;background:#34d399;flex:none;box-shadow:0 0 0 0 rgba(52,211,153,.6);animation:dlping 1.4s infinite}
-.dash-live:not(.running) .dl-dot{background:#fbbf24;animation:none}
-.dash-live.over .dl-dot{background:#ef4444;box-shadow:0 0 0 0 rgba(239,68,68,.7);animation:dlping 1.2s infinite}
-@keyframes dlping{0%{box-shadow:0 0 0 0 rgba(52,211,153,.65)}70%{box-shadow:0 0 0 12px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
+.dash-live .dl-dot{width:12px;height:12px;border-radius:50%;background:#34d399}
+.dash-live.over .dl-dot{background:#ef4444}
 .dash-live .dl-main{flex:1;min-width:220px}
-.dash-live .dl-proj{font-size:.82rem;color:var(--muted);font-weight:600}
-.dash-live .dl-time{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:2.2rem;font-weight:800;letter-spacing:1.5px;color:#67e8f9;text-shadow:0 0 20px rgba(34,211,238,.45);line-height:1.2;margin-top:2px}
-.dash-live.over .dl-time{color:#f87171;text-shadow:0 0 22px rgba(239,68,68,.5)}
-.dash-live .dl-overtag{display:inline-flex;align-items:center;gap:6px;font-size:.74rem;font-weight:700;color:#fca5a5;background:rgba(239,68,68,.18);border:1px solid rgba(239,68,68,.4);padding:3px 9px;border-radius:20px;margin-left:8px}
+.dash-live .dl-time{font-family:monospace;font-size:2.2rem;font-weight:800;color:#67e8f9;line-height:1.2}
+.dash-live.over .dl-time{color:#f87171}
 .dash-live .dl-prog{flex:0 0 260px;max-width:100%}
 .dash-live .dl-bar{height:9px;border-radius:9px;background:rgba(120,140,255,.16);overflow:hidden}
-.dash-live .dl-bar i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,#6366f1,#22d3ee,#34d399);box-shadow:0 0 12px rgba(34,211,238,.5);transition:width .4s linear}
-.dash-live.over .dl-bar i{background:linear-gradient(90deg,#b91c1c,#ef4444);box-shadow:0 0 14px rgba(239,68,68,.8);animation:redpulse 1.4s infinite}
-@keyframes redpulse{0%,100%{opacity:1}50%{opacity:.5}}
-.dash-live .dl-pct{font-size:.74rem;color:var(--muted);margin-top:6px}
+.dash-live .dl-bar i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,#6366f1,#22d3ee,#34d399)}
+.dash-live.over .dl-bar i{background:linear-gradient(90deg,#b91c1c,#ef4444)}
 
-.kpi{background:var(--panel);border:1px solid var(--border);border-radius:var(--r);padding:16px;position:relative;overflow:hidden;transition:.25s;cursor:pointer}
-.kpi:hover{transform:translateY(-3px);border-color:var(--border2);box-shadow:var(--shadow)}
-.kpi .lbl{font-size:.78rem;color:var(--muted);display:flex;align-items:center;gap:6px;margin-bottom:6px}
-.kpi .val{font-size:1.65rem;font-weight:750;letter-spacing:-.5px;line-height:1.2}
+.kpi{background:var(--panel);border:1px solid var(--border);border-radius:var(--r);padding:16px;cursor:pointer;transition:.25s}
+.kpi:hover{transform:translateY(-3px);border-color:var(--border2)}
+.kpi .lbl{font-size:.78rem;color:var(--muted);margin-bottom:6px}
+.kpi .val{font-size:1.65rem;font-weight:750;line-height:1.2}
 .kpi .sub{font-size:.74rem;color:var(--dim);margin-top:4px}
-.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-
-.ring{--p:0;width:124px;height:124px;border-radius:50%;display:grid;place-items:center;position:relative;
-  background:conic-gradient(var(--c1) calc(var(--p)*1%),rgba(120,140,255,.12) 0);transition:.6s}
+.ring{--p:0;width:124px;height:124px;border-radius:50%;display:grid;place-items:center;position:relative;background:conic-gradient(var(--c1) calc(var(--p)*1%),rgba(120,140,255,.12) 0)}
 .ring::before{content:'';position:absolute;inset:10px;border-radius:50%;background:var(--solid)}
 .ring .rv{position:relative;text-align:center}
 .ring .rv b{display:block;font-size:1.35rem;font-weight:750}
-.ring .rv small{font-size:.68rem;color:var(--muted)}
-.clickable-card{cursor:pointer;transition:.2s}
-.clickable-card:hover{border-color:var(--border2);box-shadow:var(--glow)}
 
 label{display:block;font-size:.78rem;color:var(--muted);margin:9px 0 4px;font-weight:500}
-input,select,textarea{
-  width:100%;background:rgba(10,12,25,.55);border:1px solid var(--border);color:var(--text);padding:9px 12px;
-  border-radius:11px;font-size:.88rem;font-family:inherit;transition:.2s;outline:none
-}
+input,select,textarea{width:100%;background:rgba(10,12,25,.55);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:11px;font-size:.88rem;font-family:inherit;outline:none}
 [data-theme="light"] input,[data-theme="light"] select,[data-theme="light"] textarea{background:rgba(255,255,255,.75)}
-input:focus,select:focus,textarea:focus{border-color:var(--c1);box-shadow:0 0 0 3px rgba(99,102,241,.16)}
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:7px;background:var(--grad);color:#fff;border:none;
-  padding:9px 16px;border-radius:11px;font-size:.86rem;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s;
-  white-space:nowrap
-}
-.btn:hover{transform:translateY(-2px);box-shadow:var(--glow);filter:brightness(1.06)}
-.btn:active{transform:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:var(--grad);color:#fff;border:none;padding:9px 16px;border-radius:11px;font-size:.86rem;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s;white-space:nowrap}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--glow)}
 .btn.sm{padding:5px 11px;font-size:.78rem;border-radius:9px}
 .btn.ghost{background:var(--panel2);color:var(--text);border:1px solid var(--border)}
-.btn.ghost:hover{border-color:var(--border2)}
 .btn.ok{background:linear-gradient(135deg,#059669,#10b981)}
 .btn.bad{background:linear-gradient(135deg,#dc2626,#ef4444)}
 .btn.warn{background:linear-gradient(135deg,#d97706,#f59e0b)}
-.btn.dream{background:var(--grad-dream);box-shadow:0 0 20px rgba(245,158,11,.35)}
-.btn.cy{background:var(--grad2)}
+.btn.dream{background:var(--grad-dream)}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.row.tight{gap:6px}
 .pill{font-size:.7rem;padding:3px 9px;border-radius:20px;font-weight:600;white-space:nowrap}
-.p-high{color:#fca5a5;background:rgba(239,68,68,.14);border:1px solid rgba(239,68,68,.3)}
-.p-mid{color:#fcd34d;background:rgba(245,158,11,.14);border:1px solid rgba(245,158,11,.3)}
-.p-low{color:#93c5fd;background:rgba(59,130,246,.14);border:1px solid rgba(59,130,246,.3)}
-.p-ok{color:#6ee7b7;background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.3)}
-.p-bad{color:#fca5a5;background:rgba(239,68,68,.14);border:1px solid rgba(239,68,68,.3)}
-.p-dream{color:#fef08a;background:rgba(245,158,11,.18);border:1px solid rgba(245,158,11,.4)}
+.p-ok{color:#6ee7b7;background:rgba(16,185,129,.14)}
+.p-bad{color:#fca5a5;background:rgba(239,68,68,.14)}
+.p-mid{color:#fcd34d;background:rgba(245,158,11,.14)}
 
-/* DREAM CARDS */
-.dream-card{
-  background:linear-gradient(145deg,rgba(26,30,55,.85),rgba(15,18,36,.85));
-  border:1px solid rgba(245,158,11,.28);border-radius:16px;padding:18px;margin-bottom:14px;
-  position:relative;overflow:hidden;transition:.25s
-}
-.dream-card:hover{transform:translateY(-2px);border-color:rgba(245,158,11,.55);box-shadow:var(--shadow)}
+.dream-card{background:linear-gradient(145deg,rgba(26,30,55,.85),rgba(15,18,36,.85));border:1px solid rgba(245,158,11,.28);border-radius:16px;padding:18px;margin-bottom:14px}
 .dream-card.achieved{border-color:rgba(16,185,129,.45);background:linear-gradient(145deg,rgba(16,185,129,.1),rgba(15,18,36,.85))}
-.dc-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px}
 .dc-title{font-size:1.15rem;font-weight:750;color:#fff}
-[data-theme="light"] .dc-title{color:#1e1b4b}
 .dc-target{font-size:1.25rem;font-weight:800;color:var(--gold);font-family:monospace}
-.dc-meta{display:flex;gap:14px;flex-wrap:wrap;font-size:.78rem;color:var(--muted);margin:8px 0}
 .dc-bar{height:8px;border-radius:8px;background:rgba(120,140,255,.14);overflow:hidden;margin:10px 0}
-.dc-bar i{display:block;height:100%;border-radius:8px;background:var(--grad-dream);transition:width .5s ease}
+.dc-bar i{display:block;height:100%;border-radius:8px;background:var(--grad-dream)}
 .dream-card.achieved .dc-bar i{background:linear-gradient(90deg,#059669,#10b981)}
 
-.proj{background:linear-gradient(160deg,var(--panel2),transparent);border:1px solid var(--border);border-radius:var(--r2);padding:14px;margin-bottom:12px;transition:.25s;position:relative}
-.proj:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:var(--shadow)}
-.proj.done{border-color:rgba(16,185,129,.35);opacity:.92}
+.proj{background:linear-gradient(160deg,var(--panel2),transparent);border:1px solid var(--border);border-radius:var(--r2);padding:14px;margin-bottom:12px}
 .proj .bar{height:6px;border-radius:6px;background:rgba(120,140,255,.12);overflow:hidden;margin:10px 0}
-.proj .bar i{display:block;height:100%;border-radius:6px;background:var(--grad);transition:width .5s}
-.proj .bar.over{background:rgba(239,68,68,.18);box-shadow:inset 0 0 0 1px rgba(239,68,68,.4)}
-.proj .bar.over i{background:linear-gradient(90deg,#b91c1c,#ef4444);box-shadow:0 0 14px rgba(239,68,68,.75);animation:redpulse 1.4s infinite}
-.proj .meta{display:flex;gap:12px;flex-wrap:wrap;font-size:.78rem;color:var(--muted)}
-.proj .acts{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}
+.proj .bar i{display:block;height:100%;border-radius:6px;background:var(--grad)}
+.proj .bar.over i{background:linear-gradient(90deg,#b91c1c,#ef4444)}
 
-.client-card{background:var(--panel2);border:1px solid var(--border);border-radius:var(--r2);padding:15px;display:flex;flex-direction:column;justify-content:space-between;transition:.2s}
-.client-card:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:var(--shadow)}
-.client-card .cc-name{font-size:1.02rem;font-weight:700;color:var(--text);display:flex;align-items:center;justify-content:space-between}
+.client-card{background:var(--panel2);border:1px solid var(--border);border-radius:var(--r2);padding:15px;display:flex;flex-direction:column;justify-content:space-between}
+.client-card .cc-name{font-size:1.02rem;font-weight:700}
 .client-card .cc-contact{font-size:.78rem;color:var(--muted);margin:6px 0 10px;line-height:1.5}
 .client-card .cc-stats{display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:10px;margin-top:8px;font-size:.8rem}
 
 .overlay{position:fixed;inset:0;background:rgba(3,5,14,.74);backdrop-filter:blur(7px);display:none;align-items:center;justify-content:center;z-index:1000;padding:18px}
 .overlay.on{display:flex}
-.modal{
-  background:var(--panel);backdrop-filter:blur(24px);border:1px solid var(--border2);border-radius:20px;width:100%;
-  max-width:580px;padding:22px;position:relative;animation:pop .28s cubic-bezier(.16,1,.3,1);box-shadow:var(--shadow);max-height:88vh;overflow:auto
-}
-.modal.wide{max-width:880px}
-@keyframes pop{from{opacity:0;transform:translateY(16px) scale(.96)}to{opacity:1;transform:none}}
-.modal .x{position:absolute;top:14px;right:14px;background:var(--panel2);border:1px solid var(--border);color:var(--muted);width:32px;height:32px;border-radius:10px;cursor:pointer;font-size:1rem;transition:.2s}
-.modal .x:hover{color:var(--bad);border-color:var(--bad)}
-.modal h3.mt{font-size:1.15rem;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border);color:var(--text)}
+.modal{background:var(--panel);backdrop-filter:blur(24px);border:1px solid var(--border2);border-radius:20px;width:100%;max-width:580px;padding:22px;position:relative;max-height:88vh;overflow:auto}
+.modal .x{position:absolute;top:14px;right:14px;background:var(--panel2);border:1px solid var(--border);color:var(--muted);width:32px;height:32px;border-radius:10px;cursor:pointer}
+.modal h3.mt{font-size:1.15rem;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
 .drow{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid rgba(120,140,255,.08);font-size:.88rem}
 .drow:last-child{border:none}
-.drow b{font-family:monospace}
 
-.checkin-item{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:9px;position:relative}
-.checkin-item .ci-time{font-size:.74rem;color:var(--c2);font-weight:700;margin-bottom:4px}
-.checkin-item .ci-txt{font-size:.86rem;line-height:1.5}
-
+.checkin-item{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:9px}
 #toasts{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:2000;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
-.toast{background:var(--panel);backdrop-filter:blur(20px);border:1px solid var(--border2);border-left:4px solid var(--c1);color:var(--text);padding:11px 18px;border-radius:12px;font-size:.86rem;box-shadow:var(--shadow);animation:fadeUp .3s;max-width:92vw}
-.toast.ok{border-left-color:var(--ok)}.toast.err{border-left-color:var(--bad)}.toast.warn{border-left-color:var(--warn)}.toast.dream{border-left-color:var(--gold)}
+.toast{background:var(--panel);backdrop-filter:blur(20px);border:1px solid var(--border2);border-left:4px solid var(--c1);color:var(--text);padding:11px 18px;border-radius:12px;font-size:.86rem;animation:fadeUp .3s}
+.toast.ok{border-left-color:var(--ok)}.toast.err{border-left-color:var(--bad)}.toast.warn{border-left-color:var(--warn)}
 
 .tbl{width:100%;border-collapse:collapse;font-size:.82rem}
-.tbl th{text-align:left;font-size:.68rem;text-transform:uppercase;letter-spacing:.8px;color:var(--dim);padding:9px 10px;border-bottom:1px solid var(--border);font-weight:700}
-.tbl td{padding:9px 10px;border-bottom:1px solid rgba(120,140,255,.07);vertical-align:middle}
-.tbl tr:hover td{background:rgba(120,140,255,.04)}
-.tbl .num{text-align:right;font-family:monospace;font-weight:600}
+.tbl th{text-align:left;font-size:.68rem;text-transform:uppercase;color:var(--dim);padding:9px 10px;border-bottom:1px solid var(--border)}
+.tbl td{padding:9px 10px;border-bottom:1px solid rgba(120,140,255,.07)}
 .list-item{display:flex;align-items:center;gap:10px;background:var(--panel2);border:1px solid var(--border);padding:10px 12px;border-radius:12px;margin-bottom:8px;font-size:.86rem}
 .list-item .g{flex:1;min-width:0}
-.todo-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .empty{text-align:center;padding:32px 14px;color:var(--dim);font-size:.86rem}
+.fin-tabs{display:flex;gap:8px;margin-bottom:14px;border-bottom:1px solid var(--border);padding-bottom:10px}
+.fin-tab{background:transparent;border:none;color:var(--muted);padding:7px 14px;border-radius:10px;cursor:pointer;font-weight:600;font-size:.84rem;font-family:inherit}
+.fin-tab.active{background:var(--grad);color:#fff}
+.dream-quick-btn{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);color:#fef08a;padding:5px 11px;border-radius:8px;font-size:.76rem;cursor:pointer;font-family:inherit}
 
-.fin-tabs{display:flex;gap:8px;margin-bottom:14px;border-bottom:1px solid var(--border);padding-bottom:10px;overflow-x:auto}
-.fin-tab{background:transparent;border:none;color:var(--muted);padding:7px 14px;border-radius:10px;cursor:pointer;font-weight:600;font-size:.84rem;font-family:inherit;transition:.2s}
-.fin-tab:hover{color:var(--text);background:var(--panel2)}
-.fin-tab.active{background:var(--grad);color:#fff;box-shadow:var(--glow)}
-
-.dream-quick-btn{
-  background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);color:#fef08a;padding:5px 11px;
-  border-radius:8px;font-size:.76rem;cursor:pointer;font-family:inherit;font-weight:600;transition:.2s
-}
-.dream-quick-btn:hover{background:rgba(245,158,11,.25);border-color:var(--gold)}
+/* Firebase Login Screen Modal */
+#auth{position:fixed;inset:0;z-index:3000;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:20px}
+.auth-card{background:var(--panel);backdrop-filter:blur(24px);border:1px solid var(--border2);border-radius:24px;padding:42px 34px;max-width:440px;width:100%;text-align:center;box-shadow:var(--shadow)}
+.auth-card .logo{width:64px;height:64px;border-radius:20px;background:var(--grad);display:grid;place-items:center;font-size:26px;margin:0 auto 18px;box-shadow:var(--glow);color:#fff;font-weight:800}
+.auth-card h2{font-size:1.7rem;font-weight:750;margin-bottom:8px}
+.auth-card p{color:var(--muted);font-size:.88rem;margin-bottom:26px}
+#auth-status{font-size:.76rem;color:var(--dim);margin-top:16px;line-height:1.6;word-break:break-word}
+.checklist{display:flex;flex-wrap:wrap;gap:12px;font-size:.82rem;color:var(--muted);justify-content:center;margin-top:20px}
 </style>
 </head>
 <body>
 <div class="aurora"><b></b><b></b><b></b></div>
-<div class="grid-bg"></div>
 
 <div class="shell">
+  <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
     <div class="brand">
       <div class="logo">N</div>
@@ -367,26 +252,26 @@ input:focus,select:focus,textarea:focus{border-color:var(--c1);box-shadow:0 0 0 
 
     <div class="side-foot">
       <div class="profile">
-        <div style="position:relative">
-          <img id="profile-img" src="https://placehold.co/100x100/6366f1/ffffff?text=N" alt="Profile">
-        </div>
+        <img id="profile-img" src="https://placehold.co/100x100/6366f1/ffffff?text=N" alt="Profile">
         <div style="flex:1;min-width:0">
           <div class="pn" id="side-name">Naim</div>
           <div class="ps" id="side-role">Pro Video Editor</div>
         </div>
       </div>
+      <button class="nav-btn" id="sidebar-auth-btn" onclick="handleAuthAction()" style="justify-content:center"><i>🌐</i> গুগল লগ-ইন</button>
     </div>
   </aside>
 
+  <!-- MAIN VIEW -->
   <div class="main">
     <header class="topbar">
-      <button class="icon-btn menu-btn" id="menuBtn">☰</button>
+      <button class="icon-btn menu-btn" id="menuBtn" title="মেনু">☰</button>
       <div>
         <h2 id="page-title">ড্যাশবোর্ড</h2>
-        <div class="sub" id="greeting">স্বাগতম, নাইম!</div>
+        <div class="sub" id="greeting">স্বাগতম, Naim!</div>
       </div>
       <div class="spacer"></div>
-      
+
       <div class="chip-checkin" id="chip-checkin-btn" onclick="openCheckinModal()" title="৪-ঘণ্টার কাজের লগ দিন">
         <span>⏰</span> <span id="chip-checkin-txt">লগ বাকি: ০৪:০০</span>
       </div>
@@ -402,7 +287,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--c1);box-shadow:0 0 0 
 
     <div class="marquee">
       <div class="mtrack">
-        <div class="mq" style="color:#f59e0b"><span id="mq-dream">🌟 সক্রিয় ড্রিম: লোড হচ্ছে...</span></div>
+        <div class="mq" style="color:#f59e0b"><span id="mq-dream">🌟 সক্রিয় ড্রিম: লোড হচ্ছে...</span></div>
         <div class="mq" style="color:#10b981"><span id="mq-cash">💵 হাতে নগদ: ৳0</span></div>
         <div class="mq" style="color:#fb7185"><span id="mq-due">⚠️ ক্লায়েন্ট বকেয়া: ৳0</span></div>
         <div class="mq" style="color:#f87171"><span id="mq-debt">🏦 মোট ধার/দেনা: ৳0</span></div>
@@ -413,7 +298,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--c1);box-shadow:0 0 0 
 
     <!-- ======================= DASHBOARD ======================= -->
     <section class="page active" id="page-dashboard">
-      <!-- DASHBOARD TOP ACTIVE DREAM BANNER -->
       <div id="dash-dream-banner" class="dream-banner" onclick="switchPage('dreams')" title="ক্লিক করে ড্রিম বোর্ডে যান"></div>
 
       <div class="motive-banner">
@@ -422,7 +306,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--c1);box-shadow:0 0 0 
           <button class="btn sm ghost" style="padding:2px 8px;font-size:.7rem" onclick="openMotiveEditor()">✏️ মোটিভেশন এডিট</button>
         </div>
         <div class="mb-slider">
-          <div class="mb-text" id="motive-slide-text">"আজকের ছোট কাজটাই কালকের বড় সাফল্যের মূল ভিত্তি।"</div>
+          <div class="mb-text" id="motive-slide-text">"আজকের ছোট কাজটাই কালকের বড় সাফল্যের মূল ভিত্তি।"</div>
         </div>
         <div class="mb-controls">
           <button class="mb-btn" onclick="prevMotiveSlide()">‹</button>
@@ -435,7 +319,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--c1);box-shadow:0 0 0 
         <button class="btn dream sm" onclick="switchPage('dreams')">🌟 আমার ড্রিম বোর্ড দেখুন</button>
         <button class="btn ok sm" onclick="switchPage('finance')">💰 দ্রুত টাকা যোগ / খরচ এন্ট্রি</button>
         <button class="btn ghost" onclick="startTimerForNext()">▶️ পরের প্রজেক্টে টাইমার</button>
-        <button class="btn bad sm" style="margin-left:auto" onclick="triggerManualDeadlineAlert()" title="৬ ঘণ্টার অ্যালার্ট টেস্ট করুন">🧪 ডেডলাইন ওয়ার্নিং টেস্ট</button>
+        <button class="btn bad sm" style="margin-left:auto" onclick="triggerManualDeadlineAlert()">🧪 ডেডলাইন ওয়ার্নিং টেস্ট</button>
       </div>
 
       <div class="target-hero-v3">
@@ -448,7 +332,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--c1);box-shadow:0 0 0 
         <div class="kpi" onclick="switchPage('finance')">
           <div class="lbl">💵 হাতে আছে (নিট নগদ)</div>
           <div class="val" id="k-cash" style="color:var(--ok)">৳0</div>
-          <div class="sub">আয় − খরচ − শোধ করা ঋণ</div>
+          <div class="sub">আয় − খরচ − শোধ করা ঋণ</div>
         </div>
         <div class="kpi" onclick="switchPage('finance')">
           <div class="lbl">📉 এই মাসের মোট খরচ</div>
@@ -463,7 +347,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--c1);box-shadow:0 0 0 
         <div class="kpi" onclick="openDetails('due')">
           <div class="lbl">🤝 ক্লায়েন্টের কাছে পাওনা</div>
           <div class="val" id="k-due" style="color:var(--c2)">৳0</div>
-          <div class="sub">কাজ করা বকেয়া টাকা</div>
+          <div class="sub">কাজ করা বকেয়া টাকা</div>
         </div>
       </div>
 
@@ -490,11 +374,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--c1);box-shadow:0 0 0 
       <div class="grid g-side">
         <div>
           <div class="card" style="border-color:rgba(245,158,11,.35)">
-            <div class="card-h">
-              <h3 style="color:var(--gold)">🌟 নতুন ড্রিম সেট করুন</h3>
-            </div>
-            <p class="hint" style="margin-bottom:12px">নির্দিষ্ট সময়ে কী অর্জন করতে চান তা লিখে রাখুন। এটি আপনার নিয়মিত প্রজেক্ট থেকে সম্পূর্ণ আলাদা থাকবে।</p>
-
+            <div class="card-h"><h3 style="color:var(--gold)">🌟 নতুন ড্রিম সেট করুন</h3></div>
+            <p class="hint" style="margin-bottom:12px">নির্দিষ্ট সময়ে কী অর্জন করতে চান তা লিখে রাখুন।</p>
             <label>স্বপ্নের লক্ষ্য / কী অর্জন করবেন? *</label>
             <input id="dr-title" placeholder="যেমন: নতুন M3 ম্যাকবুক কেনা / ৫০ হাজার টাকা সঞ্চয়">
 
@@ -504,17 +385,17 @@ input:focus,select:focus,textarea:focus{border-color:var(--c1);box-shadow:0 0 0 
                 <select id="dr-type">
                   <option value="money">💰 নির্দিষ্ট টাকা অর্জন</option>
                   <option value="gadget">💻 গ্যাজেট / ড্রিম কেনাকাটা</option>
-                  <option value="skill">🚀 স্কিল / ক্যারিয়ার মাইলফলক</option>
+                  <option value="skill">🚀 স্কিল / ক্যারিয়ার মাইলফলক</option>
                   <option value="other">🎯 অন্যান্য ব্যক্তিগত গোল</option>
                 </select>
               </div>
               <div>
                 <label>টার্গেট ভ্যালু (৳ বা পরিমাণ)</label>
-                <input type="number" id="dr-target" placeholder="যেমন: 150000">
+                <input type="number" id="dr-target" placeholder="150000">
               </div>
             </div>
 
-            <label>সময়কাল বা ডেডলাইন বাছাই করুন *</label>
+            <label>সময়কাল বা ডেডলাইন বাছাই করুন *</label>
             <div class="row tight" style="margin-bottom:8px">
               <button type="button" class="dream-quick-btn" onclick="setDreamDays(1)">১ দিন</button>
               <button type="button" class="dream-quick-btn" onclick="setDreamDays(7)">৭ দিন</button>
@@ -525,19 +406,12 @@ input:focus,select:focus,textarea:focus{border-color:var(--c1);box-shadow:0 0 0 
             </div>
 
             <div class="grid" style="grid-template-columns:1fr 1fr;gap:10px">
-              <div>
-                <label>শুরুর তারিখ</label>
-                <input type="date" id="dr-start">
-              </div>
-              <div>
-                <label>শেষের তারিখ *</label>
-                <input type="date" id="dr-end">
-              </div>
+              <div><label>শুরুর তারিখ</label><input type="date" id="dr-start"></div>
+              <div><label>শেষের তারিখ *</label><input type="date" id="dr-end"></div>
             </div>
 
-            <label>কেন এই ড্রিমটি পূরণ করা অত্যন্ত জরুরি? (মোটিভেশনাল নোট)</label>
-            <textarea id="dr-note" rows="3" placeholder="যেমন: এই ল্যাপটপটি পেলে আমার কাজের গতি দ্বিগুণ হবে এবং ফ্যামিলিকে সাপোর্ট দিতে পারব..."></textarea>
-
+            <label>কেন এই ড্রিমটি পূরণ করা অত্যন্ত জরুরি? (নোট)</label>
+            <textarea id="dr-note" rows="3" placeholder="যেমন: এই ল্যাপটপটি পেলে কাজের গতি দ্বিগুণ হবে..."></textarea>
             <button class="btn dream" style="width:100%;margin-top:16px" onclick="addDream()">🚀 ড্রিম বোর্ডে যুক্ত করুন</button>
           </div>
         </div>
@@ -576,8 +450,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--c1);box-shadow:0 0 0 
               <div><label>বকেয়া (৳)</label><input type="number" id="p-due" placeholder="খালি = পুরোটা বাকি"></div>
             </div>
             
-            <label>⏳ এস্টিমেট বা আনুমানিক সময় (ঘণ্টা) *</label>
-            <input type="number" id="p-est-hours" placeholder="যেমন: 8 (এই সময়ের পর লাল সতর্কবার্তা দেবে)">
+            <label>⏳ এস্টিমেট সময় (ঘণ্টা) *</label>
+            <input type="number" id="p-est-hours" placeholder="যেমন: 8">
 
             <div class="grid" style="grid-template-columns:1fr 1fr;gap:10px">
               <div><label>ডেডলাইন তারিখ *</label><input type="date" id="p-deadline"></div>
@@ -595,16 +469,14 @@ input:focus,select:focus,textarea:focus{border-color:var(--c1);box-shadow:0 0 0 
 
         <div>
           <div class="card">
-            <div class="card-h">
-              <h3>📂 প্রজেক্ট কিউ ও লাইভ ট্র্যাকার</h3>
-            </div>
+            <div class="card-h"><h3>📂 প্রজেক্ট কিউ ও লাইভ ট্র্যাকার</h3></div>
             <div id="project-list"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ======================= FINANCE (টাকা-পয়সার পূর্ণাঙ্গ হিসাব) ======================= -->
+    <!-- ======================= FINANCE ======================= -->
     <section class="page" id="page-finance">
       <div class="grid g-kpi" style="margin-bottom:18px">
         <div class="kpi" style="border-left:4px solid var(--ok)">
@@ -615,7 +487,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--c1);box-shadow:0 0 0 
         <div class="kpi" style="border-left:4px solid var(--bad)">
           <div class="lbl">📉 মোট খরচ (বাজার ও সংসার)</div>
           <div class="val" id="fin-total-expense" style="color:var(--bad)">৳0</div>
-          <div class="sub">চলতি মাসের যাবতীয় ব্যয়</div>
+          <div class="sub">চলতি মাসের যাবতীয় ব্যয়</div>
         </div>
         <div class="kpi" style="border-left:4px solid var(--warn)">
           <div class="lbl">🏦 মোট ধার / দেনা (বাকি ঋণ)</div>
@@ -623,9 +495,9 @@ input:focus,select:focus,textarea:focus{border-color:var(--c1);box-shadow:0 0 0 
           <div class="sub">মানুষ আপনার কাছে পাবে</div>
         </div>
         <div class="kpi" style="border-left:4px solid var(--c2)">
-          <div class="lbl">🎯 খরচ ও দেনা মেটাতে আরও প্রয়োজন</div>
+          <div class="lbl">🎯 খরচ ও দেনা মেটাতে আরও প্রয়োজন</div>
           <div class="val" id="fin-needed-earn" style="color:var(--c2)">৳0</div>
-          <div class="sub">মাসিক টার্গেট সাপেক্ষে বাকি</div>
+          <div class="sub">টার্গেট সাপেক্ষে বাকি</div>
         </div>
       </div>
 
@@ -640,14 +512,10 @@ input:focus,select:focus,textarea:focus{border-color:var(--c1);box-shadow:0 0 0 
           <div class="card">
             <div class="card-h"><h3>💸 নতুন খরচ লিখুন</h3></div>
             <label>খরচের বিবরণ *</label>
-            <input id="exp-desc" placeholder="যেমন: আজকের বাজার / চাল-ডাল / ইন্টারনেট বিল">
+            <input id="exp-desc" placeholder="যেমন: বাজার / চাল-ডাল / ইন্টারনেট বিল">
             <div class="grid" style="grid-template-columns:1fr 1fr;gap:10px">
-              <div>
-                <label>পরিমাণ (৳) *</label>
-                <input type="number" id="exp-amount" placeholder="500">
-              </div>
-              <div>
-                <label>খরচের খাত</label>
+              <div><label>পরিমাণ (৳) *</label><input type="number" id="exp-amount" placeholder="500"></div>
+              <div><label>খরচের খাত</label>
                 <select id="exp-cat">
                   <option value="bazaar">🛒 ফ্যামিলি বাজার</option>
                   <option value="family">🏠 সংসার / ব্যক্তিগত</option>
@@ -658,18 +526,13 @@ input:focus,select:focus,textarea:focus{border-color:var(--c1);box-shadow:0 0 0 
                 </select>
               </div>
             </div>
-            <label>তারিখ</label>
-            <input type="date" id="exp-date">
+            <label>তারিখ</label><input type="date" id="exp-date">
             <button class="btn bad" style="width:100%;margin-top:14px" onclick="addExpense()">➖ খরচ সেভ করুন</button>
           </div>
         </div>
-
         <div>
           <div class="card">
-            <div class="card-h">
-              <h3>🧾 খরচের তালিকা ও হিস্ট্রি</h3>
-              <span class="hint" id="exp-count-lbl">০টি রেকর্ড</span>
-            </div>
+            <div class="card-h"><h3>🧾 খরচের তালিকা ও হিস্ট্রি</h3><span class="hint" id="exp-count-lbl">০টি রেকর্ড</span></div>
             <div id="expense-list-container" style="max-height:550px;overflow-y:auto"></div>
           </div>
         </div>
@@ -679,36 +542,24 @@ input:focus,select:focus,textarea:focus{border-color:var(--c1);box-shadow:0 0 0 
         <div>
           <div class="card">
             <div class="card-h"><h3>💰 হাতে টাকা যোগ বা বিয়োগ করুন</h3></div>
-            <p class="hint" style="margin-bottom:12px">প্রজেক্ট ছাড়া বাইরে থেকে কোনো ক্যাশ টাকা আসলে বা আলাদা করে তুললে এখানে লিখুন।</p>
-            
             <label>লেনদেনের বিবরণ *</label>
-            <input id="cash-desc" placeholder="যেমন: গিফট পেলাম / ধার ফেরত পেয়েছি / ব্যাংক থেকে ক্যাশ তোলা">
-            
+            <input id="cash-desc" placeholder="যেমন: গিফট পেলাম / ধার ফেরত">
             <div class="grid" style="grid-template-columns:1fr 1fr;gap:10px">
-              <div>
-                <label>পরিমাণ (৳) *</label>
-                <input type="number" id="cash-amount" placeholder="2000">
-              </div>
-              <div>
-                <label>লেনদেনের ধরন</label>
+              <div><label>পরিমাণ (৳) *</label><input type="number" id="cash-amount" placeholder="2000"></div>
+              <div><label>ধরন</label>
                 <select id="cash-type">
-                  <option value="in">➕ ক্যাশ ইন (হাতে টাকা এলো)</option>
-                  <option value="out">➖ ক্যাশ আউট (টাকা সরানো হলো)</option>
+                  <option value="in">➕ ক্যাশ ইন (হাতে এলো)</option>
+                  <option value="out">➖ ক্যাশ আউট (সরানো হলো)</option>
                 </select>
               </div>
             </div>
-
-            <label>তারিখ</label>
-            <input type="date" id="cash-date">
+            <label>তারিখ</label><input type="date" id="cash-date">
             <button class="btn ok" style="width:100%;margin-top:14px" onclick="addCustomCash()">💾 ক্যাশ রেকর্ড সেভ করুন</button>
           </div>
         </div>
-
         <div>
           <div class="card">
-            <div class="card-h">
-              <h3>📋 কাস্টম ক্যাশ লেনদেনের হিস্ট্রি</h3>
-            </div>
+            <div class="card-h"><h3>📋 কাস্টম ক্যাশ হিস্ট্রি</h3></div>
             <div id="cash-history-container" style="max-height:550px;overflow-y:auto"></div>
           </div>
         </div>
@@ -718,75 +569,52 @@ input:focus,select:focus,textarea:focus{border-color:var(--c1);box-shadow:0 0 0 
         <div>
           <div class="card">
             <div class="card-h"><h3>🤝 নতুন ধার / ঋণ যোগ করুন</h3></div>
-            <p class="hint" style="margin-bottom:12px">কার কাছ থেকে কত টাকা ধার নিয়েছেন লিখে রাখুন।</p>
-            
-            <label>কার কাছ থেকে ধার নিয়েছেন? *</label>
-            <input id="loan-person" placeholder="যেমন: রফিক ভাই / আঙ্কেল / ক্রেডিট কার্ড">
-            
-            <label>ধার নেওয়ার কারণ / বিবরণ</label>
-            <input id="loan-reason" placeholder="যেমন: পিসি আপগ্রেডের জন্য ধার">
-            
+            <label>কার কাছ থেকে ধার নিয়েছেন? *</label>
+            <input id="loan-person" placeholder="যেমন: রফিক ভাই / আঙ্কেল">
+            <label>বিবরণ</label><input id="loan-reason" placeholder="যেমন: পিসি আপগ্রেডের জন্য">
             <div class="grid" style="grid-template-columns:1fr 1fr;gap:10px">
-              <div>
-                <label>মোট ধারের পরিমাণ (৳) *</label>
-                <input type="number" id="loan-amount" placeholder="10000">
-              </div>
-              <div>
-                <label>তারিখ</label>
-                <input type="date" id="loan-date">
-              </div>
+              <div><label>ধারের পরিমাণ (৳) *</label><input type="number" id="loan-amount" placeholder="10000"></div>
+              <div><label>তারিখ</label><input type="date" id="loan-date"></div>
             </div>
-
             <button class="btn warn" style="width:100%;margin-top:14px" onclick="addLoan()">🏦 ধার রেকর্ড সেভ করুন</button>
           </div>
         </div>
-
         <div>
           <div class="card">
-            <div class="card-h">
-              <h3>📜 চলমান ধার ও দেনার খাতা</h3>
-              <span class="hint" id="loan-count-lbl">০টি ধার</span>
-            </div>
+            <div class="card-h"><h3>📜 চলমান ধার ও দেনার খাতা</h3><span class="hint" id="loan-count-lbl">০টি ধার</span></div>
             <div id="loan-list-container" style="max-height:550px;overflow-y:auto"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ======================= CLIENT HUB (CRM) ======================= -->
+    <!-- ======================= CLIENTS ======================= -->
     <section class="page" id="page-clients">
       <div class="grid g-side">
         <div>
           <div class="card">
             <div class="card-h"><h3>👤 নতুন ক্লায়েন্ট যোগ করুন</h3></div>
-            <label>ক্লায়েন্টের নাম / ব্র্যান্ড *</label>
-            <input id="c-name" placeholder="যেমন: Fahim Tech BD">
-            <label>ফোন / WhatsApp নম্বর *</label>
-            <input id="c-phone" placeholder="যেমন: 01700000000">
-            <label>ওয়েবসাইট বা সোশ্যাল মিডিয়া লিঙ্ক</label>
-            <input id="c-web" placeholder="যেমন: https://youtube.com/@channel">
-            <label>কাজের ধরন / ক্যাটাগরি</label>
-            <input id="c-cat" placeholder="যেমন: YouTube Video / Reels">
+            <label>নাম / ব্র্যান্ড *</label><input id="c-name" placeholder="যেমন: Fahim Tech BD">
+            <label>ফোন / WhatsApp নম্বর *</label><input id="c-phone" placeholder="যেমন: 01700000000">
+            <label>ওয়েবসাইট বা লিঙ্ক</label><input id="c-web" placeholder="যেমন: https://youtube.com/@channel">
+            <label>কাজের ধরন</label><input id="c-cat" placeholder="যেমন: YouTube Video / Reels">
             <button class="btn ok" style="width:100%;margin-top:16px" onclick="addClient()">💾 ক্লায়েন্ট সেভ করুন</button>
           </div>
         </div>
-
         <div>
           <div class="card">
-            <div class="card-h">
-              <h3>👥 ক্লায়েন্ট ডিরেক্টরি</h3>
-            </div>
+            <div class="card-h"><h3>👥 ক্লায়েন্ট ডিরেক্টরি</h3></div>
             <div id="client-grid" class="grid g-2"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ======================= 4-HOUR CHECK-IN HISTORY ======================= -->
+    <!-- ======================= 4-HOUR LOGS ======================= -->
     <section class="page" id="page-checkin-history">
       <div class="card">
         <div class="card-h">
-          <h3>⏰ ৪-ঘণ্টার কাজের হিস্ট্রি ও রিপোর্ট টাইমলাইন</h3>
+          <h3>⏰ ৪-ঘণ্টার কাজের হিস্ট্রি ও টাইমলাইন</h3>
           <button class="btn ok sm" onclick="openCheckinModal()">➕ এখনকার লগ দিন</button>
         </div>
         <div id="checkin-timeline"></div>
@@ -796,11 +624,9 @@ input:focus,select:focus,textarea:focus{border-color:var(--c1);box-shadow:0 0 0 
     <!-- ======================= ANALYTICS ======================= -->
     <section class="page" id="page-analytics">
       <div class="card">
-        <div class="card-h">
-          <h3>📊 ৩ বছরের পূর্ণাঙ্গ অ্যানালিটিক্স হিস্ট্রি</h3>
-        </div>
+        <div class="card-h"><h3>📊 ৩ বছরের পূর্ণাঙ্গ অ্যানালিটিক্স হিস্ট্রি</h3></div>
         <div class="grid g-kpi" id="an-kpis" style="margin-bottom:18px"></div>
-        <div class="scroll-x" id="an-table"></div>
+        <div style="overflow-x:auto" id="an-table"></div>
       </div>
     </section>
 
@@ -824,1443 +650,1102 @@ input:focus,select:focus,textarea:focus{border-color:var(--c1);box-shadow:0 0 0 
   </div>
 </div>
 
-<!-- ৪-ঘণ্টার অটো চেক-ইন পপ-আপ -->
-<div class="overlay" id="m-checkin">
-  <div class="modal" style="max-width:500px;border-color:rgba(99,102,241,.6);box-shadow:0 0 35px rgba(99,102,241,.35)">
-    <button class="x" onclick="closeOverlay('m-checkin')">✖</button>
-    <h3 class="mt" style="color:var(--c2)">⏰ ৪ ঘণ্টা পার হয়েছে! কী কী করলেন?</h3>
-    <p class="hint" style="margin-bottom:12px">কাজের অগ্রগতি লিখে রাখুন। এটি আপনার রিপোর্টে যুক্ত হবে।</p>
-    <textarea id="checkin-text" rows="4" placeholder="যেমন: রাহিম ভাইয়ের ভিডিওতে সাউন্ড ডিজাইন শেষ করলাম..."></textarea>
-    
-    <div class="row" style="margin-top:14px">
-      <button class="btn ok" style="flex:2" onclick="submitCheckin(false)">✔️ লগ সেভ করুন</button>
-      <button class="btn ghost" style="flex:1" onclick="snoozeCheckin(30)">⏳ ৩০মি স্নুজ</button>
-      <button class="btn bad ghost" style="flex:1" onclick="submitCheckin(true)">💤 কাজ করিনি</button>
-    </div>
+<!-- ======================= MODALS ======================= -->
+<!-- MOTIVE EDITOR MODAL -->
+<div class="overlay" id="m-motive-edit"><div class="modal">
+  <button class="x" onclick="closeOverlay('m-motive-edit')">✖</button>
+  <h3 class="mt">✏️ কাস্টম ৫টি মোটিভেশন এডিট করুন</h3>
+  <label>১ম মোটিভেশন</label><input id="motive-input-0">
+  <label>২য় মোটিভেশন</label><input id="motive-input-1">
+  <label>৩য় মোটিভেশন</label><input id="motive-input-2">
+  <label>৪র্থ মোটিভেশন</label><input id="motive-input-3">
+  <label>৫ম মোটিভেশন</label><input id="motive-input-4">
+  <button class="btn ok" style="width:100%;margin-top:14px" onclick="saveMotiveQuotes()">💾 ৫টি মোটিভেশন সেভ করুন</button>
+</div></div>
+
+<!-- 4-HOUR CHECKIN MODAL -->
+<div class="overlay" id="m-checkin"><div class="modal" style="max-width:480px">
+  <h3 class="mt" style="color:var(--warn)">⏰ ৪ ঘণ্টা পার হয়েছে! কী কী করলেন?</h3>
+  <p class="hint" style="margin-bottom:12px">গত ৪ ঘণ্টার কাজের বিবরণ লিখে রাখুন:</p>
+  <textarea id="checkin-input" rows="4" placeholder="যেমন: ক্লায়েন্টের ভিডিও এডিট করলাম, কালার গ্রেডিং শেষ করলাম..."></textarea>
+  <div class="row" style="margin-top:14px">
+    <button class="btn ok" style="flex:2" onclick="submitCheckin(false)">✔️ লগ সেভ করুন</button>
+    <button class="btn ghost" style="flex:1" onclick="snoozeCheckin(30)">⏳ ৩০মি স্নুজ</button>
+    <button class="btn bad ghost" style="flex:1" onclick="submitCheckin(true)">💤 কাজ করিনি</button>
   </div>
-</div>
+</div></div>
 
-<!-- ৬-ঘণ্টার ডেডলাইন সতর্কবার্তা পপ-আপ -->
-<div class="overlay" id="m-deadline-warn">
-  <div class="modal" style="max-width:540px;border-color:rgba(239,68,68,.7);box-shadow:0 0 40px rgba(239,68,68,.4)">
-    <button class="x" onclick="closeOverlay('m-deadline-warn')">✖</button>
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-      <span style="font-size:2rem;line-height:1">🚨</span>
-      <div>
-        <h3 style="color:#f87171;font-size:1.15rem;font-weight:750">ডেডলাইন ওয়ার্নিং অ্যালার্ট</h3>
-        <div class="hint">প্রতি ৬ ঘণ্টায় আপনার আসন্ন ও ঝুঁকিপূর্ণ প্রজেক্টের রিমাইন্ডার</div>
-      </div>
-    </div>
-    
-    <div id="deadline-warn-list" style="max-height:300px;overflow-y:auto;margin-bottom:14px"></div>
-
-    <div class="row" style="margin-top:14px">
-      <button class="btn bad" style="flex:1" onclick="closeOverlay('m-deadline-warn')">বুঝেছি, কাজে নামছি 🚀</button>
-      <button class="btn ghost" style="flex:1" onclick="snoozeDeadlineAlert(60)">⏳ ১ ঘণ্টা স্নুজ</button>
-    </div>
+<!-- 6-HOUR DEADLINE WARNING MODAL -->
+<div class="overlay" id="m-deadline-warn"><div class="modal" style="max-width:520px;border-color:rgba(239,68,68,.5)">
+  <h3 class="mt" style="color:var(--bad)">🚨 ৬-ঘণ্টার ডেডলাইন ওয়ার্নিং অ্যালার্ট!</h3>
+  <p class="hint" style="margin-bottom:12px">নিচের প্রজেক্টগুলোর ডেডলাইন পার হচ্ছে বা খুব কাছাকাছি চলে এসেছে:</p>
+  <div id="deadline-warn-list" style="max-height:300px;overflow-y:auto;margin-bottom:14px"></div>
+  <div class="row" style="margin-top:14px">
+    <button class="btn bad" style="flex:1" onclick="closeOverlay('m-deadline-warn')">বুঝেছি, কাজে নামছি 🚀</button>
+    <button class="btn ghost" style="flex:1" onclick="snoozeDeadlineAlert(60)">⏳ ১ ঘণ্টা স্নুজ</button>
   </div>
-</div>
+</div></div>
 
-<!-- মোটিভেশন এডিটর মডাল -->
-<div class="overlay" id="m-motive-edit">
-  <div class="modal">
-    <button class="x" onclick="closeOverlay('m-motive-edit')">✖</button>
-    <h3 class="mt">✏️ কাস্টম ৫টি মোটিভেশনাল টেক্সট</h3>
-    <div id="motive-inputs-container"></div>
-    <div class="row" style="margin-top:16px">
-      <button class="btn ok" style="flex:1" onclick="saveCustomMotives()">💾 সেভ করুন</button>
-      <button class="btn ghost" onclick="resetDefaultMotives()">🔄 ডিফল্ট করুন</button>
-    </div>
-  </div>
-</div>
+<!-- DETAILS MODAL -->
+<div class="overlay" id="m-details"><div class="modal">
+  <button class="x" onclick="closeOverlay('m-details')">✖</button>
+  <h3 class="mt" id="m-details-title">বিস্তারিত</h3>
+  <div id="m-details-body"></div>
+</div></div>
 
-<!-- বিস্তারিত মডাল (Goal Progress) -->
-<div class="overlay" id="m-details">
-  <div class="modal">
-    <button class="x" onclick="closeOverlay('m-details')">✖</button>
-    <h3 class="mt" id="m-details-title">বিস্তারিত</h3>
-    <div id="m-details-body"></div>
-  </div>
-</div>
-
-<!-- ড্রিম অগ্রগতি আপডেট মডাল -->
-<div class="overlay" id="m-dream-progress">
-  <div class="modal" style="max-width:440px">
-    <button class="x" onclick="closeOverlay('m-dream-progress')">✖</button>
-    <h3 class="mt" style="color:var(--gold)">🌟 ড্রিমের অগ্রগতি আপডেট</h3>
-    <div id="dream-progress-body"></div>
-  </div>
-</div>
-
-<!-- ঋণ পরিশোধের মডাল -->
-<div class="overlay" id="m-pay-loan">
-  <div class="modal" style="max-width:440px">
-    <button class="x" onclick="closeOverlay('m-pay-loan')">✖</button>
-    <h3 class="mt" style="color:var(--ok)">💸 ধার পরিশোধ করুন</h3>
-    <div id="pay-loan-body"></div>
+<!-- FIREBASE AUTH OVERLAY -->
+<div id="auth">
+  <div class="auth-card">
+    <div class="logo">🚀</div>
+    <h2>Naim's OS <span style="background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent">Pro</span></h2>
+    <p>আপনার প্রফেশনাল এডিটর কমান্ড সেন্টারে স্বাগতম</p>
+    <button id="google-login-btn" class="btn" style="background:linear-gradient(135deg,#ea4335,#c5221f);width:100%;padding:13px 24px" onclick="loginWithGoogle()">🌐 Google দিয়ে লগ-ইন</button>
+    <button class="btn ghost" style="width:100%;margin-top:12px" onclick="continueAsGuest()">😎 লগ-ইন ছাড়া ব্যবহার করুন (Local Mode)</button>
+    <div class="checklist"><span>☁️ ক্লাউড অটো-সিঙ্ক</span><span>🌟 ড্রিম বোর্ড</span><span>💰 টাকা-পয়সার খাতা</span></div>
+    <div id="auth-status"></div>
   </div>
 </div>
 
 <div id="toasts"></div>
 
-<script>
-const APP_STORAGE_KEY = 'naims_os_v2_final_db';
+<!-- ======================= FIREBASE MODULE SCRIPT ======================= -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import { getAuth, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-const DEFAULT_MOTIVES = [
-  "আজকের ছোট কাজটাই কালকের বড় সাফল্যের মূল ভিত্তি।",
-  "সময় কম, কিন্তু ফোকাস শতভাগ থাকলে জয় নিশ্চিত।",
-  "প্রতিদিন ১% অগ্রগতি মানে বছরে ৩৭ গুণ উন্নতি!",
-  "কঠিন কাজটা সকাল সকাল সেরে ফেলুন, দিনটা হালকা লাগবে।",
-  "তোমার লক্ষ্য তোমার পরিশ্রমের ওপর নির্ভর করে, অলসতার ওপর নয়।"
-];
+const userConfig = {
+  apiKey: "AIzaSyAh-w6kxP6h6i3K35yACd5Z-01W7u_MtAI",
+  authDomain: "naims-os.firebaseapp.com",
+  projectId: "naims-os",
+  storageBucket: "naims-os.firebasestorage.app",
+  messagingSenderId: "327101185480",
+  appId: "1:327101185480:web:3b2bee72ffb0cda4d094fd",
+  measurementId: "G-PXQJXZP1WP"
+};
+const appId = 'naims-os-v1';
+
+let app, auth, db, provider, fbReady = false;
+
+function authStatus(html, isErr) {
+  const e = document.getElementById('auth-status');
+  if (!e) return;
+  e.style.color = isErr ? 'var(--bad)' : 'var(--dim)';
+  e.innerHTML = html;
+}
+function loginBusy(b) {
+  const btn = document.getElementById('google-login-btn');
+  if (!btn) return;
+  btn.disabled = b;
+  btn.style.opacity = b ? .7 : 1;
+  btn.innerHTML = b ? '⏳ অপেক্ষা করুন...' : '🌐 Google দিয়ে লগ-ইন';
+}
+function authErrText(code) {
+  const host = location.hostname;
+  if (code === 'auth/unauthorized-domain') return '<b>ডোমেইনটি অনুমোদিত নয়: ' + host + '</b><br>Firebase Console → Authentication → Settings → Authorized domains এ যোগ করুন।';
+  if (code === 'auth/operation-not-allowed') return '<b>Google লগ-ইন চালু করা হয়নি।</b><br>Firebase Console → Sign-in method → Google চালু করুন।';
+  if (code === 'auth/popup-blocked' || code === 'auth/popup-closed-by-user') return 'পপ-আপ বন্ধ বা ব্লক হয়েছে। আবার চেষ্টা করুন বা Local Mode নিন।';
+  return 'লগ-ইন ফেইল হয়েছে' + (code ? ' (' + code + ')' : '') + '। Local Mode দিয়েও কাজ চালাতে পারেন।';
+}
+
+try {
+  app = initializeApp(userConfig);
+  auth = getAuth(app);
+  db = getFirestore(app);
+  provider = new GoogleAuthProvider();
+  provider.setCustomParameters({ prompt: 'select_account' });
+  fbReady = true;
+} catch (e) { console.error("Firebase init error:", e); }
+
+window.loginWithGoogle = async () => {
+  if (!fbReady || !auth) { authStatus('Firebase লোড হয়নি — Local Mode ব্যবহার করুন।', true); return; }
+  localStorage.removeItem('naims_guest_mode');
+  loginBusy(true);
+  authStatus('Google লগ-ইন উইন্ডো খোলা হচ্ছে...');
+  try {
+    await signInWithPopup(auth, provider);
+  } catch (e) {
+    console.error("Login error:", e);
+    if (e && (e.code === 'auth/popup-blocked' || e.code === 'auth/operation-not-supported-in-this-environment')) {
+      try { await signInWithRedirect(auth, provider); return; } catch (e2) { console.error(e2); }
+    }
+    loginBusy(false);
+    authStatus(authErrText(e && e.code), true);
+  }
+};
+
+window.logout = async () => {
+  localStorage.removeItem('naims_guest_mode');
+  try { if (auth) await signOut(auth); } catch (e) { console.error(e); }
+  location.reload();
+};
+
+window.cloudSaveData = async (stateObj) => {
+  if (!window.__cloudReady || !auth || !auth.currentUser) return;
+  try {
+    await setDoc(doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'data', 'appState'), { state: JSON.stringify(stateObj), updatedAt: Date.now() });
+    window.__lastSync = Date.now();
+  } catch (e) { console.error("Cloud save error:", e); }
+};
+
+window.cloudLoadData = async (callback) => {
+  if (!auth || !auth.currentUser) { window.__cloudReady = true; return callback(null); }
+  let data = null;
+  try {
+    const snap = await getDoc(doc(db, 'artifacts', appId, 'users', auth.currentUser.uid, 'data', 'appState'));
+    if (snap.exists()) data = JSON.parse(snap.data().state);
+  } catch (e) { console.error("Cloud load error:", e); }
+  window.__cloudReady = true;
+  callback(data);
+};
+
+if (!fbReady) {
+  authStatus('Firebase লোড হয়নি। Local Mode ব্যবহার করুন।', true);
+} else {
+  getRedirectResult(auth).catch((e) => authStatus(authErrText(e && e.code), true));
+  onAuthStateChanged(auth, async (user) => {
+    window.__authUser = user || null;
+    const overlay = document.getElementById('auth');
+    if (user) {
+      localStorage.removeItem('naims_guest_mode');
+      if (overlay) overlay.style.display = 'none';
+      if (window.updateAuthUI) window.updateAuthUI(user);
+      window.cloudLoadData((cloudState) => { if (cloudState && window.handleCloudData) window.handleCloudData(cloudState); });
+    } else {
+      if (window.updateAuthUI) window.updateAuthUI(null);
+      if (overlay) overlay.style.display = (localStorage.getItem('naims_guest_mode') === '1') ? 'none' : 'flex';
+      window.__cloudReady = true;
+    }
+  });
+}
+</script>
+
+<!-- ======================= MAIN APP LOGIC ======================= -->
+<script>
+window.__cloudReady = false;
+window.__authUser = null;
+window.__lastSync = 0;
 
 const DEFAULT_STATE = {
   name: 'Naim', role: 'Pro Video Editor',
-  target: 50000, dailyTarget: 1500,
-  settings: { voice: true, sound: true, currency: '৳' },
-  projects: [],
-  clients: [],
-  checkins: [],
-  sessions: [],
-  expenses: [],      
-  customCash: [],    
-  loans: [],
-  dreams: [],
-  motives: DEFAULT_MOTIVES.slice(),
+  target: 50000, dailyTarget: 2000,
+  theme: 'dark', voice: true, sound: true,
   lastCheckinTime: Date.now(),
-  lastDeadlineWarnTime: Date.now()
+  lastDeadlineWarnTime: Date.now(),
+  projects: [
+    { id: 'p1', title: 'YouTube Tech Review', client: 'Fahim Tech', price: 15000, due: 5000, estHours: 8, timeSpent: 28800, deadline: new Date(Date.now() + 86400000*2).toISOString().slice(0,10), priority: 'high', status: 'active', payments: [{amount:10000, date:new Date().toISOString().slice(0,10)}] },
+    { id: 'p2', title: 'Wedding Teaser Reel', client: 'Dream Films', price: 12000, due: 0, estHours: 5, timeSpent: 18000, deadline: new Date(Date.now() - 86400000).toISOString().slice(0,10), priority: 'medium', status: 'done', completedAt: new Date().toISOString(), payments: [{amount:12000, date:new Date().toISOString().slice(0,10)}] }
+  ],
+  expenses: [
+    { id: 'e1', desc: 'আজকের ফ্যামিলি বাজার', amount: 1500, cat: 'bazaar', date: new Date().toISOString().slice(0,10) },
+    { id: 'e2', desc: 'ইন্টারনেট বিল', amount: 1200, cat: 'business', date: new Date().toISOString().slice(0,10) }
+  ],
+  customCash: [
+    { id: 'c1', desc: 'বোনাস ক্যাশ ইন', amount: 2000, type: 'in', date: new Date().toISOString().slice(0,10) }
+  ],
+  loans: [
+    { id: 'l1', person: 'রফিক ভাই', reason: 'পিসি র‍্যাম আপগ্রেড', amount: 6000, paid: 2000, date: new Date().toISOString().slice(0,10) }
+  ],
+  clients: [
+    { id: 'c1', name: 'Fahim Tech', phone: '01711000000', web: 'https://youtube.com/@fahim', cat: 'Tech Videos' },
+    { id: 'c2', name: 'Dream Films', phone: '01822000000', web: 'https://instagram.com/dreamfilms', cat: 'Wedding Reels' }
+  ],
+  dreams: [
+    { id: 'd1', title: 'নতুন M3 Max ম্যাকবুক প্রো কেনা', target: 220000, current: 45000, type: 'gadget', start: new Date().toISOString().slice(0,10), end: new Date(Date.now() + 86400000*90).toISOString().slice(0,10), note: 'কাজের রেন্ডারিং ও এডিটিং স্পিড দ্বিগুণ হবে!', achieved: false }
+  ],
+  checkinLogs: [],
+  motiveQuotes: [
+    "আজকের ছোট কাজটাই কালকের বড় সাফল্যের মূল ভিত্তি।",
+    "অলসতার চেয়ে বড় কোনো শত্রু মানুষের নেই—এখনই শুরু করুন।",
+    "আপনার স্বপ্ন তখনই সত্যি হবে যখন আপনি ঘুম না গিয়ে কাজ করবেন।",
+    "প্রতিদিন ১% উন্নতি মানে বছরে ৩৭ গুণ এগিয়ে যাওয়া।",
+    "কঠিন কাজটা আগে করুন, বাকি দিনটা আরামদায়ক কাটবে।"
+  ]
 };
 
 let state = JSON.parse(JSON.stringify(DEFAULT_STATE));
-let activeProjId = null;
-let tRun = false, tWorked = 0, tInt = null;
-let currentMotiveIdx = 0, motiveTimer = null;
+let activePage = 'dashboard';
+let currentMotiveIdx = 0;
+let motiveInterval = null;
 
-const el = (id) => document.getElementById(id);
-const num = (v) => { const n = parseFloat(v); return isFinite(n) ? n : 0; };
-const CUR = () => state.settings.currency || '৳';
-const money = (n) => CUR() + Math.round(num(n)).toLocaleString('en-US');
-const fmtDur = (sec) => {
-  sec = Math.max(0, Math.round(num(sec)));
-  const h = Math.floor(sec/3600), m = Math.floor((sec%3600)/60), s = sec%60;
-  if(h>0) return h + 'ঘ ' + m + 'মি';
-  if(m>0) return m + 'মি ' + s + 'সে';
-  return s + 'সে';
+// Timer Globals
+let activeProjId = null, tRun = false, tSec = 0, tInt = null;
+
+const el = id => document.getElementById(id);
+const num = v => parseFloat(v) || 0;
+const money = n => '৳' + Math.round(num(n)).toLocaleString('en-US');
+
+function loadLocal() {
+  const raw = localStorage.getItem('naims_os_final_v2');
+  if (raw) {
+    try { state = Object.assign({}, DEFAULT_STATE, JSON.parse(raw)); } catch(e){}
+  }
+  applyTheme(state.theme || 'dark');
+  renderAll();
+}
+
+function saveData(silent) {
+  localStorage.setItem('naims_os_final_v2', JSON.stringify(state));
+  if (window.cloudSaveData) window.cloudSaveData(state);
+  renderAll();
+  if (!silent) toast('ডেটা সফলভাবে সেভ হয়েছে ✅', 'ok');
+}
+
+window.handleCloudData = (cloud) => {
+  if (cloud) {
+    state = Object.assign({}, DEFAULT_STATE, cloud);
+    applyTheme(state.theme || 'dark');
+    saveData(true);
+    toast('ক্লাউড থেকে ডেটা লোড হয়েছে ☁️', 'ok');
+  }
 };
-const fmtClock = (sec) => {
-  sec = Math.max(0, Math.floor(num(sec)));
-  const h = Math.floor(sec/3600), m = Math.floor((sec%3600)/60), s = sec%60;
-  return String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+
+window.continueAsGuest = () => {
+  localStorage.setItem('naims_guest_mode', '1');
+  const a = el('auth'); if (a) a.style.display = 'none';
+  toast('Local Mode চালু হয়েছে 😎', 'ok');
 };
-const todayKey = () => new Date().toISOString().split('T')[0];
-const dateLabel = (d) => d ? new Date(d).toLocaleDateString('bn-BD', {day:'numeric',month:'short',year:'numeric'}) : '—';
+
+window.handleAuthAction = () => {
+  if (window.__authUser) {
+    if (confirm('আপনি কি Google অ্যাকাউন্ট থেকে লগআউট করতে চান?')) window.logout();
+  } else {
+    const a = el('auth'); if (a) a.style.display = 'flex';
+  }
+};
+
+window.updateAuthUI = (user) => {
+  const b = el('sidebar-auth-btn'); if (!b) return;
+  if (user) {
+    b.innerHTML = '<i>🚪</i> লগআউট (' + (user.email ? user.email.split('@')[0] : 'User') + ')';
+    b.style.color = 'var(--bad)';
+  } else {
+    b.innerHTML = '<i>🌐</i> গুগল লগ-ইন';
+    b.style.color = 'var(--muted)';
+  }
+};
+
+function toast(msg, type) {
+  const c = el('toasts'); if (!c) return;
+  const t = document.createElement('div');
+  t.className = 'toast ' + (type||'');
+  t.textContent = msg;
+  c.appendChild(t);
+  setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 300); }, 3000);
+}
 
 function speak(text) {
-  if (!state.settings.voice || !('speechSynthesis' in window)) return;
-  try {
-    window.speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = 'bn-BD';
-    window.speechSynthesis.speak(u);
-  } catch(e) {}
-}
-function sound(kind) {
-  if (!state.settings.sound) return;
-  try {
-    const ac = new (window.AudioContext || window.webkitAudioContext)();
-    const o = ac.createOscillator(), g = ac.createGain();
-    o.connect(g); g.connect(ac.destination);
-    if(kind==='warn') { o.frequency.value = 320; g.gain.value = 0.15; o.start(); o.stop(ac.currentTime + 0.3); }
-    else if(kind==='success') { o.frequency.value = 750; g.gain.value = 0.1; o.start(); o.stop(ac.currentTime + 0.2); }
-    else if(kind==='dream') {
-      [523, 659, 784, 1046].forEach((f, i) => {
-        const osc = ac.createOscillator(), gn = ac.createGain();
-        osc.connect(gn); gn.connect(ac.destination);
-        osc.frequency.value = f; gn.gain.value = 0.08;
-        osc.start(ac.currentTime + i * 0.08);
-        osc.stop(ac.currentTime + i * 0.08 + 0.18);
-      });
-    }
-    else { o.frequency.value = 520; g.gain.value = 0.08; o.start(); o.stop(ac.currentTime + 0.1); }
-  } catch(e) {}
-}
-function toast(msg, type='ok') {
-  const c = el('toasts'); if(!c) return;
-  const t = document.createElement('div');
-  t.className = 'toast ' + type;
-  t.innerHTML = (type==='err'?'⛔ ':type==='warn'?'⚠️ ':type==='dream'?'🌟 ':'✅ ') + msg;
-  c.appendChild(t);
-  setTimeout(() => { t.style.opacity='0'; setTimeout(()=>t.remove(), 300); }, 3200);
+  if (!state.voice || !('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'bn-BD';
+  window.speechSynthesis.speak(u);
 }
 
-function loadData() {
-  try {
-    const raw = localStorage.getItem(APP_STORAGE_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      state = Object.assign({}, DEFAULT_STATE, parsed);
-      if(!Array.isArray(state.motives) || state.motives.length===0) state.motives = DEFAULT_MOTIVES.slice();
-      if(!Array.isArray(state.expenses)) state.expenses = [];
-      if(!Array.isArray(state.customCash)) state.customCash = [];
-      if(!Array.isArray(state.loans)) state.loans = [];
-      if(!Array.isArray(state.dreams)) state.dreams = [];
-    }
-  } catch(e) { console.error(e); }
-  syncInputs();
-  renderAll();
-}
-function saveData() {
-  try {
-    localStorage.setItem(APP_STORAGE_KEY, JSON.stringify(state));
-  } catch(e) { console.error(e); }
-  renderAll();
-}
-function syncInputs() {
-  const set = (id, v) => { if(el(id)) el(id).value = v ?? ''; };
-  set('set-name', state.name);
-  set('monthly-target-input', state.target);
-  set('daily-target-input', state.dailyTarget);
-  if(el('side-name')) el('side-name').textContent = state.name;
-  if(el('side-role')) el('side-role').textContent = state.role;
-  if(el('exp-date')) el('exp-date').value = todayKey();
-  if(el('cash-date')) el('cash-date').value = todayKey();
-  if(el('loan-date')) el('loan-date').value = todayKey();
-  if(el('dr-start')) el('dr-start').value = todayKey();
-  if(el('dr-end') && !el('dr-end').value) setDreamDays(7);
+function applyTheme(th) {
+  state.theme = th;
+  document.documentElement.setAttribute('data-theme', th);
+  const b = el('themeBtn'); if (b) b.textContent = th === 'light' ? '🌙' : '☀️';
 }
 
 function switchPage(p) {
-  document.querySelectorAll('.page').forEach(x => x.classList.toggle('active', x.id === 'page-' + p));
-  document.querySelectorAll('.nav-btn[data-page]').forEach(x => x.classList.toggle('active', x.dataset.page === p));
-  const t = {
-    dashboard:'ড্যাশবোর্ড', dreams:'ড্রিম ও ভিশন বোর্ড', workspace:'ওয়ার্কস্পেস', finance:'টাকা-পয়সার হিসাব ও ফিন্যান্স',
-    clients:'ক্লায়েন্ট হাব (CRM)', analytics:'অ্যানালিটিক্স (৩ বছর)', 'checkin-history':'৪-ঘণ্টার লগ হিস্ট্রি', settings:'সেটিংস'
-  }[p] || 'ড্যাশবোর্ড';
-  if(el('page-title')) el('page-title').textContent = t;
-  el('sidebar').classList.remove('open');
+  activePage = p;
+  document.querySelectorAll('.page').forEach(pg => pg.classList.toggle('active', pg.id === 'page-' + p));
+  document.querySelectorAll('.nav-btn[data-page]').forEach(b => b.classList.toggle('active', b.dataset.page === p));
+  const t = el('page-title'); if (t) t.textContent = document.querySelector('.nav-btn[data-page="'+p+'"]')?.textContent.trim() || 'ড্যাশবোর্ড';
   window.scrollTo({top:0, behavior:'smooth'});
-  if(p==='dreams') renderDreamsPage();
-  if(p==='finance') renderFinancePage();
-  if(p==='analytics') renderAnalytics();
-  if(p==='clients') renderClients();
-  if(p==='checkin-history') renderCheckinTimeline();
+  if (p === 'dreams') renderDreams();
+  if (p === 'finance') renderFinance();
+  if (p === 'clients') renderClients();
+  if (p === 'workspace') renderProjects();
 }
 
-/* ------------------ DREAM & VISION BOARD ------------------ */
-function setDreamDays(d) {
-  const start = (el('dr-start') && el('dr-start').value) ? new Date(el('dr-start').value) : new Date();
-  const end = new Date(start);
-  end.setDate(end.getDate() + (num(d) <= 1 ? 1 : num(d)));
-  if(el('dr-end')) el('dr-end').value = end.toISOString().split('T')[0];
+function openOverlay(id) { const e = el(id); if (e) e.classList.add('on'); }
+function closeOverlay(id) { const e = el(id); if (e) e.classList.remove('on'); }
+
+// Financial Math
+function calcFinance() {
+  const projIn = state.projects.reduce((s,p) => s + (p.payments||[]).reduce((a,x)=>a+num(x.amount),0), 0);
+  const customIn = state.customCash.filter(c => c.type === 'in').reduce((s,c)=>s+num(c.amount),0);
+  const customOut = state.customCash.filter(c => c.type === 'out').reduce((s,c)=>s+num(c.amount),0);
+  const totalExp = state.expenses.reduce((s,e)=>s+num(e.amount),0);
+  const totalDebtPaid = state.loans.reduce((s,l)=>s+num(l.paid||0),0);
+  const remainingDebt = state.loans.reduce((s,l)=>s+Math.max(0, num(l.amount) - num(l.paid||0)),0);
+  const clientDue = state.projects.reduce((s,p)=>s+num(p.due||0),0);
+
+  const cashInHand = (projIn + customIn) - customOut - totalExp - totalDebtPaid;
+  const neededToEarn = Math.max(0, (num(state.target) + remainingDebt) - cashInHand);
+
+  return { projIn, customIn, totalExp, remainingDebt, clientDue, cashInHand, neededToEarn };
 }
 
-function addDream() {
-  const title = el('dr-title').value.trim();
-  const type = el('dr-type').value;
-  const target = num(el('dr-target').value);
-  const start = el('dr-start').value || todayKey();
-  const end = el('dr-end').value;
-  const note = el('dr-note').value.trim();
+// Today Math
+function calcToday() {
+  const t = new Date().toISOString().slice(0,10);
+  const todayDone = state.projects.filter(p => p.status === 'done' && (p.completedAt||'').slice(0,10) === t).reduce((s,p)=>s+num(p.price),0);
+  const todayCash = state.projects.reduce((s,p)=>s+(p.payments||[]).filter(x=>x.date===t).reduce((a,b)=>a+num(b.amount),0),0)
+    + state.customCash.filter(c=>c.date===t && c.type==='in').reduce((s,c)=>s+num(c.amount),0);
+  const todayTotal = todayDone + todayCash;
+  const remDaily = Math.max(0, num(state.dailyTarget) - todayTotal);
 
-  if(!title || !end) return toast('ড্রিম ও ডেডলাইন তারিখ আবশ্যক', 'err');
+  const now = new Date();
+  const daysInMonth = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
+  const daysLeft = Math.max(1, daysInMonth - now.getDate() + 1);
+  const fin = calcFinance();
+  const mTargetLeft = Math.max(0, num(state.target) - fin.projIn);
+  const perDayNeeded = Math.round(mTargetLeft / daysLeft);
 
-  state.dreams.unshift({
-    id: Date.now(),
-    title,
-    type,
-    target,
-    current: 0,
-    start,
-    end,
-    note,
-    status: 'active',
-    createdAt: new Date().toISOString(),
-    completedAt: null
-  });
-
-  el('dr-title').value = '';
-  el('dr-target').value = '';
-  el('dr-note').value = '';
-  saveData();
-  sound('dream');
-  if (typeof confetti === 'function') confetti({ particleCount: 60, spread: 70, origin: { y: 0.6 } });
-  speak(`অভিনন্দন! আপনার নতুন ড্রিম যুক্ত হয়েছে: ${title}`);
-  toast('🌟 নতুন ড্রিম সেট হয়েছে! ফোকাস ১০০% রাখুন।', 'dream');
+  return { todayTotal, todayDone, todayCash, remDaily, perDayNeeded, daysLeft };
 }
 
-function openUpdateDreamProgress(id) {
-  const dr = state.dreams.find(x => x.id === id);
-  if(!dr) return;
+function renderAll() {
+  renderTopTargetCards();
+  renderDashboardKPIs();
+  renderDreamBanner();
+  renderUrgentProjects();
+  renderProjects();
+  renderFinance();
+  renderClients();
+  renderDreams();
+  renderTimeline();
+  updateLiveBars();
+  updateMarquee();
+}
 
-  const body = el('dream-progress-body');
-  body.innerHTML = `
-    <div style="margin-bottom:12px">
-      <b>${dr.title}</b><br>
-      <span class="hint">টার্গেট: <b>${dr.target > 0 ? (dr.type === 'money' ? money(dr.target) : dr.target) : 'নির্দিষ্ট পরিমাণ নেই'}</b> • বর্তমান অগ্রগতি: <b>${dr.current}</b></span>
+function renderTopTargetCards() {
+  const container = el('focus-cards-container'); if (!container) return;
+  const td = calcToday();
+  const dTarget = num(state.dailyTarget);
+  const dPct = dTarget > 0 ? Math.min(100, Math.round((td.todayTotal / dTarget)*100)) : 0;
+
+  container.innerHTML = `
+    <div class="fc-card" style="border-left:4px solid var(--ok)">
+      <div>
+        <div class="fc-tag" style="color:var(--ok)">💵 আজ মোট কাজ ও আয় হয়েছে</div>
+        <div class="fc-val" style="color:var(--ok)">${money(td.todayTotal)}</div>
+        <div class="fc-sub">কাজ সম্পন্ন: ${money(td.todayDone)} • নগদ আদায়: ${money(td.todayCash)}</div>
+      </div>
+      <div class="fc-bar"><i style="width:${dPct}%;background:var(--ok)"></i></div>
     </div>
-    <label>বর্তমানে কতটুকু অর্জন হয়েছে? (সংখ্যা বা টাকা)</label>
-    <input type="number" id="dream-prog-input" value="${dr.current}">
-    <div class="row" style="margin-top:16px">
-      <button class="btn dream" style="flex:1" onclick="saveDreamProgress(${dr.id})">💾 প্রোগ্রেস সেভ করুন</button>
-      <button class="btn ok" style="flex:1" onclick="markDreamCompleted(${dr.id})">🎉 ড্রিম সম্পূর্ণ অর্জিত!</button>
+
+    <div class="fc-card" style="border-left:4px solid ${td.remDaily === 0 ? 'var(--ok)' : 'var(--warn)'}">
+      <div>
+        <div class="fc-tag" style="color:${td.remDaily === 0 ? 'var(--ok)' : 'var(--warn)'}">🎯 আজকের টার্গেটে আর বাকি</div>
+        <div class="fc-val" style="color:${td.remDaily === 0 ? 'var(--ok)' : 'var(--warn)'}">${td.remDaily === 0 ? '✅ পূরণ হয়েছে!' : money(td.remDaily)}</div>
+        <div class="fc-sub">দৈনিক টার্গেট: ${money(dTarget)} (${dPct}% সম্পন্ন)</div>
+      </div>
+      <div class="fc-bar"><i style="width:${dPct}%;background:${td.remDaily === 0 ? 'var(--ok)' : 'var(--warn)'}"></i></div>
+    </div>
+
+    <div class="fc-card" style="border-left:4px solid var(--c2)">
+      <div>
+        <div class="fc-tag" style="color:var(--c2)">🚀 মাসিক লক্ষ্য ছুতে আজ গড়ে প্রয়োজন</div>
+        <div class="fc-val" style="color:var(--c2)">${money(td.perDayNeeded)}</div>
+        <div class="fc-sub">মাসের বাকি আছে: <b>${td.daysLeft} দিন</b> (টার্গেট: ${money(state.target)})</div>
+      </div>
+      <div class="fc-bar"><i style="width:100%;background:var(--c2)"></i></div>
     </div>
   `;
-  openOverlay('m-dream-progress');
 }
 
-function saveDreamProgress(id) {
-  const dr = state.dreams.find(x => x.id === id);
-  if(!dr) return;
-  const val = num(el('dream-prog-input').value);
-  dr.current = val;
-  if(dr.target > 0 && dr.current >= dr.target) {
-    dr.status = 'achieved';
-    dr.completedAt = new Date().toISOString();
-    if (typeof confetti === 'function') confetti({ particleCount: 90, spread: 80, origin: { y: 0.6 } });
-    speak(`মারহাবা নাইম ভাই! আপনার ড্রিম ${dr.title} সম্পন্ন হয়েছে!`);
-    toast('🎉 ড্রিম শতভাগ অর্জিত হয়েছে!', 'dream');
-  } else {
-    toast('অগ্রগতি সংরক্ষিত হয়েছে ✅');
-  }
-  closeOverlay('m-dream-progress');
-  saveData();
+function renderDashboardKPIs() {
+  const f = calcFinance();
+  if (el('k-cash')) el('k-cash').textContent = money(f.cashInHand);
+  if (el('k-exp')) el('k-exp').textContent = money(f.totalExp);
+  if (el('k-loan')) el('k-loan').textContent = money(f.remainingDebt);
+  if (el('k-due')) el('k-due').textContent = money(f.clientDue);
+
+  const mPct = num(state.target) > 0 ? Math.min(100, Math.round((f.projIn / num(state.target))*100)) : 0;
+  const dPct = num(state.dailyTarget) > 0 ? Math.min(100, Math.round((calcToday().todayTotal / num(state.dailyTarget))*100)) : 0;
+
+  const rm = el('ring-month'); if (rm) rm.style.setProperty('--p', mPct);
+  const rmv = el('ring-month-val'); if (rmv) rmv.textContent = mPct + '%';
+  const rd = el('ring-day'); if (rd) rd.style.setProperty('--p', dPct);
+  const rdv = el('ring-day-val'); if (rdv) rdv.textContent = dPct + '%';
 }
 
-function markDreamCompleted(id) {
-  const dr = state.dreams.find(x => x.id === id);
-  if(!dr) return;
-  dr.status = 'achieved';
-  if(dr.target > 0) dr.current = dr.target;
-  dr.completedAt = new Date().toISOString();
-  closeOverlay('m-dream-progress');
-  saveData();
-  sound('dream');
-  if (typeof confetti === 'function') confetti({ particleCount: 100, spread: 90, origin: { y: 0.6 } });
-  speak(`মারহাবা নাইম ভাই! আপনার ড্রিম ${dr.title} সম্পূর্ণ সম্পন্ন হয়েছে!`);
-  toast('🎉 ড্রিম সম্পন্ন হয়েছে! নিজের পিঠ চাপড়ে দিন!', 'dream');
-}
-
-function deleteDream(id) {
-  if(!confirm('এই ড্রিমটি মুছে ফেলতে চান?')) return;
-  state.dreams = state.dreams.filter(x => x.id !== id);
-  saveData();
-  toast('ড্রিম মুছে ফেলা হয়েছে', 'warn');
-}
-
-function getDreamStats(dr) {
-  const now = new Date();
-  const end = new Date(dr.end);
-  const diffDays = Math.ceil((end - now) / (1000 * 60 * 60 * 24));
-  const isExpired = diffDays < 0 && dr.status !== 'achieved';
-  let pct = 0;
-  if(dr.status === 'achieved') pct = 100;
-  else if(dr.target > 0) pct = Math.min(100, Math.round((num(dr.current) / num(dr.target)) * 100));
-
-  let timeTxt = '';
-  if(dr.status === 'achieved') timeTxt = '🎉 অর্জিত ড্রিম!';
-  else if(diffDays < 0) timeTxt = `⚠️ সময় পার হয়েছে (${Math.abs(diffDays)} দিন)`;
-  else if(diffDays === 0) timeTxt = '🔥 আজই ডেডলাইনের শেষ দিন!';
-  else timeTxt = `⏳ আর ${diffDays} দিন বাকি`;
-
-  return { diffDays, isExpired, pct, timeTxt };
-}
-
-function renderDreamsPage() {
-  const container = el('dream-list-container');
-  if(!container) return;
-
-  const list = state.dreams || [];
-  if(el('dream-count-lbl')) el('dream-count-lbl').textContent = `${list.length}টি ড্রিম`;
-
-  if(list.length === 0) {
-    container.innerHTML = '<div class="empty">কোনো ড্রিম এখনো সেট করা হয়নি। বাম দিকের ফর্ম থেকে ১ দিন, ৭ দিন বা ১ বছরের ড্রিম সেট করুন! 🌟</div>';
+function renderDreamBanner() {
+  const b = el('dash-dream-banner'); if (!b) return;
+  const activeDream = state.dreams.find(d => !d.achieved) || state.dreams[0];
+  if (!activeDream) {
+    b.innerHTML = `<div class="db-title">🌟 আপনার কোনো সক্রিয় ড্রিম সেট করা নেই</div><div class="hint">ক্লিক করে ১ দিন থেকে ১ বছরের একটি ড্রিম সেট করুন →</div>`;
     return;
   }
+  const pct = activeDream.target > 0 ? Math.min(100, Math.round((activeDream.current / activeDream.target)*100)) : 0;
+  const daysLeft = Math.max(0, Math.ceil((new Date(activeDream.end) - new Date()) / 86400000));
 
-  const typeLabels = { money:'💰 টাকা অর্জন', gadget:'💻 গ্যাজেট/কেনাকাটা', skill:'🚀 স্কিল/ক্যারিয়ার', other:'🎯 পার্সোনাল' };
+  b.innerHTML = `
+    <div class="db-top">
+      <span class="db-tag">🌟 সক্রিয় ড্রিম (${activeDream.type.toUpperCase()})</span>
+      <span class="db-countdown">⏳ বাকি: ${daysLeft} দিন</span>
+    </div>
+    <div class="db-title">${activeDream.title}</div>
+    <div class="db-sub">
+      <span>🎯 টার্গেট: <b>${money(activeDream.target)}</b></span>
+      <span>💰 অর্জন: <b>${money(activeDream.current)}</b> (${pct}%)</span>
+      <span>📅 ডেডলাইন: <b>${activeDream.end}</b></span>
+    </div>
+    <div class="db-prog"><i style="width:${pct}%"></i></div>
+  `;
+}
 
-  container.innerHTML = list.map(dr => {
-    const isDone = dr.status === 'achieved';
-    const s = getDreamStats(dr);
+function renderUrgentProjects() {
+  const box = el('dash-urgent'); if (!box) return;
+  const list = state.projects.filter(p => p.status !== 'done').slice(0, 4);
+  if (!list.length) { box.innerHTML = '<div class="empty">কোনো জরুরি প্রজেক্ট নেই 🧘</div>'; return; }
+  box.innerHTML = list.map(p => `
+    <div class="list-item">
+      <div class="g">
+        <b>${p.title}</b>
+        <div class="hint">👤 ${p.client} • ডেডলাইন: ${p.deadline}</div>
+      </div>
+      <span class="pill ${p.priority === 'high' ? 'p-bad' : 'p-mid'}">${p.priority.toUpperCase()}</span>
+      <button class="btn sm ok" onclick="startTimer('${p.id}')">▶️ চালান</button>
+    </div>
+  `).join('');
+}
 
+function updateMarquee() {
+  const f = calcFinance();
+  const d = state.dreams.find(x => !x.achieved);
+  if (el('mq-dream')) el('mq-dream').textContent = d ? `🌟 ড্রিম: ${d.title} (${Math.round((d.current/d.target)*100)}%)` : '🌟 ড্রিম সেট করুন';
+  if (el('mq-cash')) el('mq-cash').textContent = `💵 হাতে নগদ: ${money(f.cashInHand)}`;
+  if (el('mq-due')) el('mq-due').textContent = `⚠️ ক্লায়েন্ট বকেয়া: ${money(f.clientDue)}`;
+  if (el('mq-debt')) el('mq-debt').textContent = `🏦 মোট দেনা: ${money(f.remainingDebt)}`;
+  if (el('mq-target')) el('mq-target').textContent = `🎯 টার্গেট: ${Math.round((f.projIn / num(state.target))*100)}%`;
+}
+
+// Dreams Page
+function renderDreams() {
+  const box = el('dream-list-container'); if (!box) return;
+  if (!state.dreams.length) { box.innerHTML = '<div class="empty">কোনো ড্রিম যোগ করা হয়নি</div>'; return; }
+  if (el('dream-count-lbl')) el('dream-count-lbl').textContent = state.dreams.length + 'টি ড্রিম';
+
+  box.innerHTML = state.dreams.map(d => {
+    const pct = d.target > 0 ? Math.min(100, Math.round((d.current / d.target)*100)) : 0;
+    const daysLeft = Math.max(0, Math.ceil((new Date(d.end) - new Date()) / 86400000));
     return `
-      <div class="dream-card ${isDone ? 'achieved' : ''}">
+      <div class="dream-card ${d.achieved ? 'achieved' : ''}">
         <div class="dc-head">
           <div>
-            <div class="dc-title">${dr.title}</div>
-            <div class="hint">📅 ${dateLabel(dr.start)} থেকে ${dateLabel(dr.end)} • <span class="pill p-dream">${typeLabels[dr.type] || 'গোল'}</span></div>
+            <div class="dc-title">${d.title}</div>
+            <div class="hint">${d.note || 'কোনো নোট নেই'}</div>
           </div>
-          <div style="text-align:right">
-            <div class="dc-target">${dr.target > 0 ? (dr.type === 'money' ? money(dr.target) : dr.target) : 'মাইলফলক'}</div>
-            <span class="pill ${isDone ? 'p-ok' : s.isExpired ? 'p-bad' : 'p-mid'}">${s.timeTxt}</span>
-          </div>
+          <div class="dc-target">${money(d.target)}</div>
         </div>
-
-        <div class="dc-bar"><i style="width:${s.pct}%"></i></div>
-
         <div class="dc-meta">
-          <span>অগ্রগতি: <b>${s.pct}%</b> ${dr.target > 0 ? `(${dr.current}/${dr.target})` : ''}</span>
-          ${dr.note ? `<span class="hint">💡 ${dr.note}</span>` : ''}
+          <span>⏳ বাকি: <b>${daysLeft} দিন</b></span>
+          <span>📅 শেষ: <b>${d.end}</b></span>
+          <span>💰 সঞ্চয়/অর্জিত: <b>${money(d.current)}</b> (${pct}%)</span>
         </div>
-
-        <div class="row tight" style="margin-top:10px">
-          ${!isDone ? `<button class="btn sm dream" onclick="openUpdateDreamProgress(${dr.id})">✏️ অগ্রগতি আপডেট</button>
-                       <button class="btn sm ok" onclick="markDreamCompleted(${dr.id})">🎉 সম্পন্ন</button>` : '<span class="pill p-ok">✅ ড্রিম সম্পন্ন হয়েছে</span>'}
-          <button class="btn sm bad ghost" style="margin-left:auto" onclick="deleteDream(${dr.id})">🗑️</button>
+        <div class="dc-bar"><i style="width:${pct}%"></i></div>
+        <div class="row" style="margin-top:10px">
+          <button class="btn sm ok" onclick="updateDreamProgress('${d.id}')">➕ অগ্রগতি যোগ</button>
+          <button class="btn sm ghost" onclick="toggleDreamAchieved('${d.id}')">${d.achieved ? '↩️ চলমান' : '✅ সম্পন্ন'}</button>
+          <button class="btn sm bad" onclick="deleteDream('${d.id}')">🗑️ মুছুন</button>
         </div>
       </div>
     `;
   }).join('');
 }
 
-function updateDashboardDreamBanner() {
-  const banner = el('dash-dream-banner');
-  if(!banner) return;
+function setDreamDays(days) {
+  const start = new Date();
+  const end = new Date(Date.now() + days*86400000);
+  if (el('dr-start')) el('dr-start').value = start.toISOString().slice(0,10);
+  if (el('dr-end')) el('dr-end').value = end.toISOString().slice(0,10);
+}
 
-  const activeDreams = (state.dreams || []).filter(x => x.status !== 'achieved');
-  const mqDream = el('mq-dream');
+function addDream() {
+  const title = el('dr-title').value.trim();
+  const target = num(el('dr-target').value);
+  const end = el('dr-end').value;
+  if (!title || !end) return alert('লক্ষ্য এবং ডেডলাইন দেওয়া বাধ্যতামূলক');
+  const d = {
+    id: 'dr_' + Date.now(),
+    title, target, end,
+    start: el('dr-start').value || new Date().toISOString().slice(0,10),
+    type: el('dr-type').value,
+    note: el('dr-note').value.trim(),
+    current: 0, achieved: false
+  };
+  state.dreams.unshift(d);
+  saveData();
+  toast('নতুন ড্রিম যোগ হয়েছে! 🌟', 'ok');
+}
 
-  if(activeDreams.length === 0) {
-    banner.innerHTML = `
-      <div class="db-top">
-        <div class="db-tag">🌟 ড্রিম ও ভিশন বোর্ড</div>
-        <span class="db-countdown">কোনো ড্রিম সেট নেই</span>
+function updateDreamProgress(id) {
+  const d = state.dreams.find(x => x.id === id); if (!d) return;
+  const amt = prompt('কত টাকা অর্জন/যোগ করতে চান?', '5000');
+  if (amt) {
+    d.current = num(d.current) + num(amt);
+    if (d.current >= d.target && !d.achieved) {
+      d.achieved = true;
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+      speak('অভিনন্দন! আপনার ড্রিম পূরণ হয়েছে!');
+    }
+    saveData();
+  }
+}
+
+function toggleDreamAchieved(id) {
+  const d = state.dreams.find(x => x.id === id); if (!d) return;
+  d.achieved = !d.achieved;
+  saveData();
+}
+
+function deleteDream(id) {
+  if (confirm('ড্রিমটি মুছে ফেলতে চান?')) {
+    state.dreams = state.dreams.filter(x => x.id !== id);
+    saveData();
+  }
+}
+
+// Finance Page
+function switchFinSubTab(tab) {
+  ['expense', 'cash', 'loan'].forEach(t => {
+    const b = el('fintab-' + t); if (b) b.style.display = t === tab ? 'grid' : 'none';
+  });
+  document.querySelectorAll('.fin-tab').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+function renderFinance() {
+  const f = calcFinance();
+  if (el('fin-cash-in-hand')) el('fin-cash-in-hand').textContent = money(f.cashInHand);
+  if (el('fin-total-expense')) el('fin-total-expense').textContent = money(f.totalExp);
+  if (el('fin-total-debt')) el('fin-total-debt').textContent = money(f.remainingDebt);
+  if (el('fin-needed-earn')) el('fin-needed-earn').textContent = money(f.neededToEarn);
+
+  // Expense List
+  const elist = el('expense-list-container');
+  if (elist) {
+    elist.innerHTML = state.expenses.length ? state.expenses.map(e => `
+      <div class="list-item">
+        <div class="g">
+          <b>${e.desc}</b>
+          <div class="hint">তারিখ: ${e.date} • খাত: ${e.cat}</div>
+        </div>
+        <b style="color:var(--bad)">-${money(e.amount)}</b>
+        <button class="btn sm bad" onclick="deleteExpense('${e.id}')">🗑️</button>
       </div>
-      <div class="db-title">এখনো কোনো স্বপ্ন বা ড্রিম সেট করেননি!</div>
-      <div class="db-sub">১ দিন, ৭ দিন কিংবা ১ বছরের নতুন কোনো মাইলফলক সেট করতে এখানে ক্লিক করুন →</div>
-    `;
-    if(mqDream) mqDream.textContent = '🌟 ড্রিম বোর্ড: নতুন ড্রিম সেট করুন';
-    return;
+    `).join('') : '<div class="empty">কোনো খরচ লেখা হয়নি</div>';
   }
 
-  const dr = activeDreams[0];
-  const s = getDreamStats(dr);
+  // Cash History
+  const clist = el('cash-history-container');
+  if (clist) {
+    clist.innerHTML = state.customCash.length ? state.customCash.map(c => `
+      <div class="list-item">
+        <div class="g">
+          <b>${c.desc}</b>
+          <div class="hint">তারিখ: ${c.date}</div>
+        </div>
+        <b style="color:${c.type==='in'?'var(--ok)':'var(--bad)'}">${c.type==='in'?'+':'-'}${money(c.amount)}</b>
+        <button class="btn sm bad" onclick="deleteCustomCash('${c.id}')">🗑️</button>
+      </div>
+    `).join('') : '<div class="empty">কোনো ক্যাশ এন্ট্রি নেই</div>';
+  }
 
-  banner.innerHTML = `
-    <div class="db-top">
-      <div class="db-tag">🌟 ফোকাস ড্রিম: ${dr.type === 'money' ? '💰 আর্থিক লক্ষ্য' : dr.type === 'gadget' ? '💻 গ্যাজেট লক্ষ্য' : '🚀 ব্যক্তিগত স্বপ্ন'}</div>
-      <span class="db-countdown">${s.timeTxt}</span>
-    </div>
-    <div class="db-title">${dr.title}</div>
-    <div class="db-sub">
-      <span>টার্গেট: <b>${dr.target > 0 ? (dr.type === 'money' ? money(dr.target) : dr.target) : 'মাইলফলক'}</b></span>
-      <span>বর্তমান অগ্রগতি: <b>${s.pct}%</b></span>
-      <span>ডেডলাইন: <b>${dateLabel(dr.end)}</b></span>
-    </div>
-    <div class="db-prog"><i style="width:${s.pct}%"></i></div>
-  `;
-
-  if(mqDream) mqDream.textContent = `🌟 সক্রিয় ড্রিম: ${dr.title} (${s.timeTxt})`;
-}
-
-/* ------------------ FINANCE & CASH ENGINE ------------------ */
-function getFinanceSummary() {
-  let projectCashEarned = 0;
-  state.projects.forEach(p => {
-    (p.payments || []).forEach(x => projectCashEarned += num(x.amount));
-    if (p.status === 'done' && (!p.payments || p.payments.length === 0)) {
-      projectCashEarned += Math.max(0, num(p.price) - num(p.due));
-    }
-  });
-
-  let customIn = 0, customOut = 0;
-  (state.customCash || []).forEach(c => {
-    if (c.type === 'in') customIn += num(c.amount);
-    else if (c.type === 'out') customOut += num(c.amount);
-  });
-
-  let loanTakenCash = 0, loanRepaidCash = 0, totalRemainingDebt = 0;
-  (state.loans || []).forEach(l => {
-    loanTakenCash += num(l.amount);
-    loanRepaidCash += num(l.repaid);
-    totalRemainingDebt += Math.max(0, num(l.amount) - num(l.repaid));
-  });
-
-  const totalExpenses = (state.expenses || []).reduce((s, e) => s + num(e.amount), 0);
-  const cashInHand = (projectCashEarned + customIn + loanTakenCash) - (totalExpenses + customOut + loanRepaidCash);
-  const clientDue = state.projects.reduce((s, p) => s + num(p.due), 0);
-  const monthTarget = num(state.target) || 50000;
-  const currentEarnedMonth = projectCashEarned; 
-  const neededToEarn = Math.max(0, (monthTarget - currentEarnedMonth) + totalRemainingDebt);
-
-  return {
-    cashInHand,
-    totalExpenses,
-    totalRemainingDebt,
-    neededToEarn,
-    clientDue,
-    projectCashEarned
-  };
-}
-
-function switchFinSubTab(tab) {
-  document.querySelectorAll('.fin-tab').forEach(b => b.classList.remove('active'));
-  ['expense', 'cash', 'loan'].forEach(t => {
-    const box = el(`fintab-${t}`);
-    if (box) box.style.display = (t === tab ? 'grid' : 'none');
-  });
-  if(window.event && window.event.currentTarget) window.event.currentTarget.classList.add('active');
+  // Loan List
+  const llist = el('loan-list-container');
+  if (llist) {
+    llist.innerHTML = state.loans.length ? state.loans.map(l => {
+      const rem = Math.max(0, num(l.amount) - num(l.paid||0));
+      return `
+        <div class="list-item">
+          <div class="g">
+            <b>${l.person} (${money(l.amount)})</b>
+            <div class="hint">${l.reason} • বাকি: <b style="color:var(--bad)">${money(rem)}</b></div>
+          </div>
+          <button class="btn sm ok" onclick="payLoanPartial('${l.id}')">💸 শোধ দিন</button>
+          <button class="btn sm bad" onclick="deleteLoan('${l.id}')">🗑️</button>
+        </div>
+      `;
+    }).join('') : '<div class="empty">কোনো ধার/দেনা নেই 🎉</div>';
+  }
 }
 
 function addExpense() {
   const desc = el('exp-desc').value.trim();
   const amount = num(el('exp-amount').value);
-  const cat = el('exp-cat').value;
-  const date = el('exp-date').value || todayKey();
-
-  if(!desc || amount <= 0) return toast('খরচের বিবরণ ও সঠিক পরিমাণ দিন', 'err');
-
+  if (!desc || amount <= 0) return alert('বিবরণ ও সঠিক টাকা দিন');
   state.expenses.unshift({
-    id: Date.now(),
-    desc,
-    amount,
-    cat,
-    date,
-    createdAt: new Date().toISOString()
+    id: 'exp_' + Date.now(),
+    desc, amount,
+    cat: el('exp-cat').value,
+    date: el('exp-date').value || new Date().toISOString().slice(0,10)
   });
-
-  el('exp-desc').value = '';
-  el('exp-amount').value = '';
+  el('exp-desc').value = ''; el('exp-amount').value = '';
   saveData();
-  sound('warn');
-  toast(`💸 ৳${amount} খরচের তালিকায় যুক্ত হয়েছে!`);
 }
 
 function deleteExpense(id) {
-  if(!confirm('এই খরচের হিসাবটি মুছে ফেলতে চান?')) return;
   state.expenses = state.expenses.filter(x => x.id !== id);
   saveData();
-  toast('খরচ মুছে ফেলা হয়েছে', 'warn');
 }
 
 function addCustomCash() {
   const desc = el('cash-desc').value.trim();
   const amount = num(el('cash-amount').value);
-  const type = el('cash-type').value;
-  const date = el('cash-date').value || todayKey();
-
-  if(!desc || amount <= 0) return toast('বিবরণ ও সঠিক পরিমাণ দিন', 'err');
-
+  if (!desc || amount <= 0) return alert('বিবরণ ও সঠিক টাকা দিন');
   state.customCash.unshift({
-    id: Date.now(),
-    desc,
-    amount,
-    type,
-    date,
-    createdAt: new Date().toISOString()
+    id: 'csh_' + Date.now(),
+    desc, amount,
+    type: el('cash-type').value,
+    date: el('cash-date').value || new Date().toISOString().slice(0,10)
   });
-
-  el('cash-desc').value = '';
-  el('cash-amount').value = '';
+  el('cash-desc').value = ''; el('cash-amount').value = '';
   saveData();
-  sound(type === 'in' ? 'success' : 'warn');
-  toast(type === 'in' ? `➕ ৳${amount} ক্যাশ ইন হয়েছে!` : `➖ ৳${amount} ক্যাশ সরানো হয়েছে!`);
 }
 
 function deleteCustomCash(id) {
-  if(!confirm('এই ক্যাশ লেনদেনটি মুছে ফেলতে চান?')) return;
   state.customCash = state.customCash.filter(x => x.id !== id);
   saveData();
-  toast('ক্যাশ লেনদেন মুছে ফেলা হয়েছে', 'warn');
 }
 
 function addLoan() {
   const person = el('loan-person').value.trim();
-  const reason = el('loan-reason').value.trim();
   const amount = num(el('loan-amount').value);
-  const date = el('loan-date').value || todayKey();
-
-  if(!person || amount <= 0) return toast('ব্যক্তির নাম ও ধারের সঠিক পরিমাণ দিন', 'err');
-
+  if (!person || amount <= 0) return alert('নাম ও সঠিক পরিমাণ দিন');
   state.loans.unshift({
-    id: Date.now(),
-    person,
-    reason: reason || 'ধার',
-    amount,
-    repaid: 0,
-    date,
-    createdAt: new Date().toISOString()
+    id: 'ln_' + Date.now(),
+    person, amount,
+    reason: el('loan-reason').value.trim(),
+    paid: 0,
+    date: el('loan-date').value || new Date().toISOString().slice(0,10)
   });
-
-  el('loan-person').value = '';
-  el('loan-reason').value = '';
-  el('loan-amount').value = '';
+  el('loan-person').value = ''; el('loan-amount').value = '';
   saveData();
-  sound('warn');
-  toast(`🏦 ${person} এর কাছ থেকে ৳${amount} ধার যুক্ত হয়েছে!`);
 }
 
-function openPayLoanModal(id) {
-  const loan = state.loans.find(x => x.id === id);
-  if(!loan) return;
-  const remaining = Math.max(0, num(loan.amount) - num(loan.repaid));
-
-  const body = el('pay-loan-body');
-  body.innerHTML = `
-    <div style="margin-bottom:12px">
-      <b>${loan.person}</b>-এর কাছে মোট ধার: <b>${money(loan.amount)}</b><br>
-      <span class="hint">এখনও বাকি দেনা: <b style="color:var(--bad)">${money(remaining)}</b></span>
-    </div>
-    <label>আজ কত টাকা শোধ করছেন? (৳) *</label>
-    <input type="number" id="pay-loan-input" value="${remaining}">
-    <div class="row" style="margin-top:16px">
-      <button class="btn ok" style="flex:1" onclick="confirmLoanPayment(${loan.id})">✔️ পরিশোধ সম্পন্ন</button>
-      <button class="btn ghost" onclick="closeOverlay('m-pay-loan')">বাতিল</button>
-    </div>
-  `;
-  openOverlay('m-pay-loan');
-}
-
-function confirmLoanPayment(id) {
-  const loan = state.loans.find(x => x.id === id);
-  if(!loan) return;
-  const payAmt = num(el('pay-loan-input').value);
-  if(payAmt <= 0) return toast('সঠিক পরিমাণ দিন', 'err');
-
-  loan.repaid = (num(loan.repaid) || 0) + payAmt;
-  closeOverlay('m-pay-loan');
-  saveData();
-  sound('success');
-  toast(`🎉 ${loan.person}-কে ৳${payAmt} শোধ করা হয়েছে!`);
+function payLoanPartial(id) {
+  const l = state.loans.find(x => x.id === id); if (!l) return;
+  const amt = prompt('কত টাকা শোধ দিচ্ছেন?', '1000');
+  if (amt) {
+    l.paid = num(l.paid) + num(amt);
+    saveData();
+    toast('ধার পরিশোধ রেকর্ড সেভ হয়েছে 💸', 'ok');
+  }
 }
 
 function deleteLoan(id) {
-  if(!confirm('এই ধারের হিসাবটি মুছে ফেলতে চান?')) return;
-  state.loans = state.loans.filter(x => x.id !== id);
-  saveData();
-  toast('ধারের রেকর্ড মুছে ফেলা হয়েছে', 'warn');
+  if (confirm('দেনার রেকর্ডটি মুছে ফেলবেন?')) {
+    state.loans = state.loans.filter(x => x.id !== id);
+    saveData();
+  }
 }
 
-function renderFinancePage() {
-  const f = getFinanceSummary();
+// Workspace Projects
+function renderProjects() {
+  const box = el('project-list'); if (!box) return;
+  box.innerHTML = state.projects.map(p => {
+    const est = num(p.estHours)*3600;
+    const spent = num(p.timeSpent);
+    const pct = est > 0 ? Math.min(100, Math.round((spent/est)*100)) : 0;
+    const isOver = est > 0 && spent > est;
+    const isRunning = activeProjId === p.id && tRun;
 
-  if(el('fin-cash-in-hand')) el('fin-cash-in-hand').textContent = money(f.cashInHand);
-  if(el('fin-total-expense')) el('fin-total-expense').textContent = money(f.totalExpenses);
-  if(el('fin-total-debt')) el('fin-total-debt').textContent = money(f.totalRemainingDebt);
-  if(el('fin-needed-earn')) el('fin-needed-earn').textContent = money(f.neededToEarn);
-
-  const expBox = el('expense-list-container');
-  if(expBox) {
-    if(!state.expenses || state.expenses.length === 0) {
-      expBox.innerHTML = '<div class="empty">কোনো খরচ বা বাজারের হিসাব যুক্ত করা হয়নি</div>';
-    } else {
-      const catLabels = { bazaar:'🛒 বাজার', family:'🏠 ফ্যামিলি', business:'💻 বিজনেস', food:'🍔 নাস্তা', medical:'💊 চিকিৎসা', other:'📦 অন্যান্য' };
-      expBox.innerHTML = state.expenses.map(e => `
-        <div class="list-item" style="border-left:4px solid var(--bad)">
-          <div class="g">
-            <div class="todo-title"><b>${e.desc}</b> <span class="pill p-low">${catLabels[e.cat] || 'খরচ'}</span></div>
-            <div class="hint">📅 ${dateLabel(e.date)}</div>
+    return `
+      <div class="proj ${p.status==='done'?'done':''}">
+        <div class="row" style="justify-content:space-between">
+          <div>
+            <b>${p.title}</b>
+            <div class="hint">👤 ${p.client} • ডেডলাইন: ${p.deadline}</div>
           </div>
-          <b style="color:var(--bad);font-size:1.05rem;margin-right:8px">${money(e.amount)}</b>
-          <button class="btn sm bad ghost" onclick="deleteExpense(${e.id})">🗑️</button>
-        </div>
-      `).join('');
-    }
-  }
-  if(el('exp-count-lbl')) el('exp-count-lbl').textContent = `${(state.expenses||[]).length}টি রেকর্ড`;
-
-  const cashBox = el('cash-history-container');
-  if(cashBox) {
-    if(!state.customCash || state.customCash.length === 0) {
-      cashBox.innerHTML = '<div class="empty">কোনো কাস্টম ক্যাশ ট্রানজেকশন নেই</div>';
-    } else {
-      cashBox.innerHTML = state.customCash.map(c => `
-        <div class="list-item" style="border-left:4px solid ${c.type==='in'?'var(--ok)':'var(--warn)'}">
-          <div class="g">
-            <div class="todo-title"><b>${c.desc}</b> <span class="pill ${c.type==='in'?'p-ok':'p-mid'}">${c.type==='in'?'➕ ক্যাশ ইন':'➖ ক্যাশ আউট'}</span></div>
-            <div class="hint">📅 ${dateLabel(c.date)}</div>
+          <div style="text-align:right">
+            <b>${money(p.price)}</b>
+            <div class="hint" style="color:var(--warn)">বাকি: ${money(p.due)}</div>
           </div>
-          <b style="color:${c.type==='in'?'var(--ok)':'var(--warn)'};font-size:1.05rem;margin-right:8px">${c.type==='in'?'+':'-'}${money(c.amount)}</b>
-          <button class="btn sm bad ghost" onclick="deleteCustomCash(${c.id})">🗑️</button>
         </div>
-      `).join('');
-    }
-  }
-
-  const loanBox = el('loan-list-container');
-  if(loanBox) {
-    if(!state.loans || state.loans.length === 0) {
-      loanBox.innerHTML = '<div class="empty">কারও কাছে কোনো ধার বা ঋণ নেই ✅</div>';
-    } else {
-      loanBox.innerHTML = state.loans.map(l => {
-        const remaining = Math.max(0, num(l.amount) - num(l.repaid));
-        const isPaid = remaining === 0;
-        return `
-          <div class="list-item" style="border-left:4px solid ${isPaid?'var(--ok)':'var(--warn)'};flex-wrap:wrap">
-            <div class="g" style="min-width:180px">
-              <div class="todo-title"><b>${l.person}</b> (${l.reason})</div>
-              <div class="hint">মোট ধার: <b>${money(l.amount)}</b> • শোধ: <b>${money(l.repaid)}</b> • 📅 ${dateLabel(l.date)}</div>
-            </div>
-            <div style="text-align:right;margin-right:10px">
-              <span class="pill ${isPaid?'p-ok':'p-bad'}">${isPaid?'সম্পূর্ণ পরিশোধিত':'বাকি: '+money(remaining)}</span>
-            </div>
-            <div class="row tight">
-              ${!isPaid ? `<button class="btn sm ok" onclick="openPayLoanModal(${l.id})">💸 শোধ করুন</button>` : ''}
-              <button class="btn sm bad ghost" onclick="deleteLoan(${l.id})">🗑️</button>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-  }
-  if(el('loan-count-lbl')) el('loan-count-lbl').textContent = `${(state.loans||[]).length}টি ঋণ`;
-}
-
-/* ------------------ MOTIVATION SLIDER ------------------ */
-function initMotiveSlider() {
-  renderMotiveDots();
-  showMotiveSlide(currentMotiveIdx);
-  clearInterval(motiveTimer);
-  motiveTimer = setInterval(() => { nextMotiveSlide(); }, 6000);
-}
-function showMotiveSlide(idx) {
-  if(!state.motives || !state.motives.length) return;
-  currentMotiveIdx = (idx + state.motives.length) % state.motives.length;
-  const txt = el('motive-slide-text');
-  if(txt) {
-    txt.style.opacity = '0';
-    setTimeout(() => {
-      txt.textContent = `"${state.motives[currentMotiveIdx]}"`;
-      txt.style.opacity = '1';
-    }, 150);
-  }
-  document.querySelectorAll('.mb-dot').forEach((d, i) => d.classList.toggle('active', i === currentMotiveIdx));
-}
-function nextMotiveSlide() { showMotiveSlide(currentMotiveIdx + 1); }
-function prevMotiveSlide() { showMotiveSlide(currentMotiveIdx - 1); }
-function renderMotiveDots() {
-  const c = el('motive-dots'); if(!c) return;
-  c.innerHTML = (state.motives || []).map((_, i) => `<span class="mb-dot ${i===currentMotiveIdx?'active':''}" onclick="showMotiveSlide(${i})"></span>`).join('');
-}
-function openMotiveEditor() {
-  const c = el('motive-inputs-container'); if(!c) return;
-  c.innerHTML = (state.motives || []).slice(0,5).map((m, i) => `
-    <div style="margin-bottom:10px">
-      <label>উক্তি #${i+1}</label>
-      <input id="custom-motive-${i}" value="${m.replace(/"/g, '&quot;')}" placeholder="মোটিভেশনাল টেক্সট লিখুন...">
-    </div>
-  `).join('');
-  openOverlay('m-motive-edit');
-}
-function saveCustomMotives() {
-  const newMotives = [];
-  for(let i=0; i<5; i++) {
-    const inp = el(`custom-motive-${i}`);
-    if(inp && inp.value.trim()) newMotives.push(inp.value.trim());
-  }
-  if(newMotives.length === 0) return toast('অন্তত একটি উক্তি লিখুন', 'err');
-  state.motives = newMotives;
-  saveData();
-  closeOverlay('m-motive-edit');
-  initMotiveSlider();
-  toast('মোটিভেশনাল টেক্সটগুলো সেভ হয়েছে! 🎉');
-}
-function resetDefaultMotives() {
-  state.motives = DEFAULT_MOTIVES.slice();
-  saveData();
-  closeOverlay('m-motive-edit');
-  initMotiveSlider();
-  toast('ডিফল্ট উক্তিগুলো রিস্টোর করা হয়েছে');
-}
-
-/* ------------------ DAILY FOCUS & LIVE WORK ------------------ */
-function getDailyCalculation() {
-  const today = todayKey();
-  const now = new Date();
-  const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
-  const remainingDays = Math.max(1, daysInMonth - now.getDate() + 1);
-
-  const doneToday = state.projects.filter(p => p.status === 'done' && (p.completedAt||'').startsWith(today));
-  const workTodayVal = doneToday.reduce((s, p) => s + num(p.price), 0);
-  
-  let cashToday = 0;
-  state.projects.forEach(p => {
-    (p.payments||[]).forEach(x => { if((x.date||'').startsWith(today)) cashToday += num(x.amount); });
-  });
-
-  const totalTodayEarned = workTodayVal + cashToday;
-
-  const mStart = today.slice(0, 7);
-  let monthEarned = 0;
-  state.projects.filter(p => p.status === 'done' && (p.completedAt||'').startsWith(mStart)).forEach(p => monthEarned += num(p.price));
-  
-  const monthTarget = num(state.target) || 1;
-  const monthRemaining = Math.max(0, monthTarget - monthEarned);
-  const dailyNeededForMonth = Math.round(monthRemaining / remainingDays);
-  const dailyTargetUser = num(state.dailyTarget) || dailyNeededForMonth;
-  const dailyRemaining = Math.max(0, dailyTargetUser - totalTodayEarned);
-  const dailyPct = Math.min(100, Math.round((totalTodayEarned / (dailyTargetUser || 1)) * 100));
-
-  return {
-    workTodayVal, cashToday, totalTodayEarned,
-    dailyTargetUser, dailyRemaining, dailyPct,
-    dailyNeededForMonth, monthTarget, monthRemaining, remainingDays
-  };
-}
-
-function renderDailyFocusCards() {
-  const c = el('focus-cards-container'); if(!c) return;
-  const d = getDailyCalculation();
-
-  c.innerHTML = `
-    <div class="fc-card" style="border-left:4px solid var(--ok)">
-      <div>
-        <div class="fc-tag" style="color:var(--ok)">💵 আজ মোট অর্জিত আয়</div>
-        <div class="fc-val" style="color:var(--ok)">${money(d.totalTodayEarned)}</div>
-        <div class="fc-sub">কাজ সম্পন্ন: <b>${money(d.workTodayVal)}</b> • নগদ ক্যাশ: <b>${money(d.cashToday)}</b></div>
-      </div>
-      <div class="fc-bar"><i style="width:${d.dailyPct}%;background:var(--ok)"></i></div>
-    </div>
-
-    <div class="fc-card" style="border-left:4px solid ${d.dailyRemaining>0?'var(--warn)':'var(--ok)'}">
-      <div>
-        <div class="fc-tag" style="color:${d.dailyRemaining>0?'var(--warn)':'var(--ok)'}">
-          ${d.dailyRemaining > 0 ? '🎯 আজকের টার্গেটে আর বাকি' : '🎉 আজকের টার্গেট পূরণ হয়েছে!'}
+        <div class="bar ${isOver?'over':''}"><i style="width:${pct}%"></i></div>
+        <div class="row" style="font-size:.78rem;color:var(--muted);justify-content:space-between">
+          <span>টাইম: <b>${Math.round(spent/3600*10)/10}ঘ / ${p.estHours}ঘ</b></span>
+          <span style="color:${isOver?'var(--bad)':'var(--ok)'}">${isOver ? '⚠️ ওভারটাইম চলছে' : pct+'% শেষ'}</span>
         </div>
-        <div class="fc-val" style="color:${d.dailyRemaining>0?'var(--warn)':'var(--ok)'}">
-          ${d.dailyRemaining > 0 ? money(d.dailyRemaining) : '✅ সম্পন্ন'}
-        </div>
-        <div class="fc-sub">আজকের লক্ষ্য: <b>${money(d.dailyTargetUser)}</b> (${d.dailyPct}% অর্জিত)</div>
-      </div>
-      <div class="fc-bar"><i style="width:${d.dailyPct}%;background:${d.dailyRemaining>0?'var(--warn)':'var(--ok)'}"></i></div>
-    </div>
-
-    <div class="fc-card" style="border-left:4px solid var(--c2)">
-      <div>
-        <div class="fc-tag" style="color:var(--c2)">🗓️ মাসিক লক্ষ্য অর্জনে গড়ে দরকার</div>
-        <div class="fc-val" style="color:var(--c2)">${money(d.dailyNeededForMonth)}<span style="font-size:1rem;font-weight:600">/দিন</span></div>
-        <div class="fc-sub">মাসিক টার্গেট <b>${money(d.monthTarget)}</b> • বাকি <b>${money(d.monthRemaining)}</b> (${d.remainingDays} দিন বাকি)</div>
-      </div>
-      <div class="fc-bar"><i style="width:${Math.min(100, Math.round(((d.monthTarget - d.monthRemaining)/d.monthTarget)*100))}%;background:var(--c2)"></i></div>
-    </div>
-  `;
-}
-
-function getActiveProjectActualSec() {
-  if(!activeProjId) return 0;
-  return state.sessions.filter(s => String(s.projectId) === String(activeProjId)).reduce((a, b) => a + num(b.sec), 0);
-}
-
-function updateDashLive() {
-  const box = el('dash-live'); if(!box) return;
-  const p = activeProjId ? state.projects.find(x => String(x.id) === String(activeProjId)) : null;
-
-  if (!p && !tRun && tWorked === 0) {
-    box.style.display = 'block';
-    box.classList.remove('running', 'over');
-    box.innerHTML = `
-      <div class="dl-top">
-        <span class="dl-dot" style="background:#fbbf24"></span>
-        <div class="dl-main">
-          <div class="dl-proj">⏱️ লাইভ টাইমার কন্ট্রোল</div>
-          <div class="dl-time" style="font-size:1.3rem;letter-spacing:0">কোনো কাজ চলছে না</div>
-          <div class="dl-sub">যেকোনো প্রজেক্টের "▶️ কাজ শুরু" বাটনে চাপ দিয়ে টাইমার চালু করুন</div>
-        </div>
-        <div class="row tight">
-          <button class="btn ok sm" onclick="startTimerForNext()">▶️ পরের প্রজেক্টে কাজ শুরু</button>
+        <div class="acts">
+          ${isRunning 
+            ? `<button class="btn sm bad" onclick="pauseTimer()">⏸️ পজ</button>` 
+            : `<button class="btn sm ok" onclick="startTimer('${p.id}')">▶️ শুরু</button>`
+          }
+          <button class="btn sm ghost" onclick="completeProject('${p.id}')">${p.status==='done'?'↩️ চালু':'✅ সম্পন্ন'}</button>
+          <button class="btn sm bad" onclick="deleteProject('${p.id}')">🗑️</button>
         </div>
       </div>
     `;
-    return;
+  }).join('');
+}
+
+function addProject() {
+  const title = el('p-title').value.trim();
+  const client = el('p-client').value.trim();
+  const price = num(el('p-price').value);
+  const due = el('p-due').value.trim() === '' ? price : num(el('p-due').value);
+  const estHours = num(el('p-est-hours').value);
+  const deadline = el('p-deadline').value;
+
+  if (!title || !client || price <= 0 || !deadline) return alert('সবগুলো প্রয়োজনীয় ফিল্ড পূরণ করুন');
+
+  state.projects.unshift({
+    id: 'p_' + Date.now(),
+    title, client, price, due, estHours, deadline,
+    priority: el('p-priority').value,
+    status: 'active',
+    timeSpent: 0,
+    payments: []
+  });
+
+  el('p-title').value = ''; el('p-client').value = ''; el('p-price').value = '';
+  saveData();
+  toast('নতুন প্রজেক্ট যুক্ত হয়েছে 🚀', 'ok');
+}
+
+function completeProject(id) {
+  const p = state.projects.find(x => x.id === id); if (!p) return;
+  p.status = p.status === 'done' ? 'active' : 'done';
+  if (p.status === 'done') p.completedAt = new Date().toISOString();
+  saveData();
+}
+
+function deleteProject(id) {
+  if (confirm('প্রজেক্টটি মুছে ফেলতে চান?')) {
+    state.projects = state.projects.filter(x => x.id !== id);
+    saveData();
+  }
+}
+
+// Clients CRM
+function renderClients() {
+  const box = el('client-grid'); if (!box) return;
+  const sel = el('p-client-select');
+  if (sel) {
+    sel.innerHTML = '<option value="">-- ক্লায়েন্ট ড্রপডাউন --</option>' + 
+      state.clients.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
   }
 
+  box.innerHTML = state.clients.map(c => {
+    const projs = state.projects.filter(p => p.client === c.name);
+    const totalVal = projs.reduce((s,p)=>s+num(p.price),0);
+    const totalDue = projs.reduce((s,p)=>s+num(p.due),0);
+
+    return `
+      <div class="client-card">
+        <div>
+          <div class="cc-name">${c.name}</div>
+          <div class="hint">${c.cat || 'Video Client'}</div>
+          <div class="cc-contact">
+            📞 <b>${c.phone}</b><br>
+            🌐 <a href="${c.web}" target="_blank" style="color:var(--c2)">${c.web || 'No link'}</a>
+          </div>
+        </div>
+        <div class="cc-stats">
+          <span>প্রজেক্ট: <b>${projs.length}টি</b></span>
+          <span style="color:var(--warn)">বাকি: <b>${money(totalDue)}</b></span>
+        </div>
+        <div class="row" style="margin-top:12px">
+          <a href="tel:${c.phone}" class="btn sm ghost">📞 কল</a>
+          <a href="https://wa.me/${c.phone.replace(/[^0-9]/g,'')}" target="_blank" class="btn sm ok">💬 WhatsApp</a>
+          <button class="btn sm bad" onclick="deleteClient('${c.id}')">🗑️</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function addClient() {
+  const name = el('c-name').value.trim();
+  const phone = el('c-phone').value.trim();
+  if (!name || !phone) return alert('নাম ও ফোন নম্বর দেওয়া বাধ্যতামূলক');
+  state.clients.unshift({
+    id: 'cli_' + Date.now(),
+    name, phone,
+    web: el('c-web').value.trim(),
+    cat: el('c-cat').value.trim()
+  });
+  el('c-name').value = ''; el('c-phone').value = ''; el('c-web').value = '';
+  saveData();
+  toast('ক্লায়েন্ট সংরক্ষিত হয়েছে 👤', 'ok');
+}
+
+function deleteClient(id) {
+  if (confirm('ক্লায়েন্ট মুছে ফেলতে চান?')) {
+    state.clients = state.clients.filter(x => x.id !== id);
+    saveData();
+  }
+}
+
+function handleClientSelect(val) {
+  if (val) el('p-client').value = val;
+}
+
+// Live Focus Timer & Overtime
+function startTimer(id) {
+  activeProjId = id;
+  tRun = true;
+  clearInterval(tInt);
+  tInt = setInterval(timerTick, 1000);
+  renderAll();
+  speak('টাইমার চালু হয়েছে। সম্পূর্ণ ফোকাস দিন।');
+}
+
+function pauseTimer() {
+  tRun = false;
+  clearInterval(tInt);
+  renderAll();
+  saveData(true);
+}
+
+function timerTick() {
+  const p = state.projects.find(x => x.id === activeProjId);
+  if (!p) return;
+  p.timeSpent = num(p.timeSpent) + 1;
+  updateLiveBars();
+}
+
+function updateLiveBars() {
+  const box = el('dash-live'); if (!box) return;
+  const p = state.projects.find(x => x.id === activeProjId);
+  if (!p) { box.style.display = 'none'; return; }
+
   box.style.display = 'block';
+  const est = num(p.estHours)*3600;
+  const spent = num(p.timeSpent);
+  const isOver = est > 0 && spent > est;
+  box.classList.toggle('over', isOver);
   box.classList.toggle('running', tRun);
 
-  const baseSec = getActiveProjectActualSec();
-  const currentTotalSec = baseSec + tWorked;
-  const estSec = p && num(p.estHours) > 0 ? num(p.estHours) * 3600 : 0;
-  const isOver = estSec > 0 && currentTotalSec > estSec;
-  const overSec = isOver ? currentTotalSec - estSec : 0;
-  const progPct = estSec > 0 ? Math.min(100, Math.round((currentTotalSec / estSec) * 100)) : 100;
+  const h = Math.floor(spent/3600), m = Math.floor((spent%3600)/60), s = spent%60;
+  const timeStr = String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
 
-  box.classList.toggle('over', isOver);
+  const overSec = isOver ? spent - est : 0;
+  const oh = Math.floor(overSec/3600), om = Math.floor((overSec%3600)/60), os = overSec%60;
+  const overStr = `+${oh}ঘ ${om}মি ${os}সে`;
 
   box.innerHTML = `
     <div class="dl-top">
       <span class="dl-dot"></span>
       <div class="dl-main">
-        <div class="dl-proj">
-          ${tRun ? '🔴 কাজ চলছে:' : '⏸️ পজ করা আছে:'} <b>${p ? p.title : 'ফোকাস সেশন'}</b>
-          ${isOver ? `<span class="dl-overtag">⚠️ অতিরিক্ত সময় চলছে: +${fmtDur(overSec)}</span>` : ''}
-        </div>
-        <div class="dl-time">${fmtClock(currentTotalSec)}</div>
-        <div class="dl-sub">
-          এস্টিমেট: <b>${p && num(p.estHours) > 0 ? num(p.estHours) + ' ঘণ্টা' : 'দেওয়া নেই'}</b> • 
-          চলতি সেশন: <b>${fmtDur(tWorked)}</b> • 
-          ${isOver ? `<b style="color:var(--bad)">এস্টিমেট পার হয়েছে (${fmtDur(overSec)} বেশি)</b>` : `বাকি আছে: <b>${fmtDur(estSec - currentTotalSec)}</b>`}
-        </div>
+        <div class="dl-proj">🔴 লাইভ ফোকাস: ${p.title} (${p.client})</div>
+        <div class="dl-time">${timeStr} ${isOver ? `<span class="dl-overtag">⚠️ অতিরিক্ত: ${overStr}</span>`:''}</div>
+        <div class="hint">এস্টিমেট সময়: <b>${p.estHours} ঘণ্টা</b> • ${isOver ? '<span style="color:var(--bad)">এস্টিমেট পার হয়ে গেছে!</span>':'এস্টিমেটের ভেতরে আছে'}</div>
       </div>
       <div class="dl-prog">
-        <div class="dl-bar"><i style="width:${progPct}%"></i></div>
-        <div class="dl-pct">
-          <span>প্রোগ্রেস: <b>${progPct}%</b></span>
-          <span>${isOver ? '<b style="color:var(--bad)">ওভারটাইম</b>' : 'সময়ের ভেতরে'}</span>
-        </div>
+        <div class="dl-bar"><i style="width:${Math.min(100, Math.round((spent/est)*100))}%"></i></div>
+        <div class="dl-pct">${Math.round((spent/est)*100)}% সম্পন্ন</div>
       </div>
-      <div class="row tight">
-        ${tRun 
-          ? `<button class="btn ok sm" style="background:var(--warn)" onclick="pauseInline()">⏸️ পজ</button>`
-          : `<button class="btn ok sm" onclick="resumeInline()">▶️ চালু</button>`}
-        <button class="btn bad sm" onclick="endInline()">⏹️ সেশন সেভ ও শেষ</button>
+      <div class="row">
+        ${tRun ? `<button class="btn sm bad" onclick="pauseTimer()">⏸️ পজ</button>` : `<button class="btn sm ok" onclick="startTimer('${p.id}')">▶️ চালান</button>`}
+        <button class="btn sm ghost" onclick="stopLiveTimer()">⏹️ থামান</button>
       </div>
     </div>
   `;
 }
 
-function startInline(id) {
-  const p = state.projects.find(x => String(x.id) === String(id));
-  if(!p) return;
-  activeProjId = p.id;
-  tRun = true;
-  tWorked = 0;
-  clearInterval(tInt);
-  tInt = setInterval(() => {
-    tWorked++;
-    updateDashLive();
-  }, 1000);
-  sound('success');
-  speak(`${p.title} প্রজেক্টের কাজ শুরু হলো`);
-  toast(`▶️ ${p.title} কাজ শুরু হয়েছে`);
-  updateDashLive();
-  renderProjects();
-}
-function pauseInline() {
-  tRun = false;
-  sound('warn');
-  toast('⏸️ টাইমার পজ করা হয়েছে', 'warn');
-  updateDashLive();
-}
-function resumeInline() {
-  tRun = true;
-  sound('success');
-  updateDashLive();
-}
-function endInline() {
-  if (tWorked > 0 && activeProjId) {
-    state.sessions.push({
-      id: Date.now(),
-      projectId: activeProjId,
-      sec: tWorked,
-      date: todayKey(),
-      createdAt: new Date().toISOString()
-    });
-  }
-  clearInterval(tInt);
-  tRun = false;
-  tWorked = 0;
+function stopLiveTimer() {
+  pauseTimer();
   activeProjId = null;
-  saveData();
-  sound('success');
-  toast('⏹️ কাজের সেশন সেভ করা হয়েছে');
-  updateDashLive();
-  renderProjects();
+  el('dash-live').style.display = 'none';
+  saveData(true);
 }
 
-/* ------------------ 4-HOUR CHECK-IN ------------------ */
-const CHECKIN_INTERVAL_MS = 4 * 60 * 60 * 1000;
+// 4-Hour Check-in Logic
+function check4HourTrigger() {
+  const diff = Date.now() - state.lastCheckinTime;
+  const fourHours = 4 * 3600 * 1000;
+  const rem = Math.max(0, fourHours - diff);
 
-function check4HourTimer() {
-  const now = Date.now();
-  const last = state.lastCheckinTime || now;
-  const elapsed = now - last;
-  const left = Math.max(0, Math.floor((CHECKIN_INTERVAL_MS - elapsed) / 1000));
+  const rh = Math.floor(rem / 3600000);
+  const rm = Math.floor((rem % 3600000) / 60000);
+  if (el('chip-checkin-txt')) el('chip-checkin-txt').textContent = `লগ বাকি: ${String(rh).padStart(2,'0')}:${String(rm).padStart(2,'0')}`;
 
-  const txt = el('chip-checkin-txt');
-  if(txt) {
-    const h = Math.floor(left/3600), m = Math.floor((left%3600)/60), s = left%60;
-    txt.textContent = `লগ বাকি: ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-  }
-
-  if (elapsed >= CHECKIN_INTERVAL_MS) {
+  if (diff >= fourHours) {
     openCheckinModal();
-    state.lastCheckinTime = now;
-    saveData();
+    speak('নাইম ভাই, চার ঘণ্টা পার হয়েছে! গত চার ঘণ্টায় কী কাজ করলেন তা লিখে রাখুন।');
   }
 }
+
 function openCheckinModal() {
   openOverlay('m-checkin');
-  sound('warn');
-  speak("নাইম ভাই, চার ঘণ্টা পার হয়েছে! গত চার ঘণ্টায় কী কাজ করলেন তা লিখে রাখুন।");
 }
-function submitCheckin(isNoWork=false) {
-  const ta = el('checkin-text');
-  const txt = isNoWork ? "💤 কোনো কাজ করা হয়নি (বিরতি)" : (ta.value.trim() || "সাধারণ অগ্রগতি সম্পন্ন হয়েছে");
-  
-  state.checkins.unshift({
-    id: Date.now(),
-    date: todayKey(),
-    time: new Date().toLocaleTimeString('bn-BD', {hour:'2-digit',minute:'2-digit'}),
-    text: txt,
-    timestamp: Date.now()
-  });
 
+function submitCheckin(noWork) {
+  const txt = noWork ? 'কোনো কাজ করিনি / রেস্টে ছিলাম 😴' : (el('checkin-input').value.trim() || 'নিয়মিত এডিটিং কাজ');
+  state.checkinLogs.unshift({
+    id: 'log_' + Date.now(),
+    time: new Date().toLocaleTimeString('bn-BD', {hour:'2-digit', minute:'2-digit'}),
+    date: new Date().toISOString().slice(0,10),
+    text: txt
+  });
   state.lastCheckinTime = Date.now();
-  if(ta) ta.value = '';
-  saveData();
-  sound('success');
-  toast('৪-ঘণ্টার কাজের লগ সংরক্ষিত হয়েছে! ✅');
-  renderCheckinTimeline();
-}
-function snoozeCheckin(mins) {
-  state.lastCheckinTime = Date.now() - (CHECKIN_INTERVAL_MS - (mins * 60 * 1000));
-  saveData();
+  if (el('checkin-input')) el('checkin-input').value = '';
   closeOverlay('m-checkin');
-  toast(`⏳ ${mins} মিনিটের জন্য স্নুজ করা হলো`);
+  saveData();
+  toast('৪-ঘণ্টার কাজের লগ সংরক্ষিত হয়েছে! ⏰', 'ok');
 }
-function renderCheckinTimeline() {
-  const c = el('checkin-timeline'); if(!c) return;
-  if(!state.checkins || state.checkins.length === 0) {
-    c.innerHTML = '<div class="empty">এখনো কোনো ৪-ঘণ্টার লগ দেওয়া হয়নি</div>';
-    return;
-  }
-  c.innerHTML = state.checkins.map(ci => `
+
+function snoozeCheckin(mins) {
+  state.lastCheckinTime = Date.now() - (4 * 3600000) + (mins * 60000);
+  closeOverlay('m-checkin');
+  toast(`${mins} মিনিটের জন্য স্নুজ করা হলো ⏳`, 'warn');
+}
+
+function renderTimeline() {
+  const box = el('checkin-timeline'); if (!box) return;
+  box.innerHTML = state.checkinLogs.length ? state.checkinLogs.map(l => `
     <div class="checkin-item">
-      <div class="ci-time">🕒 ${dateLabel(ci.date)} — ${ci.time}</div>
-      <div class="ci-txt">${ci.text}</div>
+      <div class="ci-time">🕒 ${l.date} — ${l.time}</div>
+      <div class="ci-txt">${l.text}</div>
     </div>
-  `).join('');
+  `).join('') : '<div class="empty">এখনো কোনো ৪-ঘণ্টার কাজের লগ দেওয়া হয়নি</div>';
 }
 
-/* ------------------ 6-HOUR DEADLINE WARNING ------------------ */
-const DEADLINE_INTERVAL_MS = 6 * 60 * 60 * 1000;
+// 6-Hour Deadline Alert Logic
+function checkDeadlineTrigger() {
+  const diff = Date.now() - state.lastDeadlineWarnTime;
+  const sixHours = 6 * 3600 * 1000;
+  const rem = Math.max(0, sixHours - diff);
 
-function check6HourDeadlineTimer() {
-  const now = Date.now();
-  const last = state.lastDeadlineWarnTime || now;
-  const elapsed = now - last;
-  const left = Math.max(0, Math.floor((DEADLINE_INTERVAL_MS - elapsed) / 1000));
+  const rh = Math.floor(rem / 3600000);
+  const rm = Math.floor((rem % 3600000) / 60000);
+  if (el('chip-deadline-txt')) el('chip-deadline-txt').textContent = `ডেডলাইন: ${String(rh).padStart(2,'0')}:${String(rm).padStart(2,'0')}`;
 
-  const txt = el('chip-deadline-txt');
-  if(txt) {
-    const h = Math.floor(left/3600), m = Math.floor((left%3600)/60), s = left%60;
-    txt.textContent = `ডেডলাইন অ্যালার্ট: ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-  }
-
-  if (elapsed >= DEADLINE_INTERVAL_MS) {
-    openDeadlineWarning();
-    state.lastDeadlineWarnTime = now;
-    saveData();
+  if (diff >= sixHours) {
+    openDeadlineWarning(false);
   }
 }
-function openDeadlineWarning(manual=false) {
-  const activeProjs = state.projects.filter(p => p.status !== 'done' && p.deadline);
-  const now = todayKey();
-  
-  const urgent = activeProjs.map(p => {
-    const diff = Math.round((new Date(p.deadline) - new Date(now)) / (1000 * 60 * 60 * 24));
-    return { p, diff };
-  }).filter(x => x.diff <= 3).sort((a,b) => a.diff - b.diff);
 
-  if (urgent.length === 0 && manual) {
-    toast('সব প্রজেক্টের ডেডলাইন নিরাপদ দূরত্বে আছে! কোনো তাড়া নেই। 🎉');
+function openDeadlineWarning(manual) {
+  const urgent = state.projects.filter(p => p.status !== 'done');
+  if (!urgent.length && manual) {
+    toast('কোনো পেন্ডিং ডেডলাইন প্রজেক্ট নেই 🎉', 'ok');
     return;
   }
-
   const list = el('deadline-warn-list');
-  if(list) {
-    list.innerHTML = urgent.length > 0 ? urgent.map(x => `
-      <div class="list-item" style="border-left:4px solid ${x.diff<0?'var(--bad)':'var(--warn)'}">
+  if (list) {
+    list.innerHTML = urgent.map(p => `
+      <div class="list-item" style="border-left:4px solid var(--bad)">
         <div class="g">
-          <div class="todo-title"><b>${x.p.title}</b> (ক্লায়েন্ট: ${x.p.client})</div>
-          <div class="hint">ডেডলাইন: ${dateLabel(x.p.deadline)}</div>
+          <b>${p.title}</b>
+          <div class="hint">ক্লায়েন্ট: ${p.client} • ডেডলাইন: <b style="color:var(--bad)">${p.deadline}</b></div>
         </div>
-        <span class="pill ${x.diff<0?'p-bad':'p-mid'}">
-          ${x.diff < 0 ? `🚨 ${Math.abs(x.diff)} দিন ওভারডিউ` : x.diff === 0 ? '🔥 আজই ডেডলাইন!' : `⏳ আর ${x.diff} দিন বাকি`}
-        </span>
-        <button class="btn ok sm" onclick="closeOverlay('m-deadline-warn');startInline('${x.p.id}')">▶️ কাজ করুন</button>
+        <button class="btn sm ok" onclick="startTimer('${p.id}');closeOverlay('m-deadline-warn')">▶️ কাজ নামুন</button>
       </div>
-    `).join('') : '<div class="empty">কোনো ডেডলাইন ওভারডিউ নেই ✅</div>';
+    `).join('');
   }
-
   openOverlay('m-deadline-warn');
-  sound('warn');
-  speak("নাইম ভাই, আপনার প্রজেক্টের ডেডলাইন পার হচ্ছে বা সামনে চলে এসেছে! সময়মতো ডেলিভারি নিশ্চিত করুন।");
+  speak('নাইম ভাই, আপনার প্রজেক্টের ডেডলাইন পার হচ্ছে বা সামনে চলে এসেছে! সময়মতো ডেলিভারি নিশ্চিত করুন।');
+  state.lastDeadlineWarnTime = Date.now();
 }
+
+function triggerManualDeadlineAlert() {
+  openDeadlineWarning(true);
+}
+
 function snoozeDeadlineAlert(mins) {
-  state.lastDeadlineWarnTime = Date.now() - (DEADLINE_INTERVAL_MS - (mins * 60 * 1000));
-  saveData();
+  state.lastDeadlineWarnTime = Date.now() - (6 * 3600000) + (mins * 60000);
   closeOverlay('m-deadline-warn');
-  toast(`⏳ ডেডলাইন অ্যালার্ট ${mins} মিনিটের জন্য স্নুজ করা হলো`);
+  toast(`ডেডলাইন ওয়ার্নিং ${mins} মিনিটের জন্য স্নুজ করা হলো ⏳`, 'warn');
 }
-function triggerManualDeadlineAlert() { openDeadlineWarning(false); }
 
-/* ------------------ CLIENT CRM ------------------ */
-function addClient() {
-  const name = el('c-name').value.trim();
-  const phone = el('c-phone').value.trim();
-  const web = el('c-web').value.trim();
-  const cat = el('c-cat').value.trim();
-
-  if(!name) return toast('ক্লায়েন্টের নাম আবশ্যক', 'err');
-
-  state.clients.unshift({
-    id: Date.now(),
-    name, phone, web, cat,
-    createdAt: todayKey()
-  });
-
-  el('c-name').value = '';
-  el('c-phone').value = '';
-  el('c-web').value = '';
-  el('c-cat').value = '';
-
-  saveData();
-  sound('success');
-  toast('ক্লায়েন্ট প্রোফাইল যুক্ত হয়েছে! 👤');
-  renderClients();
-  populateClientDropdown();
+// Auto-Slide Motivation Logic
+function initMotiveSlider() {
+  renderMotiveDots();
+  showMotiveSlide(0);
+  clearInterval(motiveInterval);
+  motiveInterval = setInterval(nextMotiveSlide, 6000);
 }
-function renderClients() {
-  const c = el('client-grid'); if(!c) return;
-  let list = state.clients || [];
 
-  if(list.length === 0) {
-    c.innerHTML = '<div class="empty" style="grid-column:1/-1">কোনো ক্লায়েন্ট সংরক্ষিত নেই</div>';
-    return;
+function showMotiveSlide(idx) {
+  if (!state.motiveQuotes || !state.motiveQuotes.length) return;
+  currentMotiveIdx = (idx + state.motiveQuotes.length) % state.motiveQuotes.length;
+  const t = el('motive-slide-text');
+  if (t) t.textContent = `"${state.motiveQuotes[currentMotiveIdx]}"`;
+  document.querySelectorAll('.mb-dot').forEach((d, i) => d.classList.toggle('active', i === currentMotiveIdx));
+}
+
+function nextMotiveSlide() { showMotiveSlide(currentMotiveIdx + 1); }
+function prevMotiveSlide() { showMotiveSlide(currentMotiveIdx - 1); }
+
+function renderMotiveDots() {
+  const box = el('motive-dots'); if (!box) return;
+  box.innerHTML = (state.motiveQuotes||[]).map((_, i) => `<span class="mb-dot ${i===0?'active':''}" onclick="showMotiveSlide(${i})"></span>`).join('');
+}
+
+function openMotiveEditor() {
+  for (let i = 0; i < 5; i++) {
+    if (el('motive-input-' + i)) el('motive-input-' + i).value = state.motiveQuotes[i] || '';
   }
-
-  c.innerHTML = list.map(cl => {
-    const projs = state.projects.filter(p => p.client === cl.name);
-    const totalVal = projs.reduce((s, p) => s + num(p.price), 0);
-    const totalDue = projs.reduce((s, p) => s + num(p.due), 0);
-    const cleanPhone = cl.phone.replace(/[^0-9]/g, '');
-
-    return `
-      <div class="client-card">
-        <div>
-          <div class="cc-name">
-            <span>${cl.name}</span>
-            <span class="pill p-low">${cl.cat || 'Client'}</span>
-          </div>
-          <div class="cc-contact">
-            ${cl.phone ? `<div>📞 <b>${cl.phone}</b></div>` : ''}
-            ${cl.web ? `<div>🌐 <a href="${cl.web.startsWith('http')?cl.web:'https://'+cl.web}" target="_blank" style="color:var(--c2)">ওয়েবসাইট/চ্যানেল লিঙ্ক</a></div>` : ''}
-          </div>
-        </div>
-
-        <div>
-          <div class="cc-stats">
-            <span>প্রজেক্ট: <b>${projs.length}টি</b></span>
-            <span>মোট: <b>${money(totalVal)}</b></span>
-            <span style="color:${totalDue>0?'var(--warn)':'var(--ok)'}">বাকি: <b>${money(totalDue)}</b></span>
-          </div>
-
-          <div class="row tight" style="margin-top:10px">
-            ${cleanPhone ? `<a class="btn sm ok" href="tel:${cleanPhone}">📞 কল</a>` : ''}
-            ${cleanPhone ? `<a class="btn sm cy" href="https://wa.me/${cleanPhone.startsWith('88')?cleanPhone:'88'+cleanPhone}" target="_blank">💬 WhatsApp</a>` : ''}
-            <button class="btn sm bad ghost" style="margin-left:auto" onclick="deleteClient(${cl.id})">🗑️</button>
-          </div>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-function deleteClient(id) {
-  if(!confirm('ক্লায়েন্ট মুছে ফেলতে চান?')) return;
-  state.clients = state.clients.filter(x => x.id !== id);
-  saveData();
-  toast('ক্লায়েন্ট মুছে ফেলা হয়েছে', 'warn');
-  renderClients();
-  populateClientDropdown();
-}
-function populateClientDropdown() {
-  const sel = el('p-client-select'); if(!sel) return;
-  sel.innerHTML = '<option value="">-- ক্লায়েন্ট ড্রপডাউন --</option>' + 
-    (state.clients||[]).map(c => `<option value="${c.name}">${c.name}</option>`).join('');
-}
-function handleClientSelect(val) {
-  if(val && el('p-client')) el('p-client').value = val;
+  openOverlay('m-motive-edit');
 }
 
-/* ------------------ PROJECTS ------------------ */
-function addProject() {
-  const title = el('p-title').value.trim();
-  const client = (el('p-client').value.trim()) || (el('p-client-select').value);
-  const price = num(el('p-price').value);
-  const dueRaw = el('p-due').value;
-  const due = dueRaw === '' ? price : num(dueRaw);
-  const estHours = num(el('p-est-hours').value);
-  const deadline = el('p-deadline').value;
-  const priority = el('p-priority').value;
-
-  if(!title || !client) return toast('প্রজেক্ট ও ক্লায়েন্টের নাম আবশ্যক', 'err');
-  if(price <= 0) return toast('সঠিক মূল্য দিন', 'err');
-
-  state.projects.unshift({
-    id: Date.now(),
-    title, client, price, due, estHours, deadline, priority,
-    status: 'active',
-    createdAt: new Date().toISOString(),
-    completedAt: null,
-    payments: []
-  });
-
-  el('p-title').value = '';
-  el('p-client').value = '';
-  el('p-price').value = '';
-  el('p-due').value = '';
-  el('p-est-hours').value = '';
-  el('p-deadline').value = '';
-
-  saveData();
-  sound('success');
-  toast('নতুন প্রজেক্ট তৈরি হয়েছে! 🚀');
-}
-function renderProjects() {
-  const c = el('project-list'); if(!c) return;
-  let list = state.projects || [];
-
-  if(list.length === 0) {
-    c.innerHTML = '<div class="empty">কোনো প্রজেক্ট পাওয়া যায়নি</div>';
-    return;
+function saveMotiveQuotes() {
+  const arr = [];
+  for (let i = 0; i < 5; i++) {
+    const v = el('motive-input-' + i).value.trim();
+    if (v) arr.push(v);
   }
-
-  c.innerHTML = list.map(p => {
-    const isDone = p.status === 'done';
-    const actualSec = state.sessions.filter(s => String(s.projectId) === String(p.id)).reduce((a,b)=>a+num(b.sec),0);
-    const estSec = num(p.estHours) * 3600;
-    const isOver = estSec > 0 && actualSec > estSec;
-    const progPct = estSec > 0 ? Math.min(100, Math.round((actualSec/estSec)*100)) : (isDone?100:0);
-
-    return `
-      <div class="proj ${isDone?'done':''}">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start">
-          <div>
-            <b>${p.title}</b>
-            <span class="pill ${p.priority==='high'?'p-high':p.priority==='low'?'p-low':'p-mid'}">${p.priority}</span>
-            <div class="hint">👤 ${p.client} • ডেডলাইন: ${dateLabel(p.deadline)}</div>
-          </div>
-          <div style="text-align:right">
-            <div style="font-weight:700;color:var(--ok)">${money(p.price)}</div>
-            <div class="hint" style="color:${num(p.due)>0?'var(--warn)':'var(--ok)'}">বাকি: ${money(p.due)}</div>
-          </div>
-        </div>
-
-        <div class="bar ${isOver?'over':''}"><i style="width:${progPct}%"></i></div>
-
-        <div class="meta">
-          <span>⏱️ কাজ হয়েছে: <b>${fmtDur(actualSec)}</b></span>
-          <span>⏳ এস্টিমেট: <b>${p.estHours ? p.estHours+'ঘ' : 'নেই'}</b></span>
-          ${isOver ? `<span style="color:var(--bad)">⚠️ ওভারটাইম: +${fmtDur(actualSec - estSec)}</span>` : ''}
-        </div>
-
-        <div class="acts">
-          ${!isDone 
-            ? `<button class="btn ok sm" onclick="startInline('${p.id}')">▶️ কাজ শুরু</button>
-               <button class="btn cy sm" onclick="markProjectDone('${p.id}')">✅ কাজ শেষ</button>` 
-            : `<span class="pill p-ok">সম্পন্ন হয়েছে</span>`}
-          <button class="btn bad sm ghost" onclick="deleteProject('${p.id}')">🗑️</button>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-function markProjectDone(id) {
-  const p = state.projects.find(x => String(x.id) === String(id));
-  if(!p) return;
-  p.status = 'done';
-  p.completedAt = new Date().toISOString();
+  if (arr.length) state.motiveQuotes = arr;
+  closeOverlay('m-motive-edit');
   saveData();
-  sound('success');
-  toast(`🎉 ${p.title} সম্পন্ন হয়েছে!`);
-}
-function deleteProject(id) {
-  if(!confirm('প্রজেক্টটি মুছে ফেলতে চান?')) return;
-  state.projects = state.projects.filter(x => String(x.id) !== String(id));
-  state.sessions = state.sessions.filter(x => String(x.projectId) !== String(id));
-  saveData();
-  toast('প্রজেক্ট মুছে ফেলা হয়েছে', 'warn');
+  initMotiveSlider();
+  toast('৫টি মোটিভেশন সফলভাবে সেভ হয়েছে 💡', 'ok');
 }
 
-/* ------------------ ANALYTICS ------------------ */
-function renderAnalytics() {
-  const cKpi = el('an-kpis');
-  const cTbl = el('an-table');
-
-  const totalEarned = state.projects.reduce((s, p) => s + (p.status==='done'?num(p.price):0), 0);
-  const totalSec = state.sessions.reduce((s, x) => s + num(x.sec), 0);
-  const totalDone = state.projects.filter(p => p.status === 'done').length;
-
-  if(cKpi) {
-    cKpi.innerHTML = `
-      <div class="kpi">
-        <div class="lbl">💵 ৩ বছরের মোট আয়</div>
-        <div class="val" style="color:var(--ok)">${money(totalEarned)}</div>
-        <div class="sub">${totalDone}টি প্রজেক্ট সম্পন্ন</div>
-      </div>
-      <div class="kpi">
-        <div class="lbl">⏱️ সর্বমোট কাজের সময়</div>
-        <div class="val" style="color:var(--c2)">${fmtDur(totalSec)}</div>
-        <div class="sub">${state.sessions.length}টি সেশন সম্পন্ন</div>
-      </div>
-      <div class="kpi">
-        <div class="lbl">👥 মোট ক্লায়েন্ট</div>
-        <div class="val" style="color:var(--c3)">${(state.clients||[]).length} জন</div>
-        <div class="sub">CRM ডিরেক্টরি</div>
-      </div>
-    `;
-  }
-
-  if(cTbl) {
-    cTbl.innerHTML = `
-      <table class="tbl">
-        <thead>
-          <tr><th>প্রজেক্ট</th><th>ক্লায়েন্ট</th><th>মূল্য</th><th>কাজের সময়</th><th>স্ট্যাটাস</th><th>তারিখ</th></tr>
-        </thead>
-        <tbody>
-          ${state.projects.map(p => `
-            <tr>
-              <td><b>${p.title}</b></td>
-              <td>${p.client}</td>
-              <td class="num" style="color:var(--ok)">${money(p.price)}</td>
-              <td class="num">${fmtDur(state.sessions.filter(s=>String(s.projectId)===String(p.id)).reduce((a,b)=>a+num(b.sec),0))}</td>
-              <td><span class="pill ${p.status==='done'?'p-ok':'p-mid'}">${p.status}</span></td>
-              <td>${dateLabel(p.createdAt)}</td>
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
-    `;
-  }
-}
-
-/* ------------------ DASHBOARD ------------------ */
-function renderDashboard() {
-  updateDashboardDreamBanner();
-  renderDailyFocusCards();
-  updateDashLive();
-
-  const f = getFinanceSummary();
-  const totalDue = state.projects.reduce((s, p) => s + num(p.due), 0);
-  const todaySec = state.sessions.filter(s => (s.date||'').startsWith(todayKey())).reduce((a,b)=>a+num(b.sec),0) + tWorked;
-
-  if(el('k-cash')) el('k-cash').textContent = money(f.cashInHand);
-  if(el('k-exp')) el('k-exp').textContent = money(f.totalExpenses);
-  if(el('k-loan')) el('k-loan').textContent = money(f.totalRemainingDebt);
-  if(el('k-due')) el('k-due').textContent = money(totalDue);
-
-  if(el('mq-cash')) el('mq-cash').textContent = `💵 হাতে নগদ: ${money(f.cashInHand)}`;
-  if(el('mq-due')) el('mq-due').textContent = `⚠️ ক্লায়েন্ট বকেয়া: ${money(totalDue)}`;
-  if(el('mq-debt')) el('mq-debt').textContent = `🏦 মোট ধার: ${money(f.totalRemainingDebt)}`;
-  if(el('mq-hours')) el('mq-hours').textContent = `⏱️ আজকের কাজ: ${fmtDur(todaySec)}`;
-
-  const d = getDailyCalculation();
-  if(el('ring-month')) el('ring-month').style.setProperty('--p', Math.min(100, Math.round(((d.monthTarget - d.monthRemaining)/d.monthTarget)*100)));
-  if(el('ring-month-val')) el('ring-month-val').textContent = Math.min(100, Math.round(((d.monthTarget - d.monthRemaining)/d.monthTarget)*100)) + '%';
-  if(el('ring-day')) el('ring-day').style.setProperty('--p', d.dailyPct);
-  if(el('ring-day-val')) el('ring-day-val').textContent = d.dailyPct + '%';
-
-  const uBox = el('dash-urgent');
-  if(uBox) {
-    const list = state.projects.filter(p => p.status !== 'done' && p.deadline).slice(0, 4);
-    uBox.innerHTML = list.length > 0 ? list.map(p => `
-      <div class="list-item">
-        <div class="g"><div class="todo-title"><b>${p.title}</b></div><div class="hint">${p.client}</div></div>
-        <span class="pill ${p.deadline<todayKey()?'p-bad':'p-mid'}">${p.deadline<todayKey()?'ওভারডিউ':dateLabel(p.deadline)}</span>
-        <button class="btn ok sm" onclick="startInline('${p.id}')">▶️</button>
-      </div>
-    `).join('') : '<div class="empty">কোনো জরুরি ডেডলাইন নেই</div>';
-  }
-}
-
-function openOverlay(id) { if(el(id)) el(id).classList.add('on'); }
-function closeOverlay(id) { if(el(id)) el(id).classList.remove('on'); }
-
+// Modal Goal Details
 function openDetails(type) {
-  const title = el('m-details-title');
-  const body = el('m-details-body');
-  if(!title || !body) return;
-
-  if(type === 'goal') {
-    const d = getDailyCalculation();
-    const f = getFinanceSummary();
-    title.textContent = "🎯 পূর্ণাঙ্গ গোল, দেনা ও ফিন্যান্স ব্রেকডাউন";
-    body.innerHTML = `
-      <div class="drow"><span>মাসিক টার্গেট</span><b style="color:var(--c2)">${money(d.monthTarget)}</b></div>
-      <div class="drow"><span>এই মাসের মোট অর্জন</span><b style="color:var(--ok)">${money(d.monthTarget - d.monthRemaining)}</b></div>
-      <div class="drow"><span>টার্গেট পূরণ হতে বাকি</span><b style="color:var(--warn)">${money(d.monthRemaining)}</b></div>
-      <div class="drow"><span>মাসে বাকি দিন</span><b>${d.remainingDays} দিন</b></div>
-      <div class="drow"><span>লক্ষ্য অর্জনে প্রতিদিন দরকার</span><b style="color:var(--c2)">${money(d.dailyNeededForMonth)}</b></div>
-      <hr style="border:0;border-top:1px solid var(--border);margin:10px 0">
-      <div class="drow"><span>💵 হাতে প্রকৃত নগদ ক্যাশ</span><b style="color:var(--ok)">${money(f.cashInHand)}</b></div>
-      <div class="drow"><span>📉 এই মাসে মোট খরচ হয়েছে</span><b style="color:var(--bad)">${money(f.totalExpenses)}</b></div>
-      <div class="drow"><span>🏦 বাকি ধার / দেনা আছে</span><b style="color:var(--warn)">${money(f.totalRemainingDebt)}</b></div>
-      <div class="drow"><span>🤝 ক্লায়েন্টের কাছে বাকি টাকা</span><b>${money(f.clientDue)}</b></div>
-      <hr style="border:0;border-top:1px solid var(--border);margin:10px 0">
-      <div class="drow"><span>আজকের অর্জিত আয়</span><b style="color:var(--ok)">${money(d.totalTodayEarned)}</b></div>
-      <div class="drow"><span>আজ আরও বাকি</span><b style="color:${d.dailyRemaining>0?'var(--warn)':'var(--ok)'}">${d.dailyRemaining>0?money(d.dailyRemaining):'✅ সম্পন্ন'}</b></div>
+  if (type === 'goal') {
+    el('m-details-title').textContent = '🎯 পূর্ণাঙ্গ গোল ও টার্গেট ব্রেকডাউন';
+    const td = calcToday();
+    const f = calcFinance();
+    el('m-details-body').innerHTML = `
+      <div class="drow"><span>মাসিক মোট টার্গেট</span><b>${money(state.target)}</b></div>
+      <div class="drow"><span>এই মাসে কাজ সম্পন্ন</span><b style="color:var(--ok)">${money(f.projIn)}</b></div>
+      <div class="drow"><span>মাসের লক্ষ্য পূরণে বাকি</span><b style="color:var(--warn)">${money(Math.max(0, num(state.target)-f.projIn))}</b></div>
+      <div class="drow"><span>আজকের দৈনিক টার্গেট</span><b>${money(state.dailyTarget)}</b></div>
+      <div class="drow"><span>আজকের মোট কাজ ও আয়</span><b style="color:var(--ok)">${money(td.todayTotal)}</b></div>
+      <div class="drow"><span>মাসিক গতি ঠিক রাখতে আজ গড়ে প্রয়োজন</span><b style="color:var(--c2)">${money(td.perDayNeeded)}</b></div>
+      <div class="drow"><span>মাসের আর বাকি আছে</span><b>${td.daysLeft} দিন</b></div>
     `;
-  } else if(type === 'due') {
-    title = "🤝 ক্লায়েন্টের কাছে বকেয়া পাওনা";
-    const dueProjects = state.projects.filter(p => num(p.due) > 0);
-    body.innerHTML = dueProjects.length ? dueProjects.map(p => `
-      <div class="drow">
-        <span><b>${p.title}</b> (${p.client})</span>
-        <b style="color:var(--warn)">${money(p.due)}</b>
-      </div>
-    `).join('') : '<div class="empty">কোনো বকেয়া পাওনা নেই! 🎉</div>';
-  } else {
-    title = "বিস্তারিত";
-    body.innerHTML = `<div class="hint">তথ্য সংরক্ষিত আছে।</div>`;
+    openOverlay('m-details');
   }
-  openOverlay('m-details');
 }
 
-function renderAll() {
-  renderDashboard();
-  renderDreamsPage();
-  renderProjects();
-  renderClients();
-  renderCheckinTimeline();
-  renderFinancePage();
-}
-
-function startTimerForNext() {
-  const p = state.projects.find(x => x.status !== 'done');
-  if(p) startInline(p.id);
-  else toast('কোনো চলমান প্রজেক্ট নেই!', 'warn');
-}
-
-function toggleTheme() {
-  const cur = document.documentElement.getAttribute('data-theme');
-  const next = cur === 'light' ? 'dark' : 'light';
-  document.documentElement.setAttribute('data-theme', next);
-  if(el('themeBtn')) el('themeBtn').textContent = next==='light'?'🌙':'☀️';
-}
-
-function confirmReset() {
-  if(!confirm('সব ডেটা মুছে ফেলবেন?')) return;
-  localStorage.removeItem(APP_STORAGE_KEY);
-  location.reload();
-}
-
+// Settings
 function saveSettings() {
   state.name = el('set-name').value || 'Naim';
   state.target = num(el('monthly-target-input').value) || 50000;
-  state.dailyTarget = num(el('daily-target-input').value) || 1500;
+  state.dailyTarget = num(el('daily-target-input').value) || 2000;
   saveData();
-  toast('সেটিংস সেভ হয়েছে! 💾');
 }
 
+function confirmReset() {
+  if (confirm('আপনি কি নিশ্চিত যে সমস্ত ডেটা মুছে নতুন করে শুরু করতে চান?')) {
+    localStorage.removeItem('naims_os_final_v2');
+    location.reload();
+  }
+}
+
+// Global Init
 window.onload = () => {
-  loadData();
+  loadLocal();
   initMotiveSlider();
-  populateClientDropdown();
 
   document.querySelectorAll('.nav-btn[data-page]').forEach(b => {
     b.addEventListener('click', () => switchPage(b.dataset.page));
   });
 
-  if(el('themeBtn')) el('themeBtn').addEventListener('click', toggleTheme);
-  if(el('menuBtn')) el('menuBtn').addEventListener('click', () => el('sidebar').classList.toggle('open'));
+  const tb = el('themeBtn'); if (tb) tb.onclick = () => applyTheme(state.theme === 'light' ? 'dark' : 'light');
+  const vb = el('voiceBtn'); if (vb) vb.onclick = () => { state.voice = !state.voice; toast(state.voice ? 'ভয়েস অন 📢' : 'ভয়েস অফ 🔇', 'ok'); };
+  const sb = el('soundBtn'); if (sb) sb.onclick = () => { state.sound = !state.sound; toast(state.sound ? 'সাউন্ড অন 🎵' : 'সাউন্ড অফ 🔇', 'ok'); };
+  const mb = el('menuBtn'); if (mb) mb.onclick = () => el('sidebar').classList.toggle('open');
 
   setInterval(() => {
     const d = new Date();
-    if(el('live-clock')) el('live-clock').textContent = d.toLocaleTimeString('bn-BD');
-    check4HourTimer();
-    check6HourDeadlineTimer();
+    if (el('live-clock')) el('live-clock').textContent = d.toLocaleTimeString('bn-BD', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
   }, 1000);
+
+  setInterval(check4HourTrigger, 30000);
+  setInterval(checkDeadlineTrigger, 30000);
 };
 </script>
 </body>
